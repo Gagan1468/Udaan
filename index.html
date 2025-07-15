@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prerna – A Place to Feel Better</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #673ab7;
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card button,
+    .card a.button {
+      background-color: #673ab7;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .card button:hover,
+    .card a.button:hover {
+      background-color: #5e35b1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to Prerna </h1>
+    <p>You are not alone. Let us heal together.</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h3> Mindfulness</h3>
+      <p>Practice calming exercises and breathing techniques.</p>
+      <button onclick="alert('Mindfulness feature coming soon!')">Start Now</button>
+    </div>
+    <div class="card">
+      <h3>Talk to Buddy</h3>
+      <p>Share how you're feeling with our friendly chatbot.</p>
+      <a class="button" href="chat.html">Chat Now</a>
+    </div>
+    <div class="card">
+      <h3> Journal</h3>
+      <p>Write down your thoughts and feelings safely.</p>
+      <button onclick="alert('Journal feature coming soon!')">Open Journal</button>
+    </div>
+    <div class="card">
+      <h3> Mood Games</h3>
+      <p>Play simple games to boost your mood and relax.</p>
+      <button onclick="alert('Mood Games coming soon!')">Play Now</button>
+    </div>
+    <div class="card">
+      <h3>Contact Counsellor</h3>
+      <p>You are never alone!! We are here to listen...</p>
+      <button onclick="alert('Connecting to a professional counsellor for your help!!!')">Start Now</button>
+    </div>
+  <div class="card">
+  <h3>To-Do-List</h3>
+  <p>Make your journey clear, concise and motivating!! Turn goals into reality!</p>
+  <button onclick="window.location.href='todo.html'">Open To-Do List</button>
+</div>
+</div>
+
+  <footer>
+    &copy; 2025 Prerna | Built with for kids’ mental wellness
+  </footer>
+
+</body>
+</html>
