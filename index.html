@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Prerna – A Place to Feel Better</title>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("EMnEQn1d8oIWHZKHV");
+    })();
+  </script>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -34,6 +43,7 @@
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0,0,0,0.08);
       text-align: center;
+      position: relative;
     }
 
     .card h3 {
@@ -51,6 +61,7 @@
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
+      margin-top: 10px;
     }
 
     .card button:hover,
@@ -64,18 +75,57 @@
       color: #999;
       font-size: 14px;
     }
+
+    .contact-form {
+      margin-top: 20px;
+      text-align: left;
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    .contact-form button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .success {
+      color: green;
+      margin-top: 15px;
+      display: none;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Welcome to Prerna </h1>
+    <h1>Welcome to Prerna</h1>
     <p>You are not alone. Let us heal together.</p>
   </header>
 
   <div class="container">
     <div class="card">
-      <h3> Mindfulness</h3>
+      <h3>Mindfulness</h3>
       <p>Practice calming exercises and breathing techniques.</p>
       <button onclick="alert('Mindfulness feature coming soon!')">Start Now</button>
     </div>
@@ -85,19 +135,36 @@
       <a class="button" href="chat.html">Chat Now</a>
     </div>
     <div class="card">
-      <h3> Journal</h3>
+      <h3>Journal</h3>
       <p>Write down your thoughts and feelings safely.</p>
       <button onclick="alert('Journal feature coming soon!')">Open Journal</button>
     </div>
     <div class="card">
-      <h3> Mood Games</h3>
+      <h3>Mood Games</h3>
       <p>Play simple games to boost your mood and relax.</p>
       <button onclick="alert('Mood Games coming soon!')">Play Now</button>
     </div>
     <div class="card">
       <h3>Contact Counsellor</h3>
       <p>You are never alone!! We are here to listen...</p>
-      <button onclick="alert('Connecting to a professional counsellor for your help!!!')">Start Now</button>
+      <button onclick="toggleForm()">Start Now</button>
+
+      <!-- Embedded Contact Form -->
+      <div id="counsellorForm" class="contact-form">
+        <form id="contact-form">
+          <label>Your Name:</label>
+          <input type="text" name="name" required>
+
+          <label>Your Email:</label>
+          <input type="email" name="email" required>
+
+          <label>Your Message:</label>
+          <textarea name="message" rows="4" required></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+        <div class="success" id="successMessage">✅ Message sent to a professional counsellor.</div>
+      </div>
     </div>
     <div class="card">
       <h3>To-Do-List</h3>
@@ -110,8 +177,30 @@
     &copy; 2025 Prerna | Built with love for kids’ mental wellness
   </footer>
 
-  <!-- 🔽 Chatbot Embed Script -->
+  <!-- Chatbot Embed Script -->
   <script src='https://www.noupe.com/embed/01980cc4a3ab788f92fbee0c70a738e54d73.js'></script>
+
+  <!-- JS for Form Toggle and EmailJS -->
+  <script>
+    function toggleForm() {
+      const form = document.getElementById("counsellorForm");
+      form.style.display = form.style.display === "block" ? "none" : "block";
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          document.getElementById("successMessage").style.display = "block";
+          document.getElementById("contact-form").reset();
+        }, function(error) {
+          alert('FAILED to send message. Please try again.');
+          console.log('FAILED...', error);
+        });
+    });
+  </script>
 
 </body>
 </html>
