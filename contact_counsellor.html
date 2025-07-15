@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Counsellor</title>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("EMnEQn1d8oIWHZKHV");
+    })();
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 40px;
+    }
+    .box {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input, textarea, button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    .success {
+      display: none;
+      color: green;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Contact a Counsellor</h2>
+  <form id="contact-form">
+    <label>Your Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Your Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Your Message:</label>
+    <textarea name="message" rows="5" required></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <div class="success" id="successMessage">
+    Message sent to a professional counsellor.
+  </div>
+</div>
+
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
+      .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+        document.getElementById("successMessage").style.display = "block";
+        document.getElementById("contact-form").reset();
+      }, function(error) {
+        alert('FAILED to send message. Please try again.');
+        console.log('FAILED...', error);
+      });
+  });
+</script>
+
+</body>
+</html>
