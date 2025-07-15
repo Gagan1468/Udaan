@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prerna Voice Assistant</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #c2e9fb, #a1c4fd);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .assistant-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    #output {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 12px;
+      min-height: 60px;
+      margin: 20px 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    #speakBtn {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #speakBtn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="assistant-container">
+    <h2>??? Talk to Prerna Voice Assistant</h2>
+    <div id="output">Click the mic and speak...</div>
+    <button id="speakBtn">??</button>
+  </div>
+
+  <script>
+    const speakBtn = document.getElementById("speakBtn");
+    const output = document.getElementById("output");
+
+    // Check browser compatibility
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    speakBtn.addEventListener("click", () => {
+      recognition.start();
+      output.innerHTML = "?? Listening...";
+    });
+
+    recognition.onresult = (event) => {
+      const userSpeech = event.results[0][0].transcript;
+      output.innerHTML = `<strong>You said:</strong> ${userSpeech}`;
+
+      // Simulated assistant response
+      let response = getResponse(userSpeech);
+      speak(response);
+      output.innerHTML += `<br><strong>Prerna:</strong> ${response}`;
+    };
+
+    recognition.onerror = (event) => {
+      output.innerHTML = `? Error: ${event.error}`;
+    };
+
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      speechSynthesis.speak(utterance);
+    }
+
+    function getResponse(input) {
+      // You can later replace this with OpenAI or your own backend
+      input = input.toLowerCase();
+      if (input.includes("hello") || input.includes("hi")) return "Hello! How can I support you today?";
+      if (input.includes("sad") || input.includes("depressed")) return "I'm here for you. Let's take a deep breath together.";
+      if (input.includes("happy")) return "That's wonderful to hear! Keep smiling.";
+      if (input.includes("help")) return "Sure! I'm here to listen and guide you. You can tell me anything.";
+      return "I'm not sure how to answer that, but I'm listening.";
+    }
+  </script>
+
+</body>
+</html>
