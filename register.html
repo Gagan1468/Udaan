@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register - Prerna</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=1400&q=80') no-repeat center center/cover;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background: url('https://img.freepik.com/free-vector/kids-playing-field_1308-30221.jpg') no-repeat center center/cover;
     }
 
     .register-box {
-      background: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.95);
       padding: 30px;
       border-radius: 12px;
+      width: 350px;
       box-shadow: 0 0 12px rgba(0,0,0,0.2);
-      width: 340px;
     }
 
-    h2 {
+    .register-box h2 {
       text-align: center;
       margin-bottom: 20px;
     }
 
-    input {
+    .register-box input {
       width: 100%;
       padding: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       border-radius: 6px;
       border: 1px solid #ccc;
+      font-size: 16px;
     }
 
-    button {
+    .register-box input[type="file"] {
+      padding: 5px;
+    }
+
+    .register-box button {
       width: 100%;
       padding: 10px;
-      background-color: #673ab7;
+      background: #673ab7;
       color: white;
       border: none;
       border-radius: 6px;
@@ -47,16 +53,16 @@
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #5e35b1;
+    .register-box button:hover {
+      background: #5e35b1;
     }
 
-    .links {
-      margin-top: 10px;
+    .register-box .links {
       text-align: center;
+      margin-top: 10px;
     }
 
-    .links a {
+    .register-box .links a {
       color: #673ab7;
       text-decoration: none;
     }
@@ -64,40 +70,58 @@
 </head>
 <body>
 
-  <div class="register-box">
-    <h2>Create Account</h2>
-    <input type="text" id="regName" placeholder="Full Name" required />
-    <input type="email" id="regEmail" placeholder="Email" required />
-    <input type="password" id="regPassword" placeholder="Password" required />
-    <button onclick="handleRegister()">Register</button>
-    <div class="links">
-      Already have an account? <a href="login.html">Login</a>
-    </div>
+<div class="register-box">
+  <h2>Create Account</h2>
+  <input type="text" id="name" placeholder="Full Name" required>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="tel" id="phone" placeholder="Phone Number" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <label>Upload Profile Picture:</label>
+  <input type="file" id="profilePic" accept="image/*">
+  <button onclick="handleRegister()">Register</button>
+  <div class="links">
+    <p>Already have an account? <a href="login.html">Login here</a></p>
   </div>
+</div>
 
-  <script>
-    function handleRegister() {
-      const name = document.getElementById("regName").value;
-      const email = document.getElementById("regEmail").value;
-      const password = document.getElementById("regPassword").value;
+<script>
+  function handleRegister() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const password = document.getElementById('password').value;
+    const profileInput = document.getElementById('profilePic');
+    
+    if (!name || !email || !phone || !password) {
+      alert("Please fill all fields");
+      return;
+    }
 
-      if (!name || !email || !password) {
-        alert("Please fill all fields");
-        return;
-      }
+    const reader = new FileReader();
+    reader.onload = function () {
+      const profilePicBase64 = reader.result;
 
-      const user = {
-        name: name,
-        email: email,
-        password: password
+      // Save data with email as key
+      const userData = {
+        name,
+        email,
+        phone,
+        password,
+        photo: profilePicBase64 || ""
       };
 
-      // Save user to localStorage
-      localStorage.setItem("prernaUser", JSON.stringify(user));
-      alert("Registration Successful! Please login.");
+      localStorage.setItem(`user_${email}`, JSON.stringify(userData));
+      alert("Registration successful! Please log in.");
       window.location.href = "login.html";
+    };
+
+    if (profileInput.files.length > 0) {
+      reader.readAsDataURL(profileInput.files[0]);
+    } else {
+      reader.onload(); // run directly without photo
     }
-  </script>
+  }
+</script>
 
 </body>
 </html>
