@@ -304,21 +304,26 @@
   document.addEventListener("DOMContentLoaded", function () {
     const isLoggedIn = localStorage.getItem("prernaLoggedIn");
 
-    // Show or hide UI elements based on login
-    const profileMenu = document.getElementById("profileMenu");
-    const authLinks = document.getElementById("authLinks");
+    const profileMenu = document.getElementById("profileMenu"); // 3 dots
+    const authLinks = document.getElementById("authLinks");     // Login/Register
 
     if (isLoggedIn === "true") {
-      // Logged in: hide login/register, show 3-dots
-      authLinks.style.display = "none";
-      profileMenu.style.display = "block";
+      // Agar login ho chuka hai
+      authLinks.style.display = "none";        // Login/Register hide
+      profileMenu.style.display = "block";     // 3 dots show
     } else {
-      // Not logged in: hide 3-dots, show login/register
-      profileMenu.style.display = "none";
-      authLinks.style.display = "block";
+      // Agar login nahi hua
+      authLinks.style.display = "block";       // Login/Register show
+      profileMenu.style.display = "none";      // 3 dots hide
     }
   });
+
+  function logoutUser() {
+    localStorage.removeItem("prernaLoggedIn");
+    window.location.href = "index.html";
+  }
 </script>
+
 
 </body>
 </html>
