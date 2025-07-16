@@ -3,59 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Register - Prerna</title>
-
-  <!-- ✅ Latest EmailJS SDK (v3) -->
-  <script type="module">
-    import emailjs from 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-    emailjs.init("EMnEQn1d8oIWHZKHV"); // ✅ Your public key
-    window.emailjs = emailjs;
-
-    // ✅ Hide links if already logged in
-    window.onload = function () {
-      const isLoggedIn = localStorage.getItem('prernaLoggedIn');
-      if (isLoggedIn === 'true') {
-        const links = document.querySelector('.links');
-        if (links) links.style.display = 'none';
-      }
-    };
-
-  // Inside handleRegister() function
-const name = document.getElementById('registerName').value;
-const email = document.getElementById('registerEmail').value;
-const password = document.getElementById('registerPassword').value;
-
-// Save user data as object
-const userData = {
-  name: name,
-  email: email,
-  password: password
-};
-
-// Store in localStorage
-localStorage.setItem("prernaUser", JSON.stringify(userData));
-
-// Redirect to login
-window.location.href = "login.html";
-
-
-        emailjs.send("service_2j8tx8y", "template_kchkdav", templateParams)
-          .then(function (response) {
-            console.log('SUCCESS!', response.status, response.text);
-            localStorage.setItem('prernaLoggedIn', 'true');
-            localStorage.setItem('prernaProfile', JSON.stringify({ name, email, phone }));
-            alert('Registration successful! Details sent to Gmail ✅');
-            window.location.href = 'index.html';
-          }, function (error) {
-            console.error('FAILED...', error);
-            alert('Email sending failed ❌: ' + error.text);
-          });
-      } else {
-        alert('Please fill all fields');
-      }
-    };
-  </script>
-
+  <title>Register – Prerna</title>
   <style>
     body, html {
       margin: 0;
@@ -65,20 +13,20 @@ window.location.href = "login.html";
       display: flex;
       align-items: center;
       justify-content: center;
-      background: url('nature-bg.jpg') no-repeat center center/cover;
+      background: url('https://images.unsplash.com/photo-1520975922059-bc1e19d1a8a9?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
     }
-    .login-box {
-      background: rgba(255,255,255,0.9);
+    .register-box {
+      background: rgba(255,255,255,0.95);
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0,0,0,0.2);
-      width: 320px;
+      width: 340px;
     }
-    .login-box h2 {
+    .register-box h2 {
       text-align: center;
       margin-bottom: 20px;
     }
-    .login-box input {
+    .register-box input {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -86,7 +34,7 @@ window.location.href = "login.html";
       border-radius: 6px;
       box-sizing: border-box;
     }
-    .login-box button {
+    .register-box button {
       width: 100%;
       padding: 10px;
       background: #673ab7;
@@ -96,14 +44,14 @@ window.location.href = "login.html";
       font-size: 16px;
       cursor: pointer;
     }
-    .login-box button:hover {
+    .register-box button:hover {
       background: #5e35b1;
     }
-    .login-box .links {
+    .register-box .links {
       text-align: center;
       margin-top: 10px;
     }
-    .login-box .links a {
+    .register-box .links a {
       color: #673ab7;
       text-decoration: none;
       margin: 0 5px;
@@ -112,17 +60,39 @@ window.location.href = "login.html";
 </head>
 <body>
 
-<div class="login-box">
-  <h2>Register Prerna</h2>
-  <input type="text" id="regName" placeholder="Full Name" required>
-  <input type="email" id="regEmail" placeholder="Email" required>
-  <input type="password" id="regPassword" placeholder="Password" required>
-  <input type="tel" id="regPhone" placeholder="Phone Number" required>
+<div class="register-box">
+  <h2>Create Account</h2>
+  <input type="text" id="registerName" placeholder="Your Name" required />
+  <input type="email" id="registerEmail" placeholder="Email" required />
+  <input type="password" id="registerPassword" placeholder="Password" required />
   <button onclick="handleRegister()">Register</button>
   <div class="links">
-    <a href="login.html">Login</a> | <a href="index.html">Back to Home</a>
+    <a href="login.html">Already have an account? Login</a>
   </div>
 </div>
+
+<script>
+  function handleRegister() {
+    const name = document.getElementById('registerName').value.trim();
+    const email = document.getElementById('registerEmail').value.trim();
+    const password = document.getElementById('registerPassword').value.trim();
+
+    if (!name || !email || !password) {
+      alert("❌ Please fill in all fields!");
+      return;
+    }
+
+    const userData = {
+      name: name,
+      email: email,
+      password: password
+    };
+
+    localStorage.setItem("prernaUser", JSON.stringify(userData));
+    alert("✅ Registered successfully! Please login.");
+    window.location.href = "login.html";
+  }
+</script>
 
 </body>
 </html>
