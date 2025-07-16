@@ -49,7 +49,7 @@
   <input type="text" id="regName" placeholder="Full Name" required>
   <input type="email" id="regEmail" placeholder="Email" required>
   <input type="password" id="regPassword" placeholder="Password" required>
-  <input type="phone number" id="regPhone Number" placeholder="Phone Number" required>
+  <input type="tel" id="regPhone" placeholder="Phone Number" required>
   <button onclick="handleRegister()">Register</button>
   <div class="links">
     <a href="login.html">Login</a> | <a href="index.html">Back to Home</a>
@@ -61,13 +61,17 @@
     const name = document.getElementById('regName').value;
     const email = document.getElementById('regEmail').value;
     const pass = document.getElementById('regPassword').value;
-    const phone = document.getElementById('regPhone Number').value;
-    if(name && email && pass) {
-      const profile = { name, email };
+    const phone = document.getElementById('regPhone').value;
+
+    if(name && email && pass && phone) {
+      const profile = { name, email, phone };
       localStorage.setItem('prernaLoggedIn', 'true');
       localStorage.setItem('prernaProfile', JSON.stringify(profile));
+      alert('Registration successful!');
       window.location.href = 'index.html';
-    } else alert('Please fill all fields');
+    } else {
+      alert('Please fill all fields');
+    }
   }
 </script>
 
