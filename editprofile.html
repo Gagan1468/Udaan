@@ -16,8 +16,9 @@
       background: white;
       padding: 25px;
       border-radius: 10px;
-      width: 360px;
+      width: 380px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
     }
     input {
       width: 100%;
@@ -25,6 +26,7 @@
       margin: 10px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
+      font-size: 15px;
     }
     button {
       padding: 10px 20px;
@@ -32,18 +34,26 @@
       border-radius: 6px;
       background: #673ab7;
       color: white;
-      margin-right: 10px;
+      margin: 10px 5px;
       cursor: pointer;
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
   <div class="edit-box">
     <h2>Edit Your Profile</h2>
+    <img id="photoPreview" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="Preview" />
+    <input type="file" id="editPhoto" accept="image/*">
     <input type="text" id="editName" placeholder="Enter new name">
     <input type="email" id="editEmail" placeholder="Enter new email">
     <input type="tel" id="editPhone" placeholder="Enter phone number">
-    <input type="file" id="editPhoto" accept="image/*">
     <br>
     <button onclick="saveChanges()">Save</button>
     <button onclick="goBack()">Back</button>
@@ -51,19 +61,23 @@
 
   <script>
     const currentEmail = localStorage.getItem('prernaEmail');
-    const userData = JSON.parse(localStorage.getItem(currentEmail));
+    let userData = JSON.parse(localStorage.getItem(currentEmail)) || {};
 
+    // Fill values
     document.getElementById('editName').value = userData.name || '';
     document.getElementById('editEmail').value = currentEmail;
     document.getElementById('editPhone').value = userData.phone || '';
+    document.getElementById('photoPreview').src = userData.photo || "https://i.ibb.co/3rkfKQg/user-default.png";
+
+    let updatedPhoto = userData.photo || "";
 
     document.getElementById('editPhoto').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = () => {
-          userData.photo = reader.result;
-          localStorage.setItem(currentEmail, JSON.stringify(userData));
+        reader.onload = function () {
+          updatedPhoto = reader.result;
+          document.getElementById('photoPreview').src = updatedPhoto;
         };
         reader.readAsDataURL(file);
       }
@@ -74,15 +88,19 @@
       const newEmail = document.getElementById('editEmail').value;
       const newPhone = document.getElementById('editPhone').value;
 
-      userData.name = newName;
-      userData.phone = newPhone;
+      const updatedData = {
+        name: newName,
+        phone: newPhone,
+        photo: updatedPhoto
+      };
 
       if (newEmail !== currentEmail) {
+        // Email changed, move data
         localStorage.removeItem(currentEmail);
-        localStorage.setItem(newEmail, JSON.stringify(userData));
-        localStorage.setItem("prernaEmail", newEmail);
+        localStorage.setItem(newEmail, JSON.stringify(updatedData));
+        localStorage.setItem('prernaEmail', newEmail);
       } else {
-        localStorage.setItem(currentEmail, JSON.stringify(userData));
+        localStorage.setItem(currentEmail, JSON.stringify(updatedData));
       }
 
       window.location.href = "profile.html";
