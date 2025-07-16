@@ -2,79 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>User Profile</title>
+  <title>My Profile – Prerna</title>
   <style>
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      background: url('https://images.unsplash.com/photo-1523268753058-747fef1c5d36') no-repeat center center/cover;
       height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
     .profile-box {
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
       padding: 30px;
-      border-radius: 10px;
-      width: 320px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 350px;
       text-align: center;
       position: relative;
     }
     .profile-box img {
       width: 120px;
-      height: 120px;
-      object-fit: cover;
       border-radius: 50%;
-      margin-bottom: 20px;
+    }
+    #editBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #eee;
+      border: none;
+      padding: 6px;
+      border-radius: 50%;
+      cursor: pointer;
     }
     button {
-      margin-top: 10px;
-      padding: 10px 20px;
       background: #673ab7;
       color: white;
+      padding: 10px 20px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
-      background: #5e35b1;
-    }
     .back-btn {
       position: absolute;
-      left: 10px;
-      top: 10px;
-      background: #ccc;
-      padding: 5px 10px;
-      font-size: 14px;
+      top: 20px;
+      left: 20px;
+      background: #673ab7;
+      color: white;
+      padding: 6px 16px;
+      border: none;
       border-radius: 6px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
+
   <div class="profile-box">
-    <a class="back-btn" href="index.html">⬅ Back</a>
-    <img id="profilePic" src="" alt="Profile Pic">
-    <h2 id="userName"></h2>
-    <p id="userEmail"></p>
-    <p id="userPhone"></p>
-    <button onclick="window.location.href='edit-profile.html'">Edit Profile</button><br/>
+    <a class="back-btn" href="index.html">← Back</a>
+    <button id="editBtn" onclick="window.location.href='edit-profile.html'">✎</button>
+    <img id="userPhoto" src="" alt="User">
+    <h2 id="userName">...</h2>
+    <p id="userEmail">...</p>
+    <p id="userPhone">...</p>
     <button onclick="logout()">Logout</button>
   </div>
 
   <script>
     const email = localStorage.getItem("prernaEmail");
-    const data = JSON.parse(localStorage.getItem(email));
-
-    if (!email || !data) {
+    const user = JSON.parse(localStorage.getItem(email));
+    if (!email || !user || localStorage.getItem("prernaLoggedIn") !== "true") {
       window.location.href = "login.html";
     }
-
-    document.getElementById("profilePic").src = data.photo || "https://i.ibb.co/3rkfKQg/user-default.png";
-    document.getElementById("userName").innerText = data.name;
-    document.getElementById("userEmail").innerText = data.email;
-    document.getElementById("userPhone").innerText = "📞 " + (data.phone || "Not provided");
+    document.getElementById("userName").innerText = user.name || "Unknown";
+    document.getElementById("userEmail").innerText = email;
+    document.getElementById("userPhone").innerText = user.phone || "Not added";
+    document.getElementById("userPhoto").src = user.photo || "https://i.ibb.co/3rkfKQg/user-default.png";
 
     function logout() {
       localStorage.removeItem("prernaLoggedIn");
