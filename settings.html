@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Settings – Prerna</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .settings-box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 350px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: #673ab7;
+      color: white;
+      cursor: pointer;
+      margin: 10px;
+    }
+    button:hover {
+      background: #5e35b1;
+    }
+    .delete-btn {
+      background: #e53935;
+    }
+    .delete-btn:hover {
+      background: #c62828;
+    }
+  </style>
+</head>
+<body>
+  <div class="settings-box">
+    <h2>Account Settings</h2>
+    <p>You can manage your account here.</p>
+    <button onclick="goBack()">Back</button>
+    <button class="delete-btn" onclick="deleteAccount()">Delete Account</button>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "index.html";
+    }
+
+    function deleteAccount() {
+      const email = localStorage.getItem("prernaEmail");
+      if (email && confirm("Are you sure you want to permanently delete your account?")) {
+        localStorage.removeItem(email);
+        localStorage.removeItem("prernaEmail");
+        localStorage.removeItem("prernaLoggedIn");
+        window.location.href = "register.html";
+      }
+    }
+  </script>
+</body>
+</html>
