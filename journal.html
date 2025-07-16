@@ -1,96 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Daily Journal - Prerna</title>
+  <meta charset="UTF-8" />
+  <title>Prerna – Daily Journal</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f7fc;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f0f4f8;
+      padding: 0;
     }
-    header {
-      padding: 20px;
-      background-color: #fff;
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
       text-align: center;
-      font-size: 24px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      color: #5e17eb;
     }
-    main {
-      padding: 40px;
-      text-align: center;
-    }
+
     textarea {
-      width: 80%;
-      height: 200px;
-      font-size: 16px;
-      padding: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-    #chat-bubble {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 70px;
-      height: 70px;
-      background-color: #007bff;
-      border-radius: 50%;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      cursor: pointer;
-      z-index: 1001;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 30px;
-      color: white;
-    }
-    #chat-iframe {
-      position: fixed;
-      bottom: 100px;
-      right: 20px;
-      width: 400px;
-      height: 500px;
-      border: 2px solid #007bff;
+      width: 100%;
+      height: 150px;
+      padding: 15px;
       border-radius: 10px;
-      display: none;
-      z-index: 1000;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      resize: none;
+    }
+
+    button {
+      background: #5e17eb;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin-top: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .entry {
+      background: #f0f0f5;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+
+    .entry h3 {
+      margin: 0;
+      font-size: 14px;
+      color: #999;
+    }
+
+    .entry p {
+      margin: 5px 0 0;
     }
   </style>
 </head>
 <body>
 
-  <header>Daily Journal</header>
-  <main>
-    <p>Write your thoughts and feelings here:</p>
-    <textarea id="journalText" placeholder="How are you feeling today?"></textarea><br>
-    <button onclick="saveJournal()">Save Entry</button>
-  </main>
+  <div class="container">
+    <h1>📝 Daily Journal</h1>
+    <textarea id="journalInput" placeholder="Write your thoughts here..."></textarea>
+    <button onclick="saveEntry()">Save Entry</button>
 
-  <div id="chat-bubble">??</div>
-  <iframe id="chat-iframe" src="https://chatannotator.com"></iframe>
+    <div id="entriesContainer"></div>
+  </div>
 
   <script>
-    function saveJournal() {
-      const entry = document.getElementById("journalText").value;
-      if (entry.trim()) {
-        const today = new Date().toISOString();
-        localStorage.setItem(`journal-${today}`, entry);
-        alert("Journal saved!");
-        document.getElementById("journalText").value = "";
-      } else {
-        alert("Please write something.");
-      }
+    function saveEntry() {
+      const text = document.getElementById('journalInput').value;
+      const date = new Date().toLocaleString();
+      if (!text.trim()) return;
+
+      const entry = { date, text };
+      let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+      entries.unshift(entry);
+      localStorage.setItem('journalEntries', JSON.stringify(entries));
+      document.getElementById('journalInput').value = '';
+      renderEntries();
     }
 
-    document.getElementById("chat-bubble").onclick = () => {
-      const iframe = document.getElementById("chat-iframe");
-      iframe.style.display = iframe.style.display === "none" ? "block" : "none";
-    };
+    function renderEntries() {
+      const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+      const container = document.getElementById('entriesContainer');
+      container.innerHTML = '';
+
+      entries.forEach(entry => {
+        const div = document.createElement('div');
+        div.className = 'entry';
+        div.innerHTML = `<h3>${entry.date}</h3><p>${entry.text}</p>`;
+        container.appendChild(div);
+      });
+    }
+
+    renderEntries();
   </script>
+
 </body>
 </html>
