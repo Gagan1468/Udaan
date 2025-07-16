@@ -7,54 +7,31 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1496309732348-3627f3f040ee?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-      background-size: cover;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center/cover;
+      margin: 0;
+      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
-    }
-
-    .back-btn {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #673ab7;
-      color: white;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
     }
 
     .profile-box {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255,255,255,0.95);
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      width: 350px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 340px;
       text-align: center;
       position: relative;
     }
 
     .profile-box img {
       width: 120px;
+      height: 120px;
+      object-fit: cover;
       border-radius: 50%;
       margin-bottom: 20px;
-    }
-
-    .edit-btn {
-      position: absolute;
-      top: 105px;
-      right: 115px;
-      background: #ffffff;
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      padding: 6px;
-      cursor: pointer;
-      font-size: 14px;
     }
 
     h2 {
@@ -63,6 +40,7 @@
 
     p {
       color: #555;
+      margin: 0;
     }
 
     button.logout {
@@ -78,6 +56,35 @@
     button.logout:hover {
       background: #5e35b1;
     }
+
+    .edit-btn {
+      position: absolute;
+      top: 100px;
+      right: 110px;
+      background: #eee;
+      border: none;
+      border-radius: 50%;
+      padding: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #673ab7;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .back-btn:hover {
+      background: #5e35b1;
+    }
   </style>
 </head>
 <body>
@@ -85,25 +92,27 @@
   <button class="back-btn" onclick="goBack()">← Back</button>
 
   <div class="profile-box">
-    <img src="https://i.ibb.co/3rkfKQg/user-default.png" alt="User">
-    function editProfile() {
-  window.location.href = "edit-profile.html"; // redirect to new page
-}
-    <h2 id="userName">Loading...</h2>
-    <p id="userEmail"></p>
+    <img id="userPic" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="User">
+    <button onclick="editProfile()" class="edit-btn">✎</button>
+    <h2 id="userName">Unknown User</h2>
+    <p id="userEmail">unknown@example.com</p>
     <button class="logout" onclick="logout()">Logout</button>
   </div>
 
   <script>
-    const name = localStorage.getItem('prernaName');
-    const email = localStorage.getItem('prernaEmail');
-
+    // Redirect to login if not logged in
     if (!localStorage.getItem('prernaLoggedIn')) {
-      window.location.href = "login.html"; // force login
+      window.location.href = "login.html";
     }
 
-    document.getElementById('userName').innerText = name ? name : 'Unknown User';
-    document.getElementById('userEmail').innerText = email ? email : 'No email found';
+    // Load data from localStorage
+    const name = localStorage.getItem('prernaName');
+    const email = localStorage.getItem('prernaEmail');
+    const img = localStorage.getItem('prernaImage');
+
+    if (name) document.getElementById('userName').innerText = name;
+    if (email) document.getElementById('userEmail').innerText = email;
+    if (img) document.getElementById('userPic').src = img;
 
     function logout() {
       localStorage.clear();
@@ -111,13 +120,12 @@
     }
 
     function goBack() {
-      window.location.href = "index.html"; // ya 3-dot wale page pe
+      window.location.href = "index.html";
     }
 
     function editProfile() {
-      alert("Edit profile clicked! (You can build a new page for editing details)");
+      window.location.href = "editprofile.html";
     }
   </script>
-
 </body>
 </html>
