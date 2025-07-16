@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to Prerna</title>
+
+  <!-- Lottie Animation -->
+  <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #e0e0ff, #ffffff);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #robotContainer {
+      width: 300px;
+      height: 300px;
+      margin-bottom: 20px;
+    }
+
+    .speech-box {
+      max-width: 80%;
+      padding: 15px 25px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      font-size: 18px;
+      color: #333;
+      border-left: 5px solid #673ab7;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="robotContainer"></div>
+  <div class="speech-box" id="speechText">??</div>
+
+  <script>
+    // Load Robot Animation
+    const robotAnim = lottie.loadAnimation({
+      container: document.getElementById('robotContainer'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://lottie.host/59a8ebff-28e0-4b4f-8883-6f9c2032e496/N38nCyWgpm.json'
+    });
+
+    // Typewriter Text + Voice + Redirect
+    const msg = "Hi! You are here. Firstly, I will introduce myself and then all...";
+    let i = 0;
+    const speed = 50;
+
+    function typeWriter() {
+      if (i < msg.length) {
+        document.getElementById("speechText").innerHTML += msg.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        speakText(msg);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 3000);
+      }
+    }
+
+    function speakText(text) {
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.rate = 0.9;
+      speech.pitch = 1.2;
+      speech.lang = "en-US";
+      window.speechSynthesis.speak(speech);
+    }
+
+    setTimeout(() => {
+      document.getElementById("speechText").innerHTML = "?? ";
+      typeWriter();
+    }, 1000);
+  </script>
+
+</body>
+</html>
