@@ -11,14 +11,14 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
     .edit-box {
       background: white;
       padding: 25px;
       border-radius: 10px;
-      width: 380px;
+      width: 360px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
     }
     input {
       width: 100%;
@@ -26,7 +26,6 @@
       margin: 10px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
-      font-size: 15px;
     }
     button {
       padding: 10px 20px;
@@ -34,26 +33,18 @@
       border-radius: 6px;
       background: #673ab7;
       color: white;
-      margin: 10px 5px;
+      margin-right: 10px;
       cursor: pointer;
-    }
-    img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
   <div class="edit-box">
     <h2>Edit Your Profile</h2>
-    <img id="photoPreview" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="Preview" />
-    <input type="file" id="editPhoto" accept="image/*">
     <input type="text" id="editName" placeholder="Enter new name">
     <input type="email" id="editEmail" placeholder="Enter new email">
     <input type="tel" id="editPhone" placeholder="Enter phone number">
+    <input type="file" id="editPhoto" accept="image/*">
     <br>
     <button onclick="saveChanges()">Save</button>
     <button onclick="goBack()">Back</button>
@@ -61,48 +52,57 @@
 
   <script>
     const currentEmail = localStorage.getItem('prernaEmail');
-    let userData = JSON.parse(localStorage.getItem(currentEmail)) || {};
+    const userData = JSON.parse(localStorage.getItem(currentEmail));
+    let updatedPhoto = userData?.photo || "";
 
-    // Fill values
+    if (!userData) {
+      alert("User data not found!");
+      window.location.href = "login.html";
+    }
+
+    // Load current values
     document.getElementById('editName').value = userData.name || '';
     document.getElementById('editEmail').value = currentEmail;
     document.getElementById('editPhone').value = userData.phone || '';
-    document.getElementById('photoPreview').src = userData.photo || "https://i.ibb.co/3rkfKQg/user-default.png";
 
-    let updatedPhoto = userData.photo || "";
-
-    document.getElementById('editPhoto').addEventListener('change', function(e) {
+    document.getElementById('editPhoto').addEventListener('change', function (e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function () {
-          updatedPhoto = reader.result;
-          document.getElementById('photoPreview').src = updatedPhoto;
+        reader.onload = () => {
+          updatedPhoto = reader.result; // store new photo to use on save
         };
         reader.readAsDataURL(file);
       }
     });
 
     function saveChanges() {
-      const newName = document.getElementById('editName').value;
-      const newEmail = document.getElementById('editEmail').value;
-      const newPhone = document.getElementById('editPhone').value;
+      const newName = document.getElementById('editName').value.trim();
+      const newEmail = document.getElementById('editEmail').value.trim();
+      const newPhone = document.getElementById('editPhone').value.trim();
 
-      const updatedData = {
+      if (!newName || !newEmail || !newPhone) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      const updatedUser = {
         name: newName,
+        email: newEmail,
         phone: newPhone,
         photo: updatedPhoto
       };
 
+      // Remove old entry if email changed
       if (newEmail !== currentEmail) {
-        // Email changed, move data
         localStorage.removeItem(currentEmail);
-        localStorage.setItem(newEmail, JSON.stringify(updatedData));
-        localStorage.setItem('prernaEmail', newEmail);
+        localStorage.setItem("prernaEmail", newEmail);
+        localStorage.setItem(newEmail, JSON.stringify(updatedUser));
       } else {
-        localStorage.setItem(currentEmail, JSON.stringify(updatedData));
+        localStorage.setItem(currentEmail, JSON.stringify(updatedUser));
       }
 
+      alert("Profile updated successfully!");
       window.location.href = "profile.html";
     }
 
