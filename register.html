@@ -20,20 +20,24 @@
       }
     };
 
-    // ✅ Registration Function
-    window.handleRegister = function () {
-      const name = document.getElementById('regName').value;
-      const email = document.getElementById('regEmail').value;
-      const pass = document.getElementById('regPassword').value;
-      const phone = document.getElementById('regPhone').value;
+  // Inside handleRegister() function
+const name = document.getElementById('registerName').value;
+const email = document.getElementById('registerEmail').value;
+const password = document.getElementById('registerPassword').value;
 
-      if (name && email && pass && phone) {
-        const templateParams = {
-          title: "New Prerna Registration",
-          name: name,
-          email: email,
-          message: `A new user registered:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`
-        };
+// Save user data as object
+const userData = {
+  name: name,
+  email: email,
+  password: password
+};
+
+// Store in localStorage
+localStorage.setItem("prernaUser", JSON.stringify(userData));
+
+// Redirect to login
+window.location.href = "login.html";
+
 
         emailjs.send("service_2j8tx8y", "template_kchkdav", templateParams)
           .then(function (response) {
