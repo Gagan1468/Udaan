@@ -2,30 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Profile – Prerna</title>
+  <title>User Profile</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center/cover;
       margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
       height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
     .profile-box {
-      background: rgba(255,255,255,0.95);
+      background: white;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 340px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.2);
       text-align: center;
       position: relative;
     }
-
     .profile-box img {
       width: 120px;
       height: 120px;
@@ -33,98 +29,57 @@
       border-radius: 50%;
       margin-bottom: 20px;
     }
-
-    h2 {
-      margin: 10px 0;
-    }
-
-    p {
-      color: #555;
-      margin: 0;
-    }
-
-    button.logout {
-      margin-top: 20px;
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
       background: #673ab7;
       color: white;
-      padding: 10px 20px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
-
-    button.logout:hover {
+    button:hover {
       background: #5e35b1;
     }
-
-    .edit-btn {
-      position: absolute;
-      top: 100px;
-      right: 110px;
-      background: #eee;
-      border: none;
-      border-radius: 50%;
-      padding: 5px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
     .back-btn {
       position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #673ab7;
-      color: white;
-      padding: 8px 16px;
-      border: none;
+      left: 10px;
+      top: 10px;
+      background: #ccc;
+      padding: 5px 10px;
+      font-size: 14px;
       border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .back-btn:hover {
-      background: #5e35b1;
     }
   </style>
 </head>
 <body>
-
-  <button class="back-btn" onclick="goBack()">← Back</button>
-
   <div class="profile-box">
-    <img id="userPic" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="User">
-    <button onclick="editProfile()" class="edit-btn">✎</button>
-    <h2 id="userName">Unknown User</h2>
-    <p id="userEmail">unknown@example.com</p>
-    <button class="logout" onclick="logout()">Logout</button>
+    <a class="back-btn" href="index.html">⬅ Back</a>
+    <img id="profilePic" src="" alt="Profile Pic">
+    <h2 id="userName"></h2>
+    <p id="userEmail"></p>
+    <p id="userPhone"></p>
+    <button onclick="window.location.href='edit-profile.html'">Edit Profile</button><br/>
+    <button onclick="logout()">Logout</button>
   </div>
 
   <script>
-    // Redirect to login if not logged in
-    if (!localStorage.getItem('prernaLoggedIn')) {
+    const email = localStorage.getItem("prernaEmail");
+    const data = JSON.parse(localStorage.getItem(email));
+
+    if (!email || !data) {
       window.location.href = "login.html";
     }
 
-    // Load data from localStorage
-    const name = localStorage.getItem('prernaName');
-    const email = localStorage.getItem('prernaEmail');
-    const img = localStorage.getItem('prernaImage');
-
-    if (name) document.getElementById('userName').innerText = name;
-    if (email) document.getElementById('userEmail').innerText = email;
-    if (img) document.getElementById('userPic').src = img;
+    document.getElementById("profilePic").src = data.photo || "https://i.ibb.co/3rkfKQg/user-default.png";
+    document.getElementById("userName").innerText = data.name;
+    document.getElementById("userEmail").innerText = data.email;
+    document.getElementById("userPhone").innerText = "📞 " + (data.phone || "Not provided");
 
     function logout() {
-      localStorage.clear();
+      localStorage.removeItem("prernaLoggedIn");
+      localStorage.removeItem("prernaEmail");
       window.location.href = "login.html";
-    }
-
-    function goBack() {
-      window.location.href = "index.html";
-    }
-
-    function editProfile() {
-      window.location.href = "editprofile.html";
     }
   </script>
 </body>
