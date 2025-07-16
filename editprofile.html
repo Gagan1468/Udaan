@@ -6,96 +6,74 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #f1f1f1;
-      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     .edit-box {
-      max-width: 400px;
-      margin: auto;
       background: white;
-      padding: 25px;
-      border-radius: 10px;
+      padding: 30px;
+      border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    .edit-box h2 {
-      text-align: center;
+      width: 350px;
     }
     input {
-      width: 100%; padding: 10px;
-      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
     button {
-      width: 100%;
       margin-top: 20px;
       background: #673ab7;
       color: white;
+      padding: 10px 20px;
       border: none;
-      padding: 12px;
       border-radius: 6px;
       cursor: pointer;
     }
-    img {
-      width: 100px;
-      border-radius: 50%;
-      display: block;
-      margin: auto;
-      margin-bottom: 10px;
-    }
     .back-btn {
-      margin-top: 15px;
       background: #999;
     }
   </style>
 </head>
 <body>
+  <div class="edit-box">
+    <h2>Edit Profile</h2>
+    <input type="text" id="editName" placeholder="Name">
+    <input type="text" id="editPhone" placeholder="Phone Number">
+    <input type="email" id="editEmail" placeholder="Email (readonly)" readonly>
+    <input type="file" id="editPhoto" accept="image/*">
+    <button onclick="saveChanges()">Save</button>
+    <button class="back-btn" onclick="window.location.href='profile.html'">Back</button>
+  </div>
 
-<div class="edit-box">
-  <h2>Edit Profile</h2>
-  <img id="previewImg" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="Preview" />
-  <input type="file" accept="image/*" onchange="loadPhoto(event)" />
-  <input type="text" id="name" placeholder="Name" />
-  <input type="text" id="phone" placeholder="Phone" />
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Password" />
-  <button onclick="saveChanges()">Save</button>
-  <button class="back-btn" onclick="window.location.href='profile.html'">Back</button>
-</div>
+  <script>
+    const email = localStorage.getItem("prernaEmail");
+    const user = JSON.parse(localStorage.getItem(email));
 
-<script>
-  const loggedInEmail = localStorage.getItem("prernaEmail");
-  const userData = JSON.parse(localStorage.getItem(loggedInEmail));
-  if (!userData) window.location.href = "login.html";
+    document.getElementById("editName").value = user.name || '';
+    document.getElementById("editPhone").value = user.phone || '';
+    document.getElementById("editEmail").value = email;
 
-  document.getElementById("name").value = userData.name || "";
-  document.getElementById("phone").value = userData.phone || "";
-  document.getElementById("email").value = loggedInEmail;
-  document.getElementById("password").value = userData.password || "";
-  document.getElementById("previewImg").src = userData.photo || "https://i.ibb.co/3rkfKQg/user-default.png";
+    document.getElementById("editPhoto").addEventListener('change', function(e){
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        user.photo = reader.result;
+      };
+      if(file) reader.readAsDataURL(file);
+    });
 
-  function loadPhoto(event) {
-    const reader = new FileReader();
-    reader.onload = function () {
-      document.getElementById("previewImg").src = reader.result;
-      userData.photo = reader.result;
+    function saveChanges() {
+      user.name = document.getElementById("editName").value;
+      user.phone = document.getElementById("editPhone").value;
+      localStorage.setItem(email, JSON.stringify(user));
+      alert("Profile updated!");
+      window.location.href = "profile.html";
     }
-    reader.readAsDataURL(event.target.files[0]);
-  }
-
-  function saveChanges() {
-    const newEmail = document.getElementById("email").value;
-    userData.name = document.getElementById("name").value;
-    userData.phone = document.getElementById("phone").value;
-    userData.password = document.getElementById("password").value;
-
-    localStorage.removeItem(loggedInEmail);
-    localStorage.setItem(newEmail, JSON.stringify(userData));
-    localStorage.setItem("prernaEmail", newEmail);
-
-    alert("Profile updated!");
-    window.location.href = "profile.html";
-  }
-</script>
-
+  </script>
 </body>
 </html>
