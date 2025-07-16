@@ -57,7 +57,7 @@
       top: 20px;
       left: 20px;
       z-index: 1000;
-      display: none;
+      display: block;
     }
 
     .dot-menu {
@@ -184,7 +184,6 @@
 <body>
 
   <header>
-    <!-- Profile Menu (hidden by default) -->
     <div class="dropdown-wrapper" id="profileMenu">
       <button class="dot-menu" onclick="toggleMenu()">⋮</button>
       <div class="dropdown-content" id="dropdown-content">
@@ -195,7 +194,6 @@
       </div>
     </div>
 
-    <!-- Login/Register Buttons -->
     <div class="auth-buttons" id="authLinks">
       <a href="login.html">Login</a>
       <a href="register.html">Register</a>
@@ -270,25 +268,11 @@
     }
 
     function logoutUser() {
-      localStorage.removeItem("isLoggedIn");
       alert("Logout successful!");
-      location.reload(); // refresh to reflect logout state
+      // Optionally redirect: window.location.href = "login.html";
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      // Show/hide login or profile based on login state
-      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-      const authLinks = document.getElementById("authLinks");
-      const profileMenu = document.getElementById("profileMenu");
-
-      if (isLoggedIn) {
-        authLinks.style.display = "none";
-        profileMenu.style.display = "block";
-      } else {
-        authLinks.style.display = "block";
-        profileMenu.style.display = "none";
-      }
-
       const contactForm = document.getElementById("contact-form");
       const successMsg = document.getElementById("successMessage");
 
