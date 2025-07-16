@@ -1,64 +1,206 @@
-<script>
-  function toggleForm() {
-    const form = document.getElementById("counsellorForm");
-    form.style.display = form.style.display === "block" ? "none" : "block";
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prerna – A Place to Feel Better</title>
 
-  document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+  <!-- EmailJS -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("EMnEQn1d8oIWHZKHV");
+    })();
+  </script>
 
-    emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
-      .then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-        document.getElementById("successMessage").style.display = "block";
-        document.getElementById("contact-form").reset();
-      }, function(error) {
-        alert('FAILED to send message. Please try again.');
-        console.log('FAILED...', error);
-      });
-  });
-
-  window.onload = function () {
-    const isLoggedIn = localStorage.getItem('prernaLoggedIn');
-    const profile = JSON.parse(localStorage.getItem('prernaProfile'));
-
-    if (isLoggedIn === 'true') {
-      document.getElementById('authLinks').style.display = 'none';
-      document.querySelector('.dropdown').style.display = 'block'; // show 3 dots menu
-
-      if (profile) {
-        document.getElementById('profileName').value = profile.name || '';
-        document.getElementById('profileEmail').value = profile.email || '';
-        document.getElementById('profilePhone').value = profile.phone || '';
-      }
-    } else {
-      document.querySelector('.dropdown').style.display = 'none'; // hide 3 dots
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
     }
-  };
 
-  function toggleProfileBox() {
-    const box = document.getElementById('profileBox');
-    box.style.display = box.style.display === 'none' ? 'block' : 'none';
-  }
+    header {
+      background-color: #673ab7;
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
 
-  function saveProfile() {
-    const name = document.getElementById('profileName').value;
-    const email = document.getElementById('profileEmail').value;
-    const phone = document.getElementById('profilePhone').value;
-    const updatedProfile = { name, email, phone };
-    localStorage.setItem('prernaProfile', JSON.stringify(updatedProfile));
-    alert('Profile updated successfully ✅');
-    document.getElementById('profileBox').style.display = 'none';
-  }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
 
-  function logoutUser() {
-    localStorage.removeItem('prernaLoggedIn');
-    localStorage.removeItem('prernaProfile');
-    location.reload();
-  }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.08);
+      text-align: center;
+      position: relative;
+    }
 
-  function toggleMenu() {
-    const menu = document.getElementById("dropdown-content");
-    menu.style.display = (menu.style.display === "block") ? "none" : "block";
-  }
-</script>
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card button,
+    .card a.button {
+      background-color: #673ab7;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .card button:hover,
+    .card a.button:hover {
+      background-color: #5e35b1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .contact-form {
+      margin-top: 20px;
+      text-align: left;
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    .contact-form button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .success {
+      color: green;
+      margin-top: 15px;
+      display: none;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to Prerna</h1>
+    <p>You are not alone. Let us heal together.</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h3>Mindfulness</h3>
+      <p>Practice calming exercises and breathing techniques.</p>
+      <button onclick="alert('Mindfulness feature coming soon!')">Start Now</button>
+    </div>
+    <div class="card">
+      <h3>Talk to Buddy</h3>
+      <p>Share how you're feeling with our friendly chatbot.</p>
+      <a class="button" href="chat.html">Chat Now</a>
+    </div>
+    <div class="card">
+      <h3>Journal</h3>
+      <p>Write down your thoughts and feelings safely.</p>
+      <button onclick="alert('Journal feature coming soon!')">Open Journal</button>
+    </div>
+    <div class="card">
+      <h3>Mood Games</h3>
+      <p>Play simple games to boost your mood and relax.</p>
+      <button onclick="alert('Mood Games coming soon!')">Play Now</button>
+    </div>
+    <div class="card">
+      <h3>Contact Counsellor</h3>
+      <p>You are never alone!! We are here to listen...</p>
+      <button onclick="toggleForm()">Start Now</button>
+
+      <!-- Embedded Contact Form -->
+      <div id="counsellorForm" class="contact-form">
+        <form id="contact-form">
+          <label>Your Name:</label>
+          <input type="text" name="name" required>
+
+          <label>Your Email:</label>
+          <input type="email" name="email" required>
+
+          <label>Your Message:</label>
+          <textarea name="message" rows="4" required></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+        <div class="success" id="successMessage">✅ Message sent to a professional counsellor.</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>To-Do-List</h3>
+      <p>Make your journey clear, concise and motivating!! Turn goals into reality!</p>
+      <button onclick="window.location.href='todo.html'">Open To-Do List</button>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Prerna | Built with love for kids’ mental wellness
+  </footer>
+
+  <!-- Chatbot Embed Script -->
+  <script src='https://www.noupe.com/embed/01980cc4a3ab788f92fbee0c70a738e54d73.js'></script>
+
+  <!-- JS for Form Toggle and EmailJS -->
+  <script>
+    function toggleForm() {
+      const form = document.getElementById("counsellorForm");
+      form.style.display = form.style.display === "block" ? "none" : "block";
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          document.getElementById("successMessage").style.display = "block";
+          document.getElementById("contact-form").reset();
+        }, function(error) {
+          alert('FAILED to send message. Please try again.');
+          console.log('FAILED...', error);
+        });
+    });
+  </script>
+
+</body>
+</html>
