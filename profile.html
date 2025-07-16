@@ -1,68 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Profile</title>
+  <meta charset="UTF-8">
+  <title>My Profile – Prerna</title>
   <style>
     body {
-      background: linear-gradient(135deg, #e3f2fd, #fff);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
     }
     .profile-box {
-      background: white;
+      background: #fff;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 350px;
       text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
     }
-    img {
-      width: 100px;
+    .profile-box img {
+      width: 120px;
       border-radius: 50%;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
-    button {
-      padding: 8px 16px;
-      margin: 10px;
-      background: #673ab7;
-      color: white;
+    .profile-box h2 {
+      margin: 10px 0;
+    }
+    .profile-box p {
+      color: #666;
+    }
+    .profile-box button {
+      margin: 10px 5px;
+      padding: 10px 20px;
       border: none;
       border-radius: 6px;
+      background: #673ab7;
+      color: white;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
+  <div class="profile-box">
+    <img id="userPhoto" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="User">
+    <h2 id="userName">Loading...</h2>
+    <p id="userEmail">Loading...</p>
+    <button onclick="goBack()">Back</button>
+    <button onclick="goToEdit()">Edit Profile</button>
+  </div>
 
-<div class="profile-box">
-  <img id="userPhoto" src="" alt="Profile Picture">
-  <h2 id="userName">Loading...</h2>
-  <p id="userEmail"></p>
-  <p id="userPhone"></p>
-  <button onclick="goBack()">⬅ Back</button>
-  <button onclick="window.location.href='edit-profile.html'">✏️ Edit Profile</button>
-</div>
+  <script>
+    const email = localStorage.getItem('prernaEmail');
+    const data = JSON.parse(localStorage.getItem(email));
 
-<script>
-  const userEmail = localStorage.getItem('prernaEmail');
-  const user = JSON.parse(localStorage.getItem(userEmail));
+    if (!localStorage.getItem('prernaLoggedIn')) {
+      window.location.href = "login.html";
+    }
 
-  if (!localStorage.getItem('prernaLoggedIn')) {
-    window.location.href = "login.html";
-  }
+    document.getElementById('userName').innerText = data?.name || 'Unknown User';
+    document.getElementById('userEmail').innerText = email || 'No email found';
+    if (data?.photo) {
+      document.getElementById('userPhoto').src = data.photo;
+    }
 
-  document.getElementById("userName").innerText = user.name || 'No Name';
-  document.getElementById("userEmail").innerText = user.email;
-  document.getElementById("userPhone").innerText = user.phone || 'No phone';
-  document.getElementById("userPhoto").src = user.photo || "https://i.ibb.co/3rkfKQg/user-default.png";
+    function goBack() {
+      window.location.href = "index.html";
+    }
 
-  function goBack() {
-    window.location.href = "index.html";
-  }
-</script>
-
+    function goToEdit() {
+      window.location.href = "edit-profile.html";
+    }
+  </script>
 </body>
 </html>
