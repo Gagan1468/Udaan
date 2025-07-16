@@ -287,6 +287,58 @@
           }, function (error) {
             alert("Failed to send message. Try again.");
             console.log("FAILED...", error);
+
+            <script>
+  function toggleForm() {
+    const form = document.getElementById("counsellorForm");
+    form.style.display = form.style.display === "block" ? "none" : "block";
+  }
+
+  function toggleMenu() {
+    const dropdown = document.getElementById("dropdown-content");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  function logoutUser() {
+    localStorage.removeItem("isLoggedIn");
+    alert("Logout successful!");
+    location.reload(); // refresh to reflect logout state
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Show/hide buttons based on login state
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const authLinks = document.getElementById("authLinks");
+    const profileMenu = document.getElementById("profileMenu");
+
+    if (isLoggedIn) {
+      authLinks.style.display = "none";
+      profileMenu.style.display = "block";
+    } else {
+      authLinks.style.display = "block";
+      profileMenu.style.display = "none";
+    }
+
+    // EmailJS contact form logic
+    const contactForm = document.getElementById("contact-form");
+    const successMsg = document.getElementById("successMessage");
+
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
+        .then(function (response) {
+          console.log("SUCCESS!", response.status, response.text);
+          successMsg.style.display = "block";
+          contactForm.reset();
+        }, function (error) {
+          alert("Failed to send message. Try again.");
+          console.log("FAILED...", error);
+        });
+    });
+  });
+</script>
+
           });
       });
     });
