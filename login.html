@@ -78,20 +78,25 @@
   </div>
 
   <script>
-    function handleLogin() {
-      const email = document.getElementById('loginEmail').value;
-      const pass = document.getElementById('loginPassword').value;
-      if (email && pass) {
-        localStorage.setItem('prernaLoggedIn', 'true');
-        localStorage.setItem('prernaEmail', email);
-        window.location.href = 'index.html';
-      } else {
-        alert('Please enter email & password');
-      }
-    }
+// Login page script (login.html)
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const pass = document.getElementById('loginPassword').value;
+  if(email && pass) {
+    localStorage.setItem('prernaLoggedIn', 'true');
+    localStorage.setItem('prernaEmail', email);
+    localStorage.setItem('prernaName', email.split('@')[0]); // naam nikal liya
+    window.location.href = 'profile.html';  // Send to profile page
+  } else alert('Please enter email & password');
+}
+
   </script>
+
+  <script>
 localStorage.setItem('prernaLoggedIn', 'true');
 window.location.href = 'index.html';
+
+  <script>
 
 
 
