@@ -13,11 +13,14 @@
       align-items: center;
     }
     .register-box {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 320px;
+      width: 340px;
+    }
+    .register-box h2 {
+      text-align: center;
     }
     .register-box input {
       width: 100%;
@@ -36,22 +39,46 @@
       font-size: 16px;
       cursor: pointer;
     }
-    .register-box h2 {
-      text-align: center;
+    .pfp-preview {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 10px auto;
     }
   </style>
 </head>
 <body>
   <div class="register-box">
-    <h2>Register</h2>
+    <h2>Create Account</h2>
     <input type="text" id="name" placeholder="Name" required>
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
-    <input type="tel" id="phone" placeholder="Phone">
+    <input type="tel" id="phone" placeholder="Phone (optional)">
+
+    <!-- PFP Upload -->
+    <input type="file" accept="image/*" id="photoInput" onchange="previewPhoto()" />
+    <img id="pfpPreview" class="pfp-preview" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="Preview" />
+
     <button onclick="registerUser()">Register</button>
   </div>
 
   <script>
+    let selectedPhotoData = "";
+
+    function previewPhoto() {
+      const file = document.getElementById("photoInput").files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        selectedPhotoData = e.target.result;
+        document.getElementById("pfpPreview").src = selectedPhotoData;
+      };
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
     function registerUser() {
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
@@ -64,7 +91,7 @@
           email,
           password,
           phone,
-          photo: "https://i.ibb.co/3rkfKQg/user-default.png"
+          photo: selectedPhotoData || "https://i.ibb.co/3rkfKQg/user-default.png"
         };
 
         localStorage.setItem(email, JSON.stringify(user));
