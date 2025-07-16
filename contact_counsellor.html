@@ -71,7 +71,7 @@
   document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
+    emailjs.sendForm('service_t5nedk8', 'template_mhoc00o', this)
       .then(function(response) {
         console.log('SUCCESS!', response.status, response.text);
         document.getElementById("successMessage").style.display = "block";
