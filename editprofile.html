@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile – Prerna</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center/cover;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .edit-box {
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 360px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      background: #673ab7;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #5e35b1;
+    }
+
+    .back-btn {
+      background: #333;
+      margin-bottom: 10px;
+      width: 100px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="edit-box">
+    <button class="back-btn" onclick="window.location.href='profile.html'">? Back</button>
+    <h2>Edit Profile</h2>
+
+    <label>Full Name:</label>
+    <input type="text" id="nameInput" placeholder="Enter your name" />
+
+    <label>Email:</label>
+    <input type="email" id="emailInput" placeholder="Enter your email" />
+
+    <label>Phone Number:</label>
+    <input type="tel" id="phoneInput" placeholder="Enter phone number" />
+
+    <label>Profile Picture:</label>
+    <input type="file" id="imageInput" accept="image/*" />
+
+    <button onclick="saveProfile()">Save Changes</button>
+  </div>
+
+  <script>
+    window.onload = function () {
+      document.getElementById('nameInput').value = localStorage.getItem('prernaName') || "";
+      document.getElementById('emailInput').value = localStorage.getItem('prernaEmail') || "";
+      document.getElementById('phoneInput').value = localStorage.getItem('prernaPhone') || "";
+    }
+
+    function saveProfile() {
+      const name = document.getElementById('nameInput').value;
+      const email = document.getElementById('emailInput').value;
+      const phone = document.getElementById('phoneInput').value;
+      const fileInput = document.getElementById('imageInput');
+      const file = fileInput.files[0];
+
+      if (name) localStorage.setItem('prernaName', name);
+      if (email) localStorage.setItem('prernaEmail', email);
+      if (phone) localStorage.setItem('prernaPhone', phone);
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          localStorage.setItem('prernaImage', reader.result);
+          window.location.href = "profile.html";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        window.location.href = "profile.html";
+      }
+    }
+  </script>
+
+</body>
+</html>
