@@ -2,148 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Prerna – Intro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <title>Welcome to Prerna</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: linear-gradient(to right, #a18cd1, #fbc2eb);
+      background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
     }
-
-    .robot-container {
-      position: relative;
-      text-align: center;
-      max-width: 600px;
-      padding: 20px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      animation: popup 1s ease-out forwards;
-    }
-
-    lottie-player {
+    .robot {
+      animation: float 4s ease-in-out infinite;
       width: 200px;
-      margin: auto;
     }
-
-    @keyframes popup {
-      from {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
     .intro-text {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #333;
-      min-height: 80px;
+      position: absolute;
+      bottom: 100px;
+      font-size: 20px;
+      color: #fff;
+      text-align: center;
     }
-
-    .start-btn {
-      margin-top: 20px;
-      background-color: #673ab7;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .start-btn:hover {
-      background-color: #5e35b1;
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
     }
   </style>
 </head>
 <body>
 
-<div class="robot-container">
-  <lottie-player
-    src="https://lottie.host/34db0a96-e3b8-47c1-83e2-d6cf6f2a1c4b/LZ8TLq3b5v.json"
-    background="transparent"
-    speed="1"
-    autoplay
-    loop
-  ></lottie-player>
-
-  <div class="intro-text" id="introText"></div>
-
-  <button class="start-btn" onclick="location.href='index.html'">Continue to App</button>
-</div>
-
-<script>
-  const introLines = [
-    "Hi! You are here. 😄",
-    "Let me introduce myself...",
-    "I'm your friendly assistant robot 🤖",
-    "And welcome to *Prerna*, your space to feel better 💜",
-    "I’ll guide you through mindfulness, journaling, buddy chat, and more...",
-    "Let’s begin the journey to a better you 🌈"
-  ];
-
-  let index = 0;
-  let charIndex = 0;
-  let currentLine = '';
-  let isDeleting = false;
-  const introText = document.getElementById("introText");
-
-  function typeEffect() {
-    if (index < introLines.length) {
-      if (!isDeleting && charIndex <= introLines[index].length) {
-        currentLine = introLines[index].substring(0, charIndex++);
-        introText.innerHTML = currentLine;
-        setTimeout(typeEffect, 40);
-      } else if (!isDeleting && charIndex > introLines[index].length) {
-        isDeleting = true;
-        setTimeout(typeEffect, 1000);
-      } else if (isDeleting && charIndex >= 0) {
-        currentLine = introLines[index].substring(0, charIndex--);
-        introText.innerHTML = currentLine;
-        setTimeout(typeEffect, 20);
-      } else {
-        isDeleting = false;
-        index++;
-        setTimeout(typeEffect, 300);
-      }
-    }
-  }
-
-  window.onload = typeEffect;
-  </script>
+  <img class="robot" src="https://i.ibb.co/G2kVvZb/robot.png" alt="Robot" />
+  <div class="intro-text">Hi! You are here.<br/> Firstly I will introduce myself and then all...</div>
 
   <script>
-  setTimeout(() => {
-    window.location.href = "home.html"; // yeh tere actual app ka home page hoga
-  }, 8000); // 8 seconds baad redirect hoga
-</script>
-
-  <script>
-  // Check agar intro pehle hi dikha chuka hai
-  if (localStorage.getItem("introShown") === "true") {
-    window.location.href = "home.html"; // skip intro
-  } else {
-    // 1st time user open kar raha — dikhao intro
-    localStorage.setItem("introShown", "true");
-
-    // fir 7-8 sec baad redirect karo home.html pe
-    setTimeout(() => {
+    // sirf pehli baar dikhe
+    if (localStorage.getItem("introShown") === "true") {
       window.location.href = "home.html";
-    }, 8000);
-  }
-</script>
-
+    } else {
+      localStorage.setItem("introShown", "true");
+      setTimeout(() => {
+        window.location.href = "home.html";
+      }, 7000); // 7 seconds wait for intro
+    }
+  </script>
 </body>
 </html>
