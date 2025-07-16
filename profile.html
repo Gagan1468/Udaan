@@ -86,7 +86,9 @@
 
   <div class="profile-box">
     <img src="https://i.ibb.co/3rkfKQg/user-default.png" alt="User">
-    <button class="edit-btn" onclick="editProfile()">✎</button>
+    function editProfile() {
+  window.location.href = "edit-profile.html"; // redirect to new page
+}
     <h2 id="userName">Loading...</h2>
     <p id="userEmail"></p>
     <button class="logout" onclick="logout()">Logout</button>
