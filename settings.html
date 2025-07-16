@@ -1,55 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Settings – Prerna</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
-      height: 100vh;
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 0;
     }
-    .settings-box {
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
       background: white;
-      padding: 30px;
-      border-radius: 10px;
-      width: 350px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 20px;
     }
+
     h2 {
-      margin-bottom: 20px;
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
     }
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      background: #673ab7;
-      color: white;
+
+    .setting-option {
+      display: flex;
+      align-items: center;
+      padding: 14px;
+      border-bottom: 1px solid #eee;
       cursor: pointer;
-      margin: 10px;
+      transition: 0.2s ease;
     }
-    button:hover {
-      background: #5e35b1;
+
+    .setting-option:hover {
+      background-color: #f9f9f9;
     }
-    .delete-btn {
-      background: #e53935;
+
+    .setting-option i {
+      font-size: 18px;
+      margin-right: 12px;
+      color: #673ab7;
     }
-    .delete-btn:hover {
-      background: #c62828;
+
+    .setting-option span {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .delete-button {
+      display: block;
+      width: 100%;
+      margin-top: 30px;
+      padding: 12px;
+      background-color: #e53935;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .delete-button:hover {
+      background-color: #c62828;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      display: block;
+      text-align: center;
+      color: #673ab7;
+      text-decoration: underline;
+      cursor: pointer;
     }
   </style>
+  <!-- Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="settings-box">
-    <h2>Account Settings</h2>
-    <p>You can manage your account here.</p>
-    <button onclick="goBack()">Back</button>
-    <button class="delete-btn" onclick="deleteAccount()">Delete Account</button>
+
+  <div class="container">
+    <h2>Settings</h2>
+
+    <div class="setting-option"><i class="fas fa-user-edit"></i><span>Edit Profile</span></div>
+    <div class="setting-option"><i class="fas fa-bell"></i><span>Notifications</span></div>
+    <div class="setting-option"><i class="fas fa-lock"></i><span>Privacy Policy</span></div>
+    <div class="setting-option"><i class="fas fa-question-circle"></i><span>Help & Support</span></div>
+    <div class="setting-option"><i class="fas fa-info-circle"></i><span>About</span></div>
+
+    <button class="delete-button" onclick="deleteAccount()">🗑 Delete Account</button>
+
+    <div class="back-btn" onclick="goBack()">← Back to Home</div>
   </div>
 
   <script>
@@ -58,11 +101,14 @@
     }
 
     function deleteAccount() {
-      const email = localStorage.getItem("prernaEmail");
-      if (email && confirm("Are you sure you want to permanently delete your account?")) {
-        localStorage.removeItem(email);
-        localStorage.removeItem("prernaEmail");
-        localStorage.removeItem("prernaLoggedIn");
+      const confirmDelete = confirm("Are you sure you want to delete your account permanently?");
+      if (confirmDelete) {
+        const email = localStorage.getItem('prernaEmail');
+        if (email) {
+          localStorage.removeItem(email);
+        }
+        localStorage.removeItem('prernaEmail');
+        localStorage.removeItem('prernaLoggedIn');
         window.location.href = "register.html";
       }
     }
