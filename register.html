@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Register - Prerna</title>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("EMnEQn1d8oIWHZKHV"); // ✅ your public key
+    })();
+  </script>
   <style>
     body, html {
       margin:0; padding:0;
@@ -64,11 +70,22 @@
     const phone = document.getElementById('regPhone').value;
 
     if(name && email && pass && phone) {
-      const profile = { name, email, phone };
-      localStorage.setItem('prernaLoggedIn', 'true');
-      localStorage.setItem('prernaProfile', JSON.stringify(profile));
-      alert('Registration successful!');
-      window.location.href = 'index.html';
+      const templateParams = {
+        name: name,
+        email: email,
+        phone: phone
+      };
+
+      emailjs.send("service_2j8tx8y", "template_kchkdav", templateParams)
+        .then(function(response) {
+          localStorage.setItem('prernaLoggedIn', 'true');
+          localStorage.setItem('prernaProfile', JSON.stringify({ name, email, phone }));
+          alert('Registration successful! Details sent to Gmail ✅');
+          window.location.href = 'index.html';
+        }, function(error) {
+          console.log('FAILED...', error);
+          alert('Email sending failed ❌');
+        });
     } else {
       alert('Please fill all fields');
     }
