@@ -6,91 +6,85 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
+      background: url('https://images.unsplash.com/photo-1508780709619-79562169bc64') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
     .register-box {
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
       width: 360px;
     }
     input {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
+      margin-top: 12px;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
     button {
+      margin-top: 15px;
+      padding: 10px 20px;
       width: 100%;
-      padding: 12px;
+      border: none;
+      border-radius: 6px;
       background: #673ab7;
       color: white;
       font-weight: bold;
-      border: none;
-      border-radius: 6px;
       cursor: pointer;
-      margin-top: 15px;
+    }
+    button:hover {
+      background: #5e35b1;
     }
   </style>
 </head>
 <body>
 
-<div class="register-box">
-  <h2>Register</h2>
-  <input type="text" id="name" placeholder="Full Name" required>
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="tel" id="phone" placeholder="Phone Number" required>
-  <input type="password" id="password" placeholder="Password" required>
-  <input type="file" id="photo" accept="image/*">
-  <button onclick="registerUser()">Register</button>
-</div>
+  <div class="register-box">
+    <h2>Register for Prerna</h2>
+    <input type="text" id="regName" placeholder="Full Name" required>
+    <input type="email" id="regEmail" placeholder="Email Address" required>
+    <input type="tel" id="regPhone" placeholder="Phone Number" required>
+    <input type="password" id="regPassword" placeholder="Password" required>
+    <button onclick="registerUser()">Register</button>
+  </div>
 
-<script>
-  function registerUser() {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const photoInput = document.getElementById("photo");
+  <script>
+    function registerUser() {
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
 
-    if (!name || !email || !phone || !password) {
-      alert("Please fill all the fields.");
-      return;
-    }
+      if (!name || !email || !phone || !password) {
+        alert('Please fill in all fields.');
+        return;
+      }
 
-    const reader = new FileReader();
-    reader.onload = function () {
-      const photo = reader.result;
+      if (localStorage.getItem(email)) {
+        alert("User already registered with this email.");
+        return;
+      }
 
-      const userData = {
-        name: name,
-        email: email,
-        phone: phone,
-        password: password,
-        photo: photo
+      const user = {
+        name,
+        email,
+        phone,
+        password,
+        photo: "" // Default empty, can be updated from edit-profile
       };
 
-      localStorage.setItem(email, JSON.stringify(userData)); // Store user uniquely by email
-      localStorage.setItem("prernaEmail", email); // Store current user login
-      localStorage.setItem("prernaLoggedIn", "true");
-
-      alert("Registration successful!");
-      window.location.href = "index.html";
-    };
-
-    if (photoInput.files.length > 0) {
-      reader.readAsDataURL(photoInput.files[0]);
-    } else {
-      reader.onload(); // Trigger manually if no photo selected
+      localStorage.setItem(email, JSON.stringify(user));
+      alert("Registration successful! Now login.");
+      window.location.href = "login.html";
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>
