@@ -26,6 +26,71 @@
       color: white;
       padding: 30px;
       text-align: center;
+      position: relative;
+    }
+
+    .auth-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .auth-buttons a {
+      color: white;
+      background-color: transparent;
+      border: 2px solid white;
+      padding: 8px 16px;
+      margin-left: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .auth-buttons a:hover {
+      background-color: white;
+      color: #673ab7;
+    }
+
+    .dropdown-wrapper {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: none;
+    }
+
+    .dot-menu {
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      padding: 12px 16px;
+      border-radius: 10px;
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: #333;
+      padding: 8px 0;
+      text-decoration: none;
+      display: block;
+      font-weight: 500;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      border-radius: 5px;
     }
 
     .container {
@@ -119,6 +184,23 @@
 <body>
 
   <header>
+    <!-- Top-left dots -->
+    <div class="dropdown-wrapper" id="profileMenu">
+      <button class="dot-menu" onclick="toggleMenu()">⋮</button>
+      <div class="dropdown-content" id="dropdown-content">
+        <a href="#">👤 Profile</a>
+        <a href="#">🔒 Privacy Policy</a>
+        <a href="#">⚙️ Settings</a>
+        <a href="#" onclick="logoutUser()">🚪 Logout</a>
+      </div>
+    </div>
+
+    <!-- Top-right login/register -->
+    <div class="auth-buttons" id="authLinks">
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+
     <h1>Welcome to Prerna</h1>
     <p>You are not alone. Let us heal together.</p>
   </header>
@@ -148,19 +230,14 @@
       <h3>Contact Counsellor</h3>
       <p>You are never alone!! We are here to listen...</p>
       <button onclick="toggleForm()">Start Now</button>
-
-      <!-- Embedded Contact Form -->
       <div id="counsellorForm" class="contact-form">
         <form id="contact-form">
           <label>Your Name:</label>
           <input type="text" name="name" required>
-
           <label>Your Email:</label>
           <input type="email" name="email" required>
-
           <label>Your Message:</label>
           <textarea name="message" rows="4" required></textarea>
-
           <button type="submit">Send Message</button>
         </form>
         <div class="success" id="successMessage">✅ Message sent to a professional counsellor.</div>
@@ -177,30 +254,13 @@
     &copy; 2025 Prerna | Built with love for kids’ mental wellness
   </footer>
 
-  <!-- Chatbot Embed Script -->
+  <!-- Chatbot -->
   <script src='https://www.noupe.com/embed/01980cc4a3ab788f92fbee0c70a738e54d73.js'></script>
 
-  <!-- JS for Form Toggle and EmailJS -->
   <script>
     function toggleForm() {
       const form = document.getElementById("counsellorForm");
       form.style.display = form.style.display === "block" ? "none" : "block";
     }
 
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
-        .then(function(response) {
-          console.log('SUCCESS!', response.status, response.text);
-          document.getElementById("successMessage").style.display = "block";
-          document.getElementById("contact-form").reset();
-        }, function(error) {
-          alert('FAILED to send message. Please try again.');
-          console.log('FAILED...', error);
-        });
-    });
-  </script>
-
-</body>
-</html>
+    function toggleMenu
