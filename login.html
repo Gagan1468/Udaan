@@ -83,10 +83,10 @@ function handleLogin() {
   const email = document.getElementById('loginEmail').value;
   const pass = document.getElementById('loginPassword').value;
   if(email && pass) {
-    localStorage.setItem('prernaLoggedIn', 'true');
-    localStorage.setItem('prernaEmail', email);
-    localStorage.setItem('prernaName', email.split('@')[0]); // naam nikal liya
-    window.location.href = 'profile.html';  // Send to profile page
+localStorage.setItem('prernaLoggedIn', 'true');
+localStorage.setItem('prernaEmail', email);
+localStorage.setItem('prernaName', name); // agar register se name bhi le rahe ho
+window.location.href = "index.html"; // ✅ go to home page after login
   } else alert('Please enter email & password');
 }
 
