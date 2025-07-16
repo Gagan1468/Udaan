@@ -57,7 +57,7 @@
       top: 20px;
       left: 20px;
       z-index: 1000;
-      display: none;
+      display: block;
     }
 
     .dot-menu {
@@ -184,7 +184,6 @@
 <body>
 
   <header>
-    <!-- Top-left dots -->
     <div class="dropdown-wrapper" id="profileMenu">
       <button class="dot-menu" onclick="toggleMenu()">⋮</button>
       <div class="dropdown-content" id="dropdown-content">
@@ -195,7 +194,6 @@
       </div>
     </div>
 
-    <!-- Top-right login/register -->
     <div class="auth-buttons" id="authLinks">
       <a href="login.html">Login</a>
       <a href="register.html">Register</a>
@@ -257,10 +255,41 @@
   <!-- Chatbot -->
   <script src='https://www.noupe.com/embed/01980cc4a3ab788f92fbee0c70a738e54d73.js'></script>
 
+  <!-- Final Script -->
   <script>
     function toggleForm() {
       const form = document.getElementById("counsellorForm");
       form.style.display = form.style.display === "block" ? "none" : "block";
     }
 
-    function toggleMenu
+    function toggleMenu() {
+      const dropdown = document.getElementById("dropdown-content");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    function logoutUser() {
+      alert("Logout successful!");
+      // Optionally redirect: window.location.href = "login.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const contactForm = document.getElementById("contact-form");
+      const successMsg = document.getElementById("successMessage");
+
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
+          .then(function (response) {
+            console.log("SUCCESS!", response.status, response.text);
+            successMsg.style.display = "block";
+            contactForm.reset();
+          }, function (error) {
+            alert("Failed to send message. Try again.");
+            console.log("FAILED...", error);
+          });
+      });
+    });
+  </script>
+</body>
+</html>
