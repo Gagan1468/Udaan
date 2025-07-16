@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Edit Profile</title>
+  <meta charset="UTF-8">
+  <title>Edit Profile – Prerna</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f1f1f1;
+      background: linear-gradient(to right, #8e9eab, #eef2f3);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -13,65 +14,81 @@
     }
     .edit-box {
       background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 350px;
+      padding: 25px;
+      border-radius: 10px;
+      width: 360px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     input {
       width: 100%;
       padding: 10px;
-      margin-top: 12px;
+      margin: 10px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
     button {
-      margin-top: 20px;
-      background: #673ab7;
-      color: white;
       padding: 10px 20px;
       border: none;
       border-radius: 6px;
+      background: #673ab7;
+      color: white;
+      margin-right: 10px;
       cursor: pointer;
-    }
-    .back-btn {
-      background: #999;
     }
   </style>
 </head>
 <body>
   <div class="edit-box">
-    <h2>Edit Profile</h2>
-    <input type="text" id="editName" placeholder="Name">
-    <input type="text" id="editPhone" placeholder="Phone Number">
-    <input type="email" id="editEmail" placeholder="Email (readonly)" readonly>
+    <h2>Edit Your Profile</h2>
+    <input type="text" id="editName" placeholder="Enter new name">
+    <input type="email" id="editEmail" placeholder="Enter new email">
+    <input type="tel" id="editPhone" placeholder="Enter phone number">
     <input type="file" id="editPhoto" accept="image/*">
+    <br>
     <button onclick="saveChanges()">Save</button>
-    <button class="back-btn" onclick="window.location.href='profile.html'">Back</button>
+    <button onclick="goBack()">Back</button>
   </div>
 
   <script>
-    const email = localStorage.getItem("prernaEmail");
-    const user = JSON.parse(localStorage.getItem(email));
+    const currentEmail = localStorage.getItem('prernaEmail');
+    const userData = JSON.parse(localStorage.getItem(currentEmail));
 
-    document.getElementById("editName").value = user.name || '';
-    document.getElementById("editPhone").value = user.phone || '';
-    document.getElementById("editEmail").value = email;
+    document.getElementById('editName').value = userData.name || '';
+    document.getElementById('editEmail').value = currentEmail;
+    document.getElementById('editPhone').value = userData.phone || '';
 
-    document.getElementById("editPhoto").addEventListener('change', function(e){
+    document.getElementById('editPhoto').addEventListener('change', function(e) {
       const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        user.photo = reader.result;
-      };
-      if(file) reader.readAsDataURL(file);
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          userData.photo = reader.result;
+          localStorage.setItem(currentEmail, JSON.stringify(userData));
+        };
+        reader.readAsDataURL(file);
+      }
     });
 
     function saveChanges() {
-      user.name = document.getElementById("editName").value;
-      user.phone = document.getElementById("editPhone").value;
-      localStorage.setItem(email, JSON.stringify(user));
-      alert("Profile updated!");
+      const newName = document.getElementById('editName').value;
+      const newEmail = document.getElementById('editEmail').value;
+      const newPhone = document.getElementById('editPhone').value;
+
+      userData.name = newName;
+      userData.phone = newPhone;
+
+      if (newEmail !== currentEmail) {
+        localStorage.removeItem(currentEmail);
+        localStorage.setItem(newEmail, JSON.stringify(userData));
+        localStorage.setItem("prernaEmail", newEmail);
+      } else {
+        localStorage.setItem(currentEmail, JSON.stringify(userData));
+      }
+
+      window.location.href = "profile.html";
+    }
+
+    function goBack() {
       window.location.href = "profile.html";
     }
   </script>
