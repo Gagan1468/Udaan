@@ -58,18 +58,14 @@
   function handleLogin() {
     const email = document.getElementById('loginEmail').value;
     const pass = document.getElementById('loginPassword').value;
-
-    if (email && pass) {
-      // Save login info in localStorage
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("prernaEmail", email);  // Optional
-      window.location.href = "index.html";
-    } else {
-      alert('Please enter email & password');
-    }
+    if(email && pass) {
+      // simulate login: in real use, integrate with backend or Auth service
+      localStorage.setItem('prernaLoggedIn', 'true');
+      localStorage.setItem('prernaEmail', email);
+      window.location.href = 'index.html';
+    } else alert('Please enter email & password');
   }
 </script>
-
 
 </body>
 </html>
