@@ -2,101 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome to Prerna</title>
-
-  <!-- Lottie Animation -->
-  <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
-
+  <title>Prerna – Intro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
     body {
       margin: 0;
-      background: linear-gradient(135deg, #e0e0ff, #ffffff);
-      font-family: 'Segoe UI', sans-serif;
+      padding: 0;
+      background: linear-gradient(to right, #a18cd1, #fbc2eb);
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
       overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    #robotContainer {
-      width: 300px;
-      height: 300px;
-      margin-bottom: 20px;
+    .robot-container {
+      position: relative;
+      text-align: center;
+      max-width: 600px;
+      padding: 20px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      animation: popup 1s ease-out forwards;
     }
 
-    .speech-box {
-      max-width: 80%;
-      padding: 15px 25px;
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-      font-size: 18px;
-      color: #333;
-      border-left: 5px solid #673ab7;
-      animation: fadeInUp 1s ease;
+    lottie-player {
+      width: 200px;
+      margin: auto;
     }
 
-    @keyframes fadeInUp {
+    @keyframes popup {
       from {
+        transform: translateX(-100%);
         opacity: 0;
-        transform: translateY(20px);
       }
       to {
+        transform: translateX(0);
         opacity: 1;
-        transform: translateY(0px);
       }
+    }
+
+    .intro-text {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+      min-height: 80px;
+    }
+
+    .start-btn {
+      margin-top: 20px;
+      background-color: #673ab7;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .start-btn:hover {
+      background-color: #5e35b1;
     }
   </style>
 </head>
 <body>
 
-  <div id="robotContainer"></div>
-  <div class="speech-box" id="speechText">??</div>
+<div class="robot-container">
+  <lottie-player
+    src="https://lottie.host/34db0a96-e3b8-47c1-83e2-d6cf6f2a1c4b/LZ8TLq3b5v.json"
+    background="transparent"
+    speed="1"
+    autoplay
+    loop
+  ></lottie-player>
 
-  <script>
-    // Load Robot Animation
-    const robotAnim = lottie.loadAnimation({
-      container: document.getElementById('robotContainer'),
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: 'https://lottie.host/59a8ebff-28e0-4b4f-8883-6f9c2032e496/N38nCyWgpm.json'
-    });
+  <div class="intro-text" id="introText"></div>
 
-    // Typewriter Text + Voice + Redirect
-    const msg = "Hi! You are here. Firstly, I will introduce myself and then all...";
-    let i = 0;
-    const speed = 50;
+  <button class="start-btn" onclick="location.href='index.html'">Continue to App</button>
+</div>
 
-    function typeWriter() {
-      if (i < msg.length) {
-        document.getElementById("speechText").innerHTML += msg.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
+<script>
+  const introLines = [
+    "Hi! You are here. 😄",
+    "Let me introduce myself...",
+    "I'm your friendly assistant robot 🤖",
+    "And welcome to *Prerna*, your space to feel better 💜",
+    "I’ll guide you through mindfulness, journaling, buddy chat, and more...",
+    "Let’s begin the journey to a better you 🌈"
+  ];
+
+  let index = 0;
+  let charIndex = 0;
+  let currentLine = '';
+  let isDeleting = false;
+  const introText = document.getElementById("introText");
+
+  function typeEffect() {
+    if (index < introLines.length) {
+      if (!isDeleting && charIndex <= introLines[index].length) {
+        currentLine = introLines[index].substring(0, charIndex++);
+        introText.innerHTML = currentLine;
+        setTimeout(typeEffect, 40);
+      } else if (!isDeleting && charIndex > introLines[index].length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1000);
+      } else if (isDeleting && charIndex >= 0) {
+        currentLine = introLines[index].substring(0, charIndex--);
+        introText.innerHTML = currentLine;
+        setTimeout(typeEffect, 20);
       } else {
-        speakText(msg);
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 3000);
+        isDeleting = false;
+        index++;
+        setTimeout(typeEffect, 300);
       }
     }
+  }
 
-    function speakText(text) {
-      const speech = new SpeechSynthesisUtterance(text);
-      speech.rate = 0.9;
-      speech.pitch = 1.2;
-      speech.lang = "en-US";
-      window.speechSynthesis.speak(speech);
-    }
-
-    setTimeout(() => {
-      document.getElementById("speechText").innerHTML = "?? ";
-      typeWriter();
-    }, 1000);
-  </script>
+  window.onload = typeEffect;
+</script>
 
 </body>
 </html>
