@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact Counsellor</title>
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("EMnEQn1d8oIWHZKHV"); // ⚠️ This is your public key
+      emailjs.init("EMnEQn1d8oIWHZKHV");
     })();
   </script>
   <style>
@@ -50,21 +52,17 @@
 <div class="box">
   <h2>Contact a Counsellor</h2>
   <form id="contact-form">
-  <label>Your Name:</label>
-  <input type="text" name="name" required>
+    <label>Your Name:</label>
+    <input type="text" name="name" required>
 
-  <label>Your Email:</label>
-  <input type="email" name="email" required>
+    <label>Your Email:</label>
+    <input type="email" name="email" required>
 
-  <!-- Required for Subject -->
-  <input type="hidden" name="title" value="Counsellor Help Request">
+    <label>Your Message:</label>
+    <textarea name="message" rows="5" required></textarea>
 
-  <label>Your Message:</label>
-  <textarea name="message" rows="5" required></textarea>
-
-  <button type="submit">Send Message</button>
-</form>
-
+    <button type="submit">Send Message</button>
+  </form>
 
   <div class="success" id="successMessage">
     ✅ Message sent to a professional counsellor.
@@ -82,7 +80,7 @@
         document.getElementById("contact-form").reset();
       }, function(error) {
         alert('❌ Failed to send message. Please try again.');
-        console.log('FAILED...', error);
+        console.error('FAILED...', error);
       });
   });
 </script>
