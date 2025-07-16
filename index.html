@@ -12,17 +12,17 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      flex-direction: column;
     }
     .robot {
       animation: float 4s ease-in-out infinite;
       width: 200px;
     }
     .intro-text {
-      position: absolute;
-      bottom: 100px;
       font-size: 20px;
       color: #fff;
       text-align: center;
+      margin-top: 20px;
     }
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
@@ -33,18 +33,16 @@
 <body>
 
   <img class="robot" src="https://i.ibb.co/G2kVvZb/robot.png" alt="Robot" />
-  <div class="intro-text">Hi! You are here.<br/> Firstly I will introduce myself and then all...</div>
+  <div class="intro-text">
+    Hi! You are here.<br/>
+    Firstly I will introduce myself and then all...
+  </div>
 
   <script>
-    // sirf pehli baar dikhe
-    if (localStorage.getItem("introShown") === "true") {
-      window.location.href = "home.html";
-    } else {
-      localStorage.setItem("introShown", "true");
-      setTimeout(() => {
-        window.location.href = "home.html";
-      }, 7000); // 7 seconds wait for intro
-    }
+    // Repeat intro every time, no check
+    setTimeout(() => {
+      window.location.href = "home.html"; // or index2.html if your home is renamed
+    }, 7000); // 7 sec delay for intro
   </script>
 </body>
 </html>
