@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Prerna – Intro</title>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
     body {
       margin: 0;
@@ -18,12 +19,7 @@
     }
 
     .robot-container {
-      position: relative;
-      animation: fly 8s ease-in-out forwards;
-    }
-
-    .robot {
-      width: 180px;
+      width: 250px;
       animation: float 3s ease-in-out infinite;
     }
 
@@ -43,12 +39,6 @@
       50% { transform: translateY(-20px); }
     }
 
-    @keyframes fly {
-      0%   { transform: translateX(-100vw); }
-      60%  { transform: translateX(0vw); }
-      100% { transform: translateX(0vw); }
-    }
-
     @keyframes fadein {
       to { opacity: 1; }
     }
@@ -56,9 +46,19 @@
 </head>
 <body>
 
+  <!-- 👇 Robot Lottie Animation -->
   <div class="robot-container">
-    <img class="robot" src="https://i.ibb.co/G2kVvZb/robot.png" alt="Floating Robot" />
+    <lottie-player
+      src="https://github.com/Gagan1468/prerna/raw/refs/heads/main/RobotSaludando.json"
+      background="transparent"
+      speed="1"
+      style="width: 100%; height: 100%;"
+      loop
+      autoplay>
+    </lottie-player>
   </div>
+
+  <!-- 👇 Intro Text -->
   <div class="intro-text" id="introText">
     Hi! You are here.<br>
     Firstly, I will introduce myself.<br>
@@ -66,20 +66,22 @@
     And welcome to <b>Prerna</b> – your safe space to feel better 💜
   </div>
 
+  <!-- 👇 Voice Intro + Redirect -->
   <script>
     function speakIntro() {
-      const msg = new SpeechSynthesisUtterance();
-      msg.text = "Hi! You are here. Firstly, I will introduce myself. I’m Robo, your friendly buddy! And welcome to Prerna – your safe space to feel better.";
+      const msg = new SpeechSynthesisUtterance(
+        "Hi! You are here. Firstly, I will introduce myself. I am Robo, your friendly buddy. And welcome to Prerna – your safe space to feel better."
+      );
       msg.pitch = 1;
       msg.rate = 0.9;
       msg.volume = 1;
       window.speechSynthesis.speak(msg);
     }
 
-    // Start speaking after delay
-    setTimeout(speakIntro, 2500);
+    // ✅ Speak after slight delay
+    setTimeout(speakIntro, 2000);
 
-    // Redirect to home after 10s
+    // ✅ Redirect to index.html after 10 seconds
     setTimeout(() => {
       window.location.href = "index.html";
     }, 10000);
