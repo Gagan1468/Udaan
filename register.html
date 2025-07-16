@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Register - Prerna</title>
+
+  <!-- EmailJS -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("EMnEQn1d8oIWHZKHV"); // ✅ your public key
+      emailjs.init("EMnEQn1d8oIWHZKHV"); // ✅ Your Public Key
     })();
   </script>
+
   <style>
     body, html {
-      margin:0; padding:0;
-      height:100%;
+      margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: url('nature-bg.jpg') no-repeat center center/cover;
     }
     .login-box {
@@ -27,24 +31,39 @@
       box-shadow: 0 0 12px rgba(0,0,0,0.2);
       width: 320px;
     }
-    .login-box h2 { text-align:center; margin-bottom:20px; }
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
     .login-box input {
-      width:100%; padding:10px; margin-bottom:15px;
-      border:1px solid #ccc; border-radius:6px;
-      box-sizing:border-box;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
     }
     .login-box button {
-      width:100%; padding:10px;
-      background:#673ab7;color:white;
-      border:none; border-radius:6px;
-      font-size:16px; cursor:pointer;
+      width: 100%;
+      padding: 10px;
+      background: #673ab7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
     }
-    .login-box button:hover { background:#5e35b1; }
+    .login-box button:hover {
+      background: #5e35b1;
+    }
     .login-box .links {
-      text-align:center; margin-top:10px;
+      text-align: center;
+      margin-top: 10px;
     }
     .login-box .links a {
-      color:#673ab7; text-decoration:none; margin:0 5px;
+      color: #673ab7;
+      text-decoration: none;
+      margin: 0 5px;
     }
   </style>
 </head>
@@ -69,22 +88,24 @@
     const pass = document.getElementById('regPassword').value;
     const phone = document.getElementById('regPhone').value;
 
-    if(name && email && pass && phone) {
+    if (name && email && pass && phone) {
       const templateParams = {
+        title: "New Prerna Registration",
         name: name,
         email: email,
-        phone: phone
+        message: `A new user registered:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`
       };
 
       emailjs.send("service_2j8tx8y", "template_kchkdav", templateParams)
         .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
           localStorage.setItem('prernaLoggedIn', 'true');
           localStorage.setItem('prernaProfile', JSON.stringify({ name, email, phone }));
           alert('Registration successful! Details sent to Gmail ✅');
           window.location.href = 'index.html';
         }, function(error) {
-          console.log('FAILED...', error);
-          alert('Email sending failed ❌');
+          console.error('FAILED...', error);
+          alert('Email sending failed ❌: ' + error.text);
         });
     } else {
       alert('Please fill all fields');
