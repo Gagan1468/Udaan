@@ -7,32 +7,65 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f1f1f1;
+      background: url('https://images.unsplash.com/photo-1496309732348-3627f3f040ee?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #673ab7;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     .profile-box {
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
       width: 350px;
       text-align: center;
+      position: relative;
     }
+
     .profile-box img {
       width: 120px;
       border-radius: 50%;
       margin-bottom: 20px;
     }
+
+    .edit-btn {
+      position: absolute;
+      top: 105px;
+      right: 115px;
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      padding: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
     h2 {
       margin: 10px 0;
     }
+
     p {
       color: #555;
     }
-    button {
+
+    button.logout {
       margin-top: 20px;
       background: #673ab7;
       color: white;
@@ -41,17 +74,22 @@
       border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
+
+    button.logout:hover {
       background: #5e35b1;
     }
   </style>
 </head>
 <body>
+
+  <button class="back-btn" onclick="goBack()">← Back</button>
+
   <div class="profile-box">
     <img src="https://i.ibb.co/3rkfKQg/user-default.png" alt="User">
+    <button class="edit-btn" onclick="editProfile()">✎</button>
     <h2 id="userName">Loading...</h2>
     <p id="userEmail"></p>
-    <button onclick="logout()">Logout</button>
+    <button class="logout" onclick="logout()">Logout</button>
   </div>
 
   <script>
@@ -69,6 +107,15 @@
       localStorage.clear();
       window.location.href = "login.html";
     }
+
+    function goBack() {
+      window.location.href = "index.html"; // ya 3-dot wale page pe
+    }
+
+    function editProfile() {
+      alert("Edit profile clicked! (You can build a new page for editing details)");
+    }
   </script>
+
 </body>
 </html>
