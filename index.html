@@ -5,14 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Prerna – A Place to Feel Better</title>
 
-  <!-- EmailJS -->
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("EMnEQn1d8oIWHZKHV");
-    })();
-  </script>
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -57,7 +49,7 @@
       top: 20px;
       left: 20px;
       z-index: 1000;
-      display: block;
+      display: none;
     }
 
     .dot-menu {
@@ -108,7 +100,6 @@
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0,0,0,0.08);
       text-align: center;
-      position: relative;
     }
 
     .card h3 {
@@ -140,67 +131,27 @@
       color: #999;
       font-size: 14px;
     }
-
-    .contact-form {
-      margin-top: 20px;
-      text-align: left;
-      display: none;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .contact-form input,
-    .contact-form textarea,
-    .contact-form button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-      box-sizing: border-box;
-    }
-
-    .contact-form button {
-      background: #28a745;
-      color: white;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
-
-    .success {
-      color: green;
-      margin-top: 15px;
-      display: none;
-      text-align: center;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
   </style>
 </head>
 <body>
 
   <header>
-    <!-- DOT MENU (3 dots) – initially hidden -->
-<div class="dropdown-wrapper" id="profileMenu" style="display: none;">
-  <button class="dot-menu" onclick="toggleMenu()">⋮</button>
-  <div class="dropdown-content" id="dropdown-content">
-    <a href="profile.html">👤 Profile</a>
-    <a href="#">🔒 Privacy Policy</a>
-    <a href="#">⚙️ Settings</a>
-    <a href="#" onclick="logoutUser()">🚪 Logout</a>
-  </div>
-</div>
+    <!-- Dropdown (Three Dots Menu) -->
+    <div class="dropdown-wrapper" id="profileMenu">
+      <button class="dot-menu" onclick="toggleMenu()">⋮</button>
+      <div class="dropdown-content" id="dropdown-content">
+        <a href="profile.html">👤 Profile</a>
+        <a href="#">🔒 Privacy Policy</a>
+        <a href="#">⚙️ Settings</a>
+        <a href="#" onclick="logoutUser()">🚪 Logout</a>
+      </div>
+    </div>
 
-<!-- LOGIN / REGISTER BUTTONS – visible only if not logged in -->
-<div class="auth-buttons" id="authLinks">
-  <a href="login.html">Login</a>
-  <a href="register.html">Register</a>
-</div>
-
+    <!-- Login/Register Buttons -->
+    <div class="auth-buttons" id="authLinks">
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
 
     <h1>Welcome to Prerna</h1>
     <p>You are not alone. Let us heal together.</p>
@@ -220,7 +171,7 @@
     <div class="card">
       <h3>Journal</h3>
       <p>Write down your thoughts and feelings safely.</p>
-      <a class="button" href="journal2.html">Open Journal</a>
+      <a class="button" href="journal.html">Open Journal</a>
     </div>
     <div class="card">
       <h3>Mood Games</h3>
@@ -230,24 +181,12 @@
     <div class="card">
       <h3>Contact Counsellor</h3>
       <p>You are never alone!! We are here to listen...</p>
-      <button onclick="toggleForm()">Start Now</button>
-      <div id="counsellorForm" class="contact-form">
-        <form id="contact-form">
-          <label>Your Name:</label>
-          <input type="text" name="name" required>
-          <label>Your Email:</label>
-          <input type="email" name="email" required>
-          <label>Your Message:</label>
-          <textarea name="message" rows="4" required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-        <div class="success" id="successMessage">✅ Message sent to a professional counsellor.</div>
-      </div>
+      <a class="button" href="counsellor.html">Start Now</a>
     </div>
     <div class="card">
       <h3>To-Do-List</h3>
       <p>Make your journey clear, concise and motivating!! Turn goals into reality!</p>
-      <button onclick="window.location.href='todo.html'">Open To-Do List</button>
+      <a class="button" href="todo.html">Open To-Do List</a>
     </div>
   </div>
 
@@ -255,78 +194,35 @@
     &copy; 2025 Prerna | Built with love for kids’ mental wellness
   </footer>
 
-  <!-- Chatbot -->
-  <script src='https://www.noupe.com/embed/01980cc4a3ab788f92fbee0c70a738e54d73.js'></script>
-
-  <!-- Final Script -->
+  <!-- Scripts -->
   <script>
-    function toggleForm() {
-      const form = document.getElementById("counsellorForm");
-      form.style.display = form.style.display === "block" ? "none" : "block";
-    }
-
     function toggleMenu() {
       const dropdown = document.getElementById("dropdown-content");
       dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
     }
 
     function logoutUser() {
-      localStorage.removeItem("prernaLoggedIn");
-      localStorage.removeItem("prernaEmail");
-      alert("Logout successful!");
-      window.location.href = "login.html";
+      localStorage.removeItem('prernaLoggedIn');
+      localStorage.removeItem('prernaEmail');
+      localStorage.removeItem('prernaName');
+      localStorage.removeItem('prernaPhone');
+      localStorage.removeItem('prernaPhoto');
+      location.reload(); // back to login state
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const contactForm = document.getElementById("contact-form");
-      const successMsg = document.getElementById("successMessage");
+    window.onload = function () {
+      const loggedIn = localStorage.getItem('prernaLoggedIn');
+      const profileMenu = document.getElementById('profileMenu');
+      const authLinks = document.getElementById('authLinks');
 
-      // email sending
-      contactForm?.addEventListener("submit", function (e) {
-        e.preventDefault();
-        emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
-          .then(function (response) {
-            console.log("SUCCESS!", response.status, response.text);
-            successMsg.style.display = "block";
-            contactForm.reset();
-          }, function (error) {
-            alert("Failed to send message. Try again.");
-            console.log("FAILED...", error);
-          });
-      });
-
-      // hide login/register after login
-      const authLinks = document.getElementById("authLinks");
-      if (localStorage.getItem("prernaLoggedIn") === "true") {
-        authLinks.style.display = "none";
+      if (loggedIn === 'true') {
+        profileMenu.style.display = 'block';
+        authLinks.style.display = 'none';
+      } else {
+        profileMenu.style.display = 'none';
+        authLinks.style.display = 'block';
       }
-    });
+    };
   </script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const isLoggedIn = localStorage.getItem("prernaLoggedIn");
-
-    const profileMenu = document.getElementById("profileMenu"); // 3 dots
-    const authLinks = document.getElementById("authLinks");     // Login/Register
-
-    if (isLoggedIn === "true") {
-      // Agar login ho chuka hai
-      authLinks.style.display = "none";        // Login/Register hide
-      profileMenu.style.display = "block";     // 3 dots show
-    } else {
-      // Agar login nahi hua
-      authLinks.style.display = "block";       // Login/Register show
-      profileMenu.style.display = "none";      // 3 dots hide
-    }
-  });
-
-  function logoutUser() {
-    localStorage.removeItem("prernaLoggedIn");
-    window.location.href = "index.html";
-  }
-</script>
-
-
 </body>
 </html>
