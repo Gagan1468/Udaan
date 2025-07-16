@@ -268,17 +268,19 @@
     }
 
     function logoutUser() {
+      localStorage.removeItem("prernaLoggedIn");
+      localStorage.removeItem("prernaEmail");
       alert("Logout successful!");
-      // Optionally redirect: window.location.href = "login.html";
+      window.location.href = "login.html";
     }
 
     document.addEventListener("DOMContentLoaded", function () {
       const contactForm = document.getElementById("contact-form");
       const successMsg = document.getElementById("successMessage");
 
-      contactForm.addEventListener("submit", function (e) {
+      // email sending
+      contactForm?.addEventListener("submit", function (e) {
         e.preventDefault();
-
         emailjs.sendForm('service_t5nedk8', 'template_66d7oru', this)
           .then(function (response) {
             console.log("SUCCESS!", response.status, response.text);
@@ -289,6 +291,12 @@
             console.log("FAILED...", error);
           });
       });
+
+      // hide login/register after login
+      const authLinks = document.getElementById("authLinks");
+      if (localStorage.getItem("prernaLoggedIn") === "true") {
+        authLinks.style.display = "none";
+      }
     });
   </script>
 </body>
