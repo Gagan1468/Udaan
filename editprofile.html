@@ -1,92 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Edit Profile – Prerna</title>
+  <title>Edit Profile</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #eee;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background: #f1f1f1;
+      padding: 30px;
     }
     .edit-box {
+      max-width: 400px;
+      margin: auto;
       background: white;
-      padding: 30px;
-      border-radius: 12px;
+      padding: 25px;
+      border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 350px;
+    }
+    .edit-box h2 {
+      text-align: center;
     }
     input {
-      width: 100%;
+      width: 100%; padding: 10px;
       margin-top: 10px;
-      padding: 10px;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
     button {
-      margin-top: 20px;
       width: 100%;
-      padding: 10px;
+      margin-top: 20px;
       background: #673ab7;
       color: white;
-      font-weight: bold;
       border: none;
+      padding: 12px;
       border-radius: 6px;
       cursor: pointer;
     }
+    img {
+      width: 100px;
+      border-radius: 50%;
+      display: block;
+      margin: auto;
+      margin-bottom: 10px;
+    }
     .back-btn {
-      display: inline-block;
-      margin-bottom: 15px;
-      color: #673ab7;
-      text-decoration: none;
+      margin-top: 15px;
+      background: #999;
     }
   </style>
 </head>
 <body>
 
-  <div class="edit-box">
-    <a class="back-btn" href="profile.html">← Back</a>
-    <h2>Edit Profile</h2>
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="email" id="email" placeholder="Email" disabled>
-    <input type="tel" id="phone" placeholder="Phone Number">
-    <input type="file" id="photoInput" accept="image/*">
-    <button onclick="saveChanges()">Save</button>
-  </div>
+<div class="edit-box">
+  <h2>Edit Profile</h2>
+  <img id="previewImg" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="Preview" />
+  <input type="file" accept="image/*" onchange="loadPhoto(event)" />
+  <input type="text" id="name" placeholder="Name" />
+  <input type="text" id="phone" placeholder="Phone" />
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
+  <button onclick="saveChanges()">Save</button>
+  <button class="back-btn" onclick="window.location.href='profile.html'">Back</button>
+</div>
 
-  <script>
-    const email = localStorage.getItem("prernaEmail");
-    const user = JSON.parse(localStorage.getItem(email));
+<script>
+  const loggedInEmail = localStorage.getItem("prernaEmail");
+  const userData = JSON.parse(localStorage.getItem(loggedInEmail));
+  if (!userData) window.location.href = "login.html";
 
-    if (!user || localStorage.getItem("prernaLoggedIn") !== "true") {
-      window.location.href = "login.html";
+  document.getElementById("name").value = userData.name || "";
+  document.getElementById("phone").value = userData.phone || "";
+  document.getElementById("email").value = loggedInEmail;
+  document.getElementById("password").value = userData.password || "";
+  document.getElementById("previewImg").src = userData.photo || "https://i.ibb.co/3rkfKQg/user-default.png";
+
+  function loadPhoto(event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      document.getElementById("previewImg").src = reader.result;
+      userData.photo = reader.result;
     }
+    reader.readAsDataURL(event.target.files[0]);
+  }
 
-    document.getElementById("name").value = user.name || "";
-    document.getElementById("email").value = email;
-    document.getElementById("phone").value = user.phone || "";
+  function saveChanges() {
+    const newEmail = document.getElementById("email").value;
+    userData.name = document.getElementById("name").value;
+    userData.phone = document.getElementById("phone").value;
+    userData.password = document.getElementById("password").value;
 
-    document.getElementById("photoInput").addEventListener("change", function() {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          user.photo = e.target.result;
-        }
-        reader.readAsDataURL(file);
-      }
-    });
+    localStorage.removeItem(loggedInEmail);
+    localStorage.setItem(newEmail, JSON.stringify(userData));
+    localStorage.setItem("prernaEmail", newEmail);
 
-    function saveChanges() {
-      user.name = document.getElementById("name").value;
-      user.phone = document.getElementById("phone").value;
-      localStorage.setItem(email, JSON.stringify(user));
-      window.location.href = "profile.html";
-    }
-  </script>
+    alert("Profile updated!");
+    window.location.href = "profile.html";
+  }
+</script>
 
 </body>
 </html>
