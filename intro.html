@@ -2,47 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Welcome to Prerna</title>
+  <title>Prerna – Intro</title>
   <style>
     body {
       margin: 0;
-      background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+      background: linear-gradient(to right, #141e30, #243b55);
       height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
       flex-direction: column;
+      color: white;
     }
+
+    .robot-container {
+      position: relative;
+      animation: fly 8s ease-in-out forwards;
+    }
+
     .robot {
-      animation: float 4s ease-in-out infinite;
-      width: 200px;
+      width: 180px;
+      animation: float 3s ease-in-out infinite;
     }
+
     .intro-text {
-      font-size: 20px;
-      color: #fff;
-      text-align: center;
       margin-top: 20px;
+      font-size: 20px;
+      max-width: 600px;
+      text-align: center;
+      line-height: 1.5;
+      opacity: 0;
+      animation: fadein 2s ease forwards;
+      animation-delay: 2s;
     }
+
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
+      0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
+    }
+
+    @keyframes fly {
+      0%   { transform: translateX(-100vw); }
+      60%  { transform: translateX(0vw); }
+      100% { transform: translateX(0vw); }
+    }
+
+    @keyframes fadein {
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <img class="robot" src="https://i.ibb.co/G2kVvZb/robot.png" alt="Robot" />
-  <div class="intro-text">
-    Hi! You are here.<br/>
-    Firstly I will introduce myself and then all...
+  <div class="robot-container">
+    <img class="robot" src="https://i.ibb.co/G2kVvZb/robot.png" alt="Floating Robot" />
+  </div>
+  <div class="intro-text" id="introText">
+    Hi! You are here.<br>
+    Firstly, I will introduce myself.<br>
+    I’m Robo, your friendly buddy!<br>
+    And welcome to <b>Prerna</b> – your safe space to feel better 💜
   </div>
 
   <script>
-    // Repeat intro every time, no check
+    function speakIntro() {
+      const msg = new SpeechSynthesisUtterance();
+      msg.text = "Hi! You are here. Firstly, I will introduce myself. I’m Robo, your friendly buddy! And welcome to Prerna – your safe space to feel better.";
+      msg.pitch = 1;
+      msg.rate = 0.9;
+      msg.volume = 1;
+      window.speechSynthesis.speak(msg);
+    }
+
+    // Start speaking after delay
+    setTimeout(speakIntro, 2500);
+
+    // Redirect to home after 10s
     setTimeout(() => {
-      window.location.href = "index.html"; // or index2.html if your home is renamed
-    }, 7000); // 7 sec delay for intro
+      window.location.href = "index.html";
+    }, 10000);
   </script>
+
 </body>
 </html>
