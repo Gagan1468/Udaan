@@ -75,25 +75,82 @@
       text-decoration: underline;
       cursor: pointer;
     }
+
+    /* Popup Styles */
+    .about-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 300px;
+      text-align: center;
+      z-index: 9999;
+    }
+
+    .about-popup h3 {
+      margin-bottom: 10px;
+    }
+
+    .about-popup button {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background: #673ab7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 9998;
+    }
   </style>
-  <!-- Icons CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
 
   <div class="container">
     <h2>Settings</h2>
 
-    <div class="setting-option"><i class="fas fa-bell"></i><span>Notifications</span></div>
-    <div class="setting-option"><i class="fas fa-lock"></i><span>Privacy Policy</span></div>
-    <div class="setting-option"><i class="fas fa-question-circle"></i><span>Help & Support</span></div>
-    <div class="setting-option"><i class="fas fa-info-circle"></i><span>About</span></div>
+    <div class="setting-option" onclick="alert('Notifications settings coming soon!')">
+      <i class="fas fa-bell"></i><span>Notifications</span>
+    </div>
+
+    <div class="setting-option" onclick="alert('Help & Support coming soon!')">
+      <i class="fas fa-question-circle"></i><span>Help & Support</span>
+    </div>
+
+    <div class="setting-option" onclick="showAbout()">
+      <i class="fas fa-info-circle"></i><span>About</span>
+    </div>
 
     <button class="delete-button" onclick="deleteAccount()">🗑 Delete Account</button>
 
     <div class="back-btn" onclick="goBack()">← Back to Home</div>
   </div>
 
+  <!-- About Popup -->
+  <div class="overlay" id="overlay"></div>
+  <div class="about-popup" id="aboutPopup">
+    <h3>About Prerna</h3>
+    <p><strong>Version:</strong> 1.0</p>
+    <p>Prerna is a space for kids to feel better, relax and grow emotionally strong.</p>
+    <button onclick="closeAbout()">Close</button>
+  </div>
+
+  <!-- Script -->
   <script>
     function goBack() {
       window.location.href = "index.html";
@@ -111,6 +168,17 @@
         window.location.href = "register.html";
       }
     }
+
+    function showAbout() {
+      document.getElementById("aboutPopup").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    function closeAbout() {
+      document.getElementById("aboutPopup").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
   </script>
+
 </body>
 </html>
