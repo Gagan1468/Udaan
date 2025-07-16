@@ -63,6 +63,7 @@
       margin-bottom: 15px;
       border-radius: 10px;
       position: relative;
+      overflow-wrap: break-word;
     }
 
     .entry time {
@@ -74,24 +75,31 @@
 
     .entry p {
       margin: 0;
-      padding-right: 20px;
+      padding-right: 25px;
     }
 
     .delete-btn {
       position: absolute;
       top: 8px;
       right: 10px;
-      background: transparent;
-      color: #888;
+      width: 22px;
+      height: 22px;
+      background: #ff4b5c;
+      color: white;
       border: none;
-      font-size: 16px;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: bold;
       cursor: pointer;
-      line-height: 1;
-      padding: 2px;
+      line-height: 22px;
+      text-align: center;
+      padding: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: 0.2s ease;
     }
 
     .delete-btn:hover {
-      color: #ff4b5c;
+      background: #e60023;
     }
   </style>
 </head>
