@@ -5,12 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Register - Prerna</title>
 
-  <!-- EmailJS -->
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("EMnEQn1d8oIWHZKHV"); // ✅ Your Public Key
-    })();
+  <!-- ✅ Latest EmailJS SDK (v3) -->
+  <script type="module">
+    import emailjs from 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+    emailjs.init("EMnEQn1d8oIWHZKHV"); // ✅ Your public key
+    window.emailjs = emailjs;
+
+    // ✅ Hide links if already logged in
+    window.onload = function () {
+      const isLoggedIn = localStorage.getItem('prernaLoggedIn');
+      if (isLoggedIn === 'true') {
+        const links = document.querySelector('.links');
+        if (links) links.style.display = 'none';
+      }
+    };
+
+    // ✅ Registration Function
+    window.handleRegister = function () {
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const pass = document.getElementById('regPassword').value;
+      const phone = document.getElementById('regPhone').value;
+
+      if (name && email && pass && phone) {
+        const templateParams = {
+          title: "New Prerna Registration",
+          name: name,
+          email: email,
+          message: `A new user registered:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`
+        };
+
+        emailjs.send("service_2j8tx8y", "template_kchkdav", templateParams)
+          .then(function (response) {
+            console.log('SUCCESS!', response.status, response.text);
+            localStorage.setItem('prernaLoggedIn', 'true');
+            localStorage.setItem('prernaProfile', JSON.stringify({ name, email, phone }));
+            alert('Registration successful! Details sent to Gmail ✅');
+            window.location.href = 'index.html';
+          }, function (error) {
+            console.error('FAILED...', error);
+            alert('Email sending failed ❌: ' + error.text);
+          });
+      } else {
+        alert('Please fill all fields');
+      }
+    };
   </script>
 
   <style>
@@ -80,38 +119,6 @@
     <a href="login.html">Login</a> | <a href="index.html">Back to Home</a>
   </div>
 </div>
-
-<script>
-  function handleRegister() {
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const pass = document.getElementById('regPassword').value;
-    const phone = document.getElementById('regPhone').value;
-
-    if (name && email && pass && phone) {
-      const templateParams = {
-        title: "New Prerna Registration",
-        name: name,
-        email: email,
-        message: `A new user registered:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`
-      };
-
-      emailjs.send("service_2j8tx8y", "template_kchkdav", templateParams)
-        .then(function(response) {
-          console.log('SUCCESS!', response.status, response.text);
-          localStorage.setItem('prernaLoggedIn', 'true');
-          localStorage.setItem('prernaProfile', JSON.stringify({ name, email, phone }));
-          alert('Registration successful! Details sent to Gmail ✅');
-          window.location.href = 'index.html';
-        }, function(error) {
-          console.error('FAILED...', error);
-          alert('Email sending failed ❌: ' + error.text);
-        });
-    } else {
-      alert('Please fill all fields');
-    }
-  }
-</script>
 
 </body>
 </html>
