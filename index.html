@@ -24,8 +24,33 @@
     header {
       background-color: #673ab7;
       color: white;
-      padding: 30px;
+      padding: 30px 20px;
       text-align: center;
+      position: relative;
+    }
+
+    /* Top-right login/register */
+    .auth-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .auth-buttons a {
+      color: white;
+      background-color: transparent;
+      border: 2px solid white;
+      padding: 8px 16px;
+      margin-left: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .auth-buttons a:hover {
+      background-color: white;
+      color: #673ab7;
     }
 
     .container {
@@ -119,16 +144,13 @@
 <body>
 
   <header>
+    <div class="auth-buttons">
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
     <h1>Welcome to Prerna</h1>
     <p>You are not alone. Let us heal together.</p>
   </header>
-
-  <!-- 👇 Login/Register/Logout Buttons -->
-  <div style="position:fixed; top:20px; right:20px; z-index:999;">
-    <button id="btnLogin" onclick="window.location.href='login.html'" style="margin-right:10px;">Login</button>
-    <button id="btnRegister" onclick="window.location.href='register.html'">Register</button>
-    <button id="btnLogout" onclick="logout()" style="display:none;">Logout</button>
-  </div>
 
   <div class="container">
     <div class="card">
@@ -184,15 +206,6 @@
     &copy; 2025 Prerna | Built with love for kids’ mental wellness
   </footer>
 
-  <!-- 👇 Sidebar Profile -->
-  <div id="sidebarProfile" style="position:fixed; left:0; top:0; bottom:0; width:240px; background:#512da8; color:white; padding:20px; display:none; z-index:999;">
-    <h2 style="font-size:20px; margin-top:0;">👤 Profile</h2>
-    <img id="profileAvatar" src="https://via.placeholder.com/80" alt="Avatar" style="border-radius:50%; margin-bottom:10px;">
-    <div id="profileName" style="font-weight:bold;"></div>
-    <div id="profileEmail" style="font-size:14px; opacity:0.9;"></div>
-    <button onclick="toggleSidebar()" style="margin-top:15px; padding:8px 12px; background:#673ab7; color:white; border:none; border-radius:6px; cursor:pointer;">✏️ Edit Profile</button>
-  </div>
-
   <!-- Chatbot Embed Script -->
   <script src='https://www.noupe.com/embed/01980cc4a3ab788f92fbee0c70a738e54d73.js'></script>
 
@@ -216,17 +229,7 @@
           console.log('FAILED...', error);
         });
     });
+  </script>
 
-    // 👇 Login/Profile Management Script
-    function checkLogin() {
-      const loggedIn = localStorage.getItem('prernaLoggedIn') === 'true';
-      document.getElementById('btnLogin').style.display = loggedIn ? 'none' : 'inline-block';
-      document.getElementById('btnRegister').style.display = loggedIn ? 'none' : 'inline-block';
-      const btnLogout = document.getElementById('btnLogout');
-      btnLogout.style.display = loggedIn ? 'inline-block' : 'none';
-      if(loggedIn) {
-        const profile = JSON.parse(localStorage.getItem('prernaProfile') || '{}');
-        document.getElementById('profileName').innerText = profile.name || 'User';
-        document.getElementById('profileEmail').innerText = profile.email || localStorage.getItem('prernaEmail');
-        document.getElementById('sidebarProfile').style.display = 'block';
-      } else
+</body>
+</html>
