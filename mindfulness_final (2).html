@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mindfulness - Prerna</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #c2fbd7, #e0c3fc);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    header {
+      padding: 20px;
+      background-color: #fff;
+      font-size: 24px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    main {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .audio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    audio {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    #chat-bubble {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 70px;
+      height: 70px;
+      background-color: #007bff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      cursor: pointer;
+      z-index: 1001;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      color: white;
+    }
+
+    #chat-iframe {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 400px;
+      height: 500px;
+      border: 2px solid #007bff;
+      border-radius: 10px;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <header>????? Mindfulness Activities</header>
+
+  <main>
+    <p>Here you can do breathing exercises, meditation, or calming audio...</p>
+
+    <div class="audio-list">
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-tomorrow.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-relaxing.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-dreams.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-memories.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-clearday.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-sunny.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-creativeminds.mp3"></audio>
+      <audio controls src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3"></audio>
+    </div>
+  </main>
+
+  <div id="chat-bubble">??</div>
+  <iframe id="chat-iframe" src="https://chatannotator.com"></iframe>
+
+  <script>
+    document.getElementById("chat-bubble").onclick = () => {
+      const iframe = document.getElementById("chat-iframe");
+      iframe.style.display = iframe.style.display === "none" ? "block" : "none";
+    };
+  </script>
+</body>
+</html>
