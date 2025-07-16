@@ -6,66 +6,90 @@
   <title>Login - Prerna</title>
   <style>
     body, html {
-      margin:0; padding:0;
-      height:100%;
+      margin: 0; padding: 0;
+      height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: url('nature-bg.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('kite-kid.jpg') no-repeat center center/cover;
+      /* ↑ Image yaha paste karo */
     }
+
     .login-box {
-      background: rgba(255,255,255,0.9);
+      background: rgba(255, 255, 255, 0.9);
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0,0,0,0.2);
       width: 320px;
     }
-    .login-box h2 { text-align:center; margin-bottom:20px; }
+
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
     .login-box input {
-      width:100%; padding:10px; margin-bottom:15px;
-      border:1px solid #ccc; border-radius:6px;
-      box-sizing:border-box;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
     }
+
     .login-box button {
-      width:100%; padding:10px;
-      background:#673ab7;color:white;
-      border:none; border-radius:6px;
-      font-size:16px; cursor:pointer;
+      width: 100%;
+      padding: 10px;
+      background: #673ab7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
     }
-    .login-box button:hover { background:#5e35b1; }
+
+    .login-box button:hover {
+      background: #5e35b1;
+    }
+
     .login-box .links {
-      text-align:center; margin-top:10px;
+      text-align: center;
+      margin-top: 10px;
     }
+
     .login-box .links a {
-      color:#673ab7; text-decoration:none; margin:0 5px;
+      color: #673ab7;
+      text-decoration: none;
+      margin: 0 5px;
     }
   </style>
 </head>
 <body>
 
-<div class="login-box">
-  <h2>Login to Prerna</h2>
-  <input type="email" id="loginEmail" placeholder="Email" required>
-  <input type="password" id="loginPassword" placeholder="Password" required>
-  <button onclick="handleLogin()">Log In</button>
-  <div class="links">
-    <a href="register.html">Register</a> | <a href="index.html">Back to Home</a>
+  <div class="login-box">
+    <h2>Login to Prerna</h2>
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+    <button onclick="handleLogin()">Log In</button>
+    <div class="links">
+      <a href="register.html">Register</a> | <a href="index.html">Back to Home</a>
+    </div>
   </div>
-</div>
 
-<script>
-  function handleLogin() {
-    const email = document.getElementById('loginEmail').value;
-    const pass = document.getElementById('loginPassword').value;
-    if(email && pass) {
-      // simulate login: in real use, integrate with backend or Auth service
-      localStorage.setItem('prernaLoggedIn', 'true');
-      localStorage.setItem('prernaEmail', email);
-      window.location.href = 'index.html';
-    } else alert('Please enter email & password');
-  }
-</script>
+  <script>
+    function handleLogin() {
+      const email = document.getElementById('loginEmail').value;
+      const pass = document.getElementById('loginPassword').value;
+      if (email && pass) {
+        localStorage.setItem('prernaLoggedIn', 'true');
+        localStorage.setItem('prernaEmail', email);
+        window.location.href = 'index.html';
+      } else {
+        alert('Please enter email & password');
+      }
+    }
+  </script>
 
 </body>
 </html>
