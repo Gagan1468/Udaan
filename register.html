@@ -1,106 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Register - Prerna</title>
+  <meta charset="UTF-8">
+  <title>Register – Prerna</title>
   <style>
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
     .register-box {
-      background: rgba(255, 255, 255, 0.95);
+      background: white;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 340px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 360px;
     }
-    .register-box h2 {
-      text-align: center;
-    }
-    .register-box input {
+    input {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-    .register-box button {
+    button {
       width: 100%;
       padding: 12px;
       background: #673ab7;
       color: white;
+      font-weight: bold;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
       cursor: pointer;
-    }
-    .pfp-preview {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-      margin: 10px auto;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
-  <div class="register-box">
-    <h2>Create Account</h2>
-    <input type="text" id="name" placeholder="Name" required>
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <input type="tel" id="phone" placeholder="Phone (optional)">
 
-    <!-- PFP Upload -->
-    <input type="file" accept="image/*" id="photoInput" onchange="previewPhoto()" />
-    <img id="pfpPreview" class="pfp-preview" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="Preview" />
+<div class="register-box">
+  <h2>Register</h2>
+  <input type="text" id="name" placeholder="Full Name" required>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="tel" id="phone" placeholder="Phone Number" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <input type="file" id="photo" accept="image/*">
+  <button onclick="registerUser()">Register</button>
+</div>
 
-    <button onclick="registerUser()">Register</button>
-  </div>
+<script>
+  function registerUser() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const photoInput = document.getElementById("photo");
 
-  <script>
-    let selectedPhotoData = "";
+    if (!name || !email || !phone || !password) {
+      alert("Please fill all the fields.");
+      return;
+    }
 
-    function previewPhoto() {
-      const file = document.getElementById("photoInput").files[0];
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        selectedPhotoData = e.target.result;
-        document.getElementById("pfpPreview").src = selectedPhotoData;
+    const reader = new FileReader();
+    reader.onload = function () {
+      const photo = reader.result;
+
+      const userData = {
+        name: name,
+        email: email,
+        phone: phone,
+        password: password,
+        photo: photo
       };
-      if (file) {
-        reader.readAsDataURL(file);
-      }
+
+      localStorage.setItem(email, JSON.stringify(userData)); // Store user uniquely by email
+      localStorage.setItem("prernaEmail", email); // Store current user login
+      localStorage.setItem("prernaLoggedIn", "true");
+
+      alert("Registration successful!");
+      window.location.href = "index.html";
+    };
+
+    if (photoInput.files.length > 0) {
+      reader.readAsDataURL(photoInput.files[0]);
+    } else {
+      reader.onload(); // Trigger manually if no photo selected
     }
+  }
+</script>
 
-    function registerUser() {
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const phone = document.getElementById("phone").value;
-
-      if (name && email && password) {
-        const user = {
-          name,
-          email,
-          password,
-          phone,
-          photo: selectedPhotoData || "https://i.ibb.co/3rkfKQg/user-default.png"
-        };
-
-        localStorage.setItem(email, JSON.stringify(user));
-        alert("Registered successfully!");
-        window.location.href = "login.html";
-      } else {
-        alert("Please fill all required fields!");
-      }
-    }
-  </script>
 </body>
 </html>
