@@ -5,37 +5,42 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 0;
       height: 100vh;
-      background: url('https://cdn.pixabay.com/photo/2020/12/07/09/08/children-5811141_1280.jpg') no-repeat center center/cover;
+      background: url('https://cdn.pixabay.com/photo/2017/01/20/00/30/boy-1994849_1280.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
     }
     .login-box {
-      background: rgba(255,255,255,0.9);
+      background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.2);
-      width: 320px;
+      width: 300px;
     }
     .login-box h2 {
       text-align: center;
+      margin-bottom: 20px;
     }
-    .login-box input, .login-box button {
+    input {
       width: 100%;
       padding: 10px;
-      margin-top: 12px;
+      margin: 10px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
-      font-size: 16px;
     }
-    .login-box button {
+    button {
+      width: 100%;
+      padding: 10px;
       background: #673ab7;
       color: white;
-      font-weight: bold;
       border: none;
+      border-radius: 6px;
       cursor: pointer;
+    }
+    button:hover {
+      background: #5e35b1;
     }
     .links {
       text-align: center;
@@ -52,7 +57,7 @@
     <h2>Login</h2>
     <input type="email" id="loginEmail" placeholder="Email" required>
     <input type="password" id="loginPassword" placeholder="Password" required>
-    <button onclick="handleLogin()">Login</button>
+    <button onclick="handleLogin()">Log In</button>
     <div class="links">
       <a href="register.html">Register</a>
     </div>
@@ -61,12 +66,12 @@
   <script>
     function handleLogin() {
       const email = document.getElementById('loginEmail').value;
-      const pass = document.getElementById('loginPassword').value;
+      const password = document.getElementById('loginPassword').value;
       const userData = JSON.parse(localStorage.getItem(email));
 
-      if (userData && userData.password === pass) {
-        localStorage.setItem('prernaLoggedIn', 'true');
-        localStorage.setItem('prernaEmail', email);
+      if (userData && userData.password === password) {
+        localStorage.setItem("prernaLoggedIn", "true");
+        localStorage.setItem("prernaEmail", email);
         window.location.href = "index.html";
       } else {
         alert("Invalid email or password");
