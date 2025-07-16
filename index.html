@@ -184,20 +184,23 @@
 <body>
 
   <header>
-    <div class="dropdown-wrapper" id="profileMenu">
-      <button class="dot-menu" onclick="toggleMenu()">⋮</button>
-      <div class="dropdown-content" id="dropdown-content">
-        <a href="#">👤 Profile</a>
-        <a href="#">🔒 Privacy Policy</a>
-        <a href="#">⚙️ Settings</a>
-        <a href="#" onclick="logoutUser()">🚪 Logout</a>
-      </div>
-    </div>
+    <!-- DOT MENU (3 dots) – initially hidden -->
+<div class="dropdown-wrapper" id="profileMenu" style="display: none;">
+  <button class="dot-menu" onclick="toggleMenu()">⋮</button>
+  <div class="dropdown-content" id="dropdown-content">
+    <a href="#">👤 Profile</a>
+    <a href="#">🔒 Privacy Policy</a>
+    <a href="#">⚙️ Settings</a>
+    <a href="#" onclick="logoutUser()">🚪 Logout</a>
+  </div>
+</div>
 
-    <div class="auth-buttons" id="authLinks">
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-    </div>
+<!-- LOGIN / REGISTER BUTTONS – visible only if not logged in -->
+<div class="auth-buttons" id="authLinks">
+  <a href="login.html">Login</a>
+  <a href="register.html">Register</a>
+</div>
+
 
     <h1>Welcome to Prerna</h1>
     <p>You are not alone. Let us heal together.</p>
