@@ -3,121 +3,118 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Edit Profile � Prerna</title>
+  <title>Edit Profile – Prerna</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #8e2de2, #4a00e0);
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center/cover;
       margin: 0;
       padding: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
     }
+
     .edit-box {
-      background: white;
+      background: rgba(255,255,255,0.95);
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
       width: 360px;
-      text-align: center;
-      position: relative;
     }
-    .edit-box h2 {
+
+    h2 {
+      text-align: center;
       margin-bottom: 20px;
     }
-    .edit-box input {
+
+    input {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
+      margin-bottom: 15px;
       border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
     }
-    .edit-box button {
+
+    button {
+      width: 100%;
       background: #673ab7;
       color: white;
-      padding: 10px 20px;
+      padding: 12px;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin-top: 15px;
     }
-    .edit-box button:hover {
+
+    button:hover {
       background: #5e35b1;
     }
-    #preview {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 10px;
-      border: 2px solid #ccc;
-    }
+
     .back-btn {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      font-size: 16px;
-      background: none;
-      border: none;
-      color: #673ab7;
+      background: #333;
+      margin-bottom: 10px;
+      width: 100px;
+    }
+
+    label {
       font-weight: bold;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<div class="edit-box">
-  <button class="back-btn" onclick="goBack()">? Back</button>
-  <h2>Edit Profile</h2>
-  <img id="preview" src="https://i.ibb.co/3rkfKQg/user-default.png" alt="Preview">
-  <input type="file" accept="image/*" onchange="updatePhoto(event)">
-  <input type="text" id="editName" placeholder="Your Name">
-  <input type="email" id="editEmail" placeholder="Your Email">
-  <input type="tel" id="editPhone" placeholder="Phone Number">
-  <button onclick="saveProfile()">Save Changes</button>
-</div>
+  <div class="edit-box">
+    <button class="back-btn" onclick="window.location.href='profile.html'">← Back</button>
+    <h2>Edit Profile</h2>
 
-<script>
-  // Load previous data if exists
-  document.getElementById('editName').value = localStorage.getItem('prernaName') || '';
-  document.getElementById('editEmail').value = localStorage.getItem('prernaEmail') || '';
-  document.getElementById('editPhone').value = localStorage.getItem('prernaPhone') || '';
-  if (localStorage.getItem('prernaPhoto')) {
-    document.getElementById('preview').src = localStorage.getItem('prernaPhoto');
-  }
+    <label>Full Name:</label>
+    <input type="text" id="nameInput" placeholder="Enter your name" />
 
-  function updatePhoto(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        document.getElementById('preview').src = evt.target.result;
-        localStorage.setItem('prernaPhoto', evt.target.result);
-      };
-      reader.readAsDataURL(file);
+    <label>Email:</label>
+    <input type="email" id="emailInput" placeholder="Enter your email" />
+
+    <label>Phone Number:</label>
+    <input type="tel" id="phoneInput" placeholder="Enter phone number" />
+
+    <label>Profile Picture:</label>
+    <input type="file" id="imageInput" accept="image/*" />
+
+    <button onclick="saveProfile()">Save Changes</button>
+  </div>
+
+  <script>
+    window.onload = function () {
+      document.getElementById('nameInput').value = localStorage.getItem('prernaName') || "";
+      document.getElementById('emailInput').value = localStorage.getItem('prernaEmail') || "";
+      document.getElementById('phoneInput').value = localStorage.getItem('prernaPhone') || "";
     }
-  }
 
-  function saveProfile() {
-    const name = document.getElementById('editName').value;
-    const email = document.getElementById('editEmail').value;
-    const phone = document.getElementById('editPhone').value;
+    function saveProfile() {
+      const name = document.getElementById('nameInput').value;
+      const email = document.getElementById('emailInput').value;
+      const phone = document.getElementById('phoneInput').value;
+      const fileInput = document.getElementById('imageInput');
+      const file = fileInput.files[0];
 
-    localStorage.setItem('prernaName', name);
-    localStorage.setItem('prernaEmail', email);
-    localStorage.setItem('prernaPhone', phone);
+      if (name) localStorage.setItem('prernaName', name);
+      if (email) localStorage.setItem('prernaEmail', email);
+      if (phone) localStorage.setItem('prernaPhone', phone);
 
-    alert("Profile updated successfully!");
-    window.location.href = "profile.html"; // redirect back to profile
-  }
-
-  function goBack() {
-    window.location.href = "profile.html";
-  }
-</script>
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          localStorage.setItem('prernaImage', reader.result);
+          window.location.href = "profile.html";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        window.location.href = "profile.html";
+      }
+    }
+  </script>
 
 </body>
 </html>
