@@ -130,5 +130,20 @@
   }, 8000); // 8 seconds baad redirect hoga
 </script>
 
+  <script>
+  // Check agar intro pehle hi dikha chuka hai
+  if (localStorage.getItem("introShown") === "true") {
+    window.location.href = "home.html"; // skip intro
+  } else {
+    // 1st time user open kar raha — dikhao intro
+    localStorage.setItem("introShown", "true");
+
+    // fir 7-8 sec baad redirect karo home.html pe
+    setTimeout(() => {
+      window.location.href = "home.html";
+    }, 8000);
+  }
+</script>
+
 </body>
 </html>
