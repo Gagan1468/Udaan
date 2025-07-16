@@ -78,17 +78,23 @@
   </div>
 
   <script>
-// Login page script (login.html)
 function handleLogin() {
   const email = document.getElementById('loginEmail').value;
-  const pass = document.getElementById('loginPassword').value;
-  if(email && pass) {
-localStorage.setItem('prernaLoggedIn', 'true');
-localStorage.setItem('prernaEmail', email);
-localStorage.setItem('prernaName', name); // agar register se name bhi le rahe ho
-window.location.href = "index.html"; // ✅ go to home page after login
-  } else alert('Please enter email & password');
+  const password = document.getElementById('loginPassword').value;
+
+  const storedUser = JSON.parse(localStorage.getItem("prernaUser"));
+
+  if (storedUser && email === storedUser.email && password === storedUser.password) {
+    // Login successful
+    localStorage.setItem("prernaLoggedIn", "true");
+    localStorage.setItem("prernaEmail", storedUser.email);
+    localStorage.setItem("prernaName", storedUser.name);
+    window.location.href = "index.html"; // ✅ back to home, not profile
+  } else {
+    alert("❌ Invalid email or password. Try again!");
+  }
 }
+
 
   </script>
 
