@@ -1,109 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login – Prerna</title>
+  <title>Login - Prerna</title>
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
+    body {
+      margin: 0; padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b') no-repeat center center/cover;
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh;
+      background: url('https://cdn.pixabay.com/photo/2017/01/20/00/30/child-1992234_1280.jpg') no-repeat center center/cover;
     }
-
     .login-box {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255,255,255,0.95);
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      width: 340px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
-
     .login-box h2 {
       text-align: center;
-      margin-bottom: 20px;
     }
-
-    .login-box input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
+    input, button {
+      width: 100%; padding: 10px;
+      margin-top: 10px;
       border-radius: 6px;
-      box-sizing: border-box;
+      border: 1px solid #ccc;
+      font-size: 16px;
     }
-
-    .login-box button {
-      width: 100%;
-      padding: 10px;
+    button {
       background: #673ab7;
       color: white;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
       cursor: pointer;
     }
-
-    .login-box button:hover {
+    button:hover {
       background: #5e35b1;
-    }
-
-    .login-box .links {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .login-box .links a {
-      color: #673ab7;
-      text-decoration: none;
-      margin: 0 5px;
     }
   </style>
 </head>
 <body>
 
 <div class="login-box">
-  <h2>Login to Prerna</h2>
-  <input type="email" id="loginEmail" placeholder="Email" required>
-  <input type="password" id="loginPassword" placeholder="Password" required>
-  <button onclick="handleLogin()">Log In</button>
-  <div class="links">
-    <a href="register.html">Register</a> | <a href="index.html">Back to Home</a>
-  </div>
+  <h2>Login</h2>
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Password" required />
+  <button onclick="login()">Login</button>
+  <p style="text-align:center;"><a href="register.html">Register</a></p>
 </div>
 
 <script>
-  function handleLogin() {
-    const email = document.getElementById('loginEmail').value.toLowerCase().trim();
-    const pass = document.getElementById('loginPassword').value;
-
-    if (!email || !pass) {
-      alert("Please enter both email and password.");
-      return;
+  function login() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    const userData = JSON.parse(localStorage.getItem(email));
+    if (userData && userData.password === pass) {
+      localStorage.setItem("prernaLoggedIn", "true");
+      localStorage.setItem("prernaEmail", email);
+      window.location.href = "index.html";
+    } else {
+      alert("Invalid email or password");
     }
-
-    const userDataRaw = localStorage.getItem(`user_${email}`);
-    if (!userDataRaw) {
-      alert("User not found. Please register first.");
-      return;
-    }
-
-    const userData = JSON.parse(userDataRaw);
-    if (userData.password !== pass) {
-      alert("Incorrect password!");
-      return;
-    }
-
-    // Set current logged-in user session
-    localStorage.setItem('prernaLoggedIn', 'true');
-    localStorage.setItem('prernaEmail', email);
-    alert("Login successful!");
-    window.location.href = "index.html";
   }
 </script>
 
