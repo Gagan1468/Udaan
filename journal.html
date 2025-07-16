@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily Journal - Prerna</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+    }
+    header {
+      padding: 20px;
+      background-color: #fff;
+      text-align: center;
+      font-size: 24px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    main {
+      padding: 40px;
+      text-align: center;
+    }
+    textarea {
+      width: 80%;
+      height: 200px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    #chat-bubble {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 70px;
+      height: 70px;
+      background-color: #007bff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      cursor: pointer;
+      z-index: 1001;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      color: white;
+    }
+    #chat-iframe {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 400px;
+      height: 500px;
+      border: 2px solid #007bff;
+      border-radius: 10px;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <header>?? Daily Journal</header>
+  <main>
+    <p>Write your thoughts and feelings here:</p>
+    <textarea id="journalText" placeholder="How are you feeling today?"></textarea><br>
+    <button onclick="saveJournal()">Save Entry</button>
+  </main>
+
+  <div id="chat-bubble">??</div>
+  <iframe id="chat-iframe" src="https://chatannotator.com"></iframe>
+
+  <script>
+    function saveJournal() {
+      const entry = document.getElementById("journalText").value;
+      if (entry.trim()) {
+        const today = new Date().toISOString();
+        localStorage.setItem(`journal-${today}`, entry);
+        alert("Journal saved!");
+        document.getElementById("journalText").value = "";
+      } else {
+        alert("Please write something.");
+      }
+    }
+
+    document.getElementById("chat-bubble").onclick = () => {
+      const iframe = document.getElementById("chat-iframe");
+      iframe.style.display = iframe.style.display === "none" ? "block" : "none";
+    };
+  </script>
+</body>
+</html>
