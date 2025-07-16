@@ -74,19 +74,24 @@
 
     .entry p {
       margin: 0;
+      padding-right: 20px;
     }
 
     .delete-btn {
       position: absolute;
-      top: 10px;
-      right: 15px;
-      background: #ff4b5c;
-      color: white;
+      top: 8px;
+      right: 10px;
+      background: transparent;
+      color: #888;
       border: none;
-      border-radius: 5px;
-      padding: 4px 8px;
-      font-size: 12px;
+      font-size: 16px;
       cursor: pointer;
+      line-height: 1;
+      padding: 2px;
+    }
+
+    .delete-btn:hover {
+      color: #ff4b5c;
     }
   </style>
 </head>
@@ -130,9 +135,9 @@
         const div = document.createElement('div');
         div.className = 'entry';
         div.innerHTML = `
+          <button class="delete-btn" onclick="deleteEntry(${index})" title="Delete">×</button>
           <time>${entry.date}</time>
           <p>${entry.text}</p>
-          <button class="delete-btn" onclick="deleteEntry(${index})">Delete</button>
         `;
         container.appendChild(div);
       });
