@@ -1,92 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register - Prerna</title>
   <style>
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #f1f1f1;
+      background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
     .register-box {
-      background: white;
+      background: rgba(255, 255, 255, 0.9);
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 350px;
+      width: 320px;
     }
-    input {
+    .register-box input {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-    button {
+    .register-box button {
+      width: 100%;
+      padding: 12px;
       background: #673ab7;
       color: white;
-      padding: 12px;
-      width: 100%;
       border: none;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
     }
-    button:hover {
-      background: #5e35b1;
+    .register-box h2 {
+      text-align: center;
     }
   </style>
 </head>
 <body>
+  <div class="register-box">
+    <h2>Register</h2>
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <input type="tel" id="phone" placeholder="Phone">
+    <button onclick="registerUser()">Register</button>
+  </div>
 
-<div class="register-box">
-  <h2>Register</h2>
-  <input type="text" id="regName" placeholder="Full Name" required>
-  <input type="email" id="regEmail" placeholder="Email" required>
-  <input type="tel" id="regPhone" placeholder="Phone Number" required>
-  <input type="file" id="regPhoto" accept="image/*" required>
-  <input type="password" id="regPassword" placeholder="Password" required>
-  <button onclick="registerUser()">Register</button>
-</div>
+  <script>
+    function registerUser() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const phone = document.getElementById("phone").value;
 
-<script>
-  function registerUser() {
-    const name = document.getElementById("regName").value;
-    const email = document.getElementById("regEmail").value;
-    const phone = document.getElementById("regPhone").value;
-    const photoInput = document.getElementById("regPhoto");
-    const password = document.getElementById("regPassword").value;
+      if (name && email && password) {
+        const user = {
+          name,
+          email,
+          password,
+          phone,
+          photo: "https://i.ibb.co/3rkfKQg/user-default.png"
+        };
 
-    if (!name || !email || !phone || !password || !photoInput.files[0]) {
-      alert("All fields are required!");
-      return;
+        localStorage.setItem(email, JSON.stringify(user));
+        alert("Registered successfully!");
+        window.location.href = "login.html";
+      } else {
+        alert("Please fill all required fields!");
+      }
     }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const photoURL = e.target.result;
-
-      const userData = {
-        name,
-        email,
-        phone,
-        password,
-        photo: photoURL
-      };
-
-      // Save using email as unique key
-      localStorage.setItem(`user_${email}`, JSON.stringify(userData));
-      alert("Registration successful!");
-      window.location.href = "login.html";
-    };
-    reader.readAsDataURL(photoInput.files[0]);
-  }
-</script>
-
+  </script>
 </body>
 </html>
