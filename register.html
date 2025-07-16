@@ -7,119 +7,84 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=1400&q=80') no-repeat center center/cover;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
+      background: #f1f1f1;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-
     .register-box {
-      background: rgba(255,255,255,0.95);
+      background: white;
       padding: 30px;
       border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       width: 350px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.2);
     }
-
-    .register-box h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .register-box input {
+    input {
       width: 100%;
       padding: 10px;
-      margin-bottom: 12px;
+      margin: 10px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
-      font-size: 16px;
     }
-
-    .register-box input[type="file"] {
-      padding: 5px;
-    }
-
-    .register-box button {
-      width: 100%;
-      padding: 10px;
+    button {
       background: #673ab7;
       color: white;
+      padding: 12px;
+      width: 100%;
       border: none;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
     }
-
-    .register-box button:hover {
+    button:hover {
       background: #5e35b1;
-    }
-
-    .register-box .links {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .register-box .links a {
-      color: #673ab7;
-      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
 <div class="register-box">
-  <h2>Create Account</h2>
-  <input type="text" id="name" placeholder="Full Name" required>
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="tel" id="phone" placeholder="Phone Number" required>
-  <input type="password" id="password" placeholder="Password" required>
-  <label>Upload Profile Picture:</label>
-  <input type="file" id="profilePic" accept="image/*">
-  <button onclick="handleRegister()">Register</button>
-  <div class="links">
-    <p>Already have an account? <a href="login.html">Login here</a></p>
-  </div>
+  <h2>Register</h2>
+  <input type="text" id="regName" placeholder="Full Name" required>
+  <input type="email" id="regEmail" placeholder="Email" required>
+  <input type="tel" id="regPhone" placeholder="Phone Number" required>
+  <input type="file" id="regPhoto" accept="image/*" required>
+  <input type="password" id="regPassword" placeholder="Password" required>
+  <button onclick="registerUser()">Register</button>
 </div>
 
 <script>
-  function handleRegister() {
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const password = document.getElementById('password').value;
-    const profileInput = document.getElementById('profilePic');
-    
-    if (!name || !email || !phone || !password) {
-      alert("Please fill all fields");
+  function registerUser() {
+    const name = document.getElementById("regName").value;
+    const email = document.getElementById("regEmail").value;
+    const phone = document.getElementById("regPhone").value;
+    const photoInput = document.getElementById("regPhoto");
+    const password = document.getElementById("regPassword").value;
+
+    if (!name || !email || !phone || !password || !photoInput.files[0]) {
+      alert("All fields are required!");
       return;
     }
 
     const reader = new FileReader();
-    reader.onload = function () {
-      const profilePicBase64 = reader.result;
+    reader.onload = function(e) {
+      const photoURL = e.target.result;
 
-      // Save data with email as key
       const userData = {
         name,
         email,
         phone,
         password,
-        photo: profilePicBase64 || ""
+        photo: photoURL
       };
 
+      // Save using email as unique key
       localStorage.setItem(`user_${email}`, JSON.stringify(userData));
-      alert("Registration successful! Please log in.");
+      alert("Registration successful!");
       window.location.href = "login.html";
     };
-
-    if (profileInput.files.length > 0) {
-      reader.readAsDataURL(profileInput.files[0]);
-    } else {
-      reader.onload(); // run directly without photo
-    }
+    reader.readAsDataURL(photoInput.files[0]);
   }
 </script>
 
