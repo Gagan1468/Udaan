@@ -5,76 +5,72 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
       height: 100vh;
-      background: url('https://cdn.pixabay.com/photo/2017/01/20/00/30/boy-1994849_1280.jpg') no-repeat center center/cover;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', sans-serif;
     }
     .login-box {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.9);
       padding: 30px;
       border-radius: 12px;
-      width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 320px;
     }
-    .login-box h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    input {
+    .login-box input {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-    button {
+    .login-box button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background: #673ab7;
       color: white;
       border: none;
       border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
     }
-    button:hover {
-      background: #5e35b1;
-    }
-    .links {
+    .login-box h2 {
       text-align: center;
-      margin-top: 10px;
-    }
-    .links a {
-      color: #673ab7;
-      text-decoration: none;
     }
   </style>
 </head>
 <body>
   <div class="login-box">
     <h2>Login</h2>
-    <input type="email" id="loginEmail" placeholder="Email" required>
-    <input type="password" id="loginPassword" placeholder="Password" required>
-    <button onclick="handleLogin()">Log In</button>
-    <div class="links">
-      <a href="register.html">Register</a>
-    </div>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="loginUser()">Login</button>
   </div>
 
   <script>
-    function handleLogin() {
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      const userData = JSON.parse(localStorage.getItem(email));
+    function loginUser() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-      if (userData && userData.password === password) {
-        localStorage.setItem("prernaLoggedIn", "true");
-        localStorage.setItem("prernaEmail", email);
-        window.location.href = "index.html";
+      const storedUser = localStorage.getItem(email);
+
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user.password === password) {
+          localStorage.setItem("prernaLoggedIn", "true");
+          localStorage.setItem("prernaEmail", user.email);
+          localStorage.setItem("prernaName", user.name);
+          localStorage.setItem("prernaPhone", user.phone || "");
+          localStorage.setItem("prernaPhoto", user.photo || "");
+
+          window.location.href = "index.html";
+        } else {
+          alert("Incorrect password.");
+        }
       } else {
-        alert("Invalid email or password");
+        alert("User not found. Please register.");
       }
     }
   </script>
