@@ -299,5 +299,26 @@
       }
     });
   </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const isLoggedIn = localStorage.getItem("prernaLoggedIn");
+
+    // Show or hide UI elements based on login
+    const profileMenu = document.getElementById("profileMenu");
+    const authLinks = document.getElementById("authLinks");
+
+    if (isLoggedIn === "true") {
+      // Logged in: hide login/register, show 3-dots
+      authLinks.style.display = "none";
+      profileMenu.style.display = "block";
+    } else {
+      // Not logged in: hide 3-dots, show login/register
+      profileMenu.style.display = "none";
+      authLinks.style.display = "block";
+    }
+  });
+</script>
+
 </body>
 </html>
