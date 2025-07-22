@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prerna – A Place to Feel Better</title>
+  <title>Prerna – Learn. Grow. Earn.</title>
 
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f9f9f9;
+      background: #f3f6f9;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #673ab7;
+      background-color: #1e88e5;
       color: white;
       padding: 30px;
       text-align: center;
@@ -29,7 +29,6 @@
 
     .auth-buttons a {
       color: white;
-      background-color: transparent;
       border: 2px solid white;
       padding: 8px 16px;
       margin-left: 10px;
@@ -41,7 +40,7 @@
 
     .auth-buttons a:hover {
       background-color: white;
-      color: #673ab7;
+      color: #1e88e5;
     }
 
     .dropdown-wrapper {
@@ -58,7 +57,6 @@
       border: none;
       color: white;
       cursor: pointer;
-      padding: 5px;
     }
 
     .dropdown-content {
@@ -85,9 +83,28 @@
       border-radius: 5px;
     }
 
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #0d47a1;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #333;
+    }
+
     .container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       max-width: 1000px;
       margin: 40px auto;
@@ -104,32 +121,36 @@
 
     .card h3 {
       margin-bottom: 10px;
+      color: #1565c0;
     }
 
-    .card button,
+    .card p {
+      font-size: 0.95rem;
+      color: #444;
+    }
+
     .card a.button {
-      background-color: #673ab7;
+      background-color: #1e88e5;
       color: white;
-      padding: 12px 24px;
-      font-size: 16px;
+      padding: 10px 20px;
+      font-size: 14px;
       border: none;
       border-radius: 8px;
-      cursor: pointer;
       text-decoration: none;
       display: inline-block;
       margin-top: 10px;
     }
 
-    .card button:hover,
     .card a.button:hover {
-      background-color: #5e35b1;
+      background-color: #1565c0;
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      color: #999;
+      color: #888;
       font-size: 14px;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -141,7 +162,6 @@
       <button class="dot-menu" onclick="toggleMenu()">⋮</button>
       <div class="dropdown-content" id="dropdown-content">
         <a href="profile.html">👤 Profile</a>
-        <a href="privacy.html">🔒 Privacy</a>
         <a href="settings.html">⚙️ Settings</a>
         <a href="#" onclick="logoutUser()">🚪 Logout</a>
       </div>
@@ -153,45 +173,40 @@
       <a href="register.html">Register</a>
     </div>
 
-    <h1>Welcome to Prerna</h1>
-    <p>You are not alone. Let us heal together.</p>
+    <h1>Prerna</h1>
+    <p>Learn. Grow. Earn. A step toward financial freedom 🚀</p>
   </header>
+
+  <section class="hero">
+    <h1>Unlock Your Financial Power</h1>
+    <p>From budgeting and investing to launching your first startup, Prerna helps you master money and entrepreneurship skills that actually matter.</p>
+  </section>
 
   <div class="container">
     <div class="card">
-      <h3>Mindfulness</h3>
-      <p>Practice calming exercises and breathing techniques.</p>
-      <a class="button" href="mindfulness_final.html">Start Now</a>
+      <h3>💸 Financial Literacy</h3>
+      <p>Understand budgeting, saving, and smart investing from scratch.</p>
+      <a class="button" href="learn.html">Start Learning</a>
     </div>
     <div class="card">
-      <h3>Talk to Buddy</h3>
-      <p>Share how you're feeling with our friendly chatbot.</p>
-      <a class="button" href="chat.html">Chat Now</a>
+      <h3>🚀 Entrepreneurship</h3>
+      <p>Turn ideas into startups with real-world tools and guides.</p>
+      <a class="button" href="startup.html">Explore</a>
     </div>
     <div class="card">
-      <h3>Journal</h3>
-      <p>Write down your thoughts and feelings safely.</p>
-      <a class="button" href="journal2.html">Open Journal</a>
+      <h3>📊 Financial Tools</h3>
+      <p>Use expense trackers, calculators, and idea generators for free.</p>
+      <a class="button" href="tools.html">Open Tools</a>
     </div>
     <div class="card">
-      <h3>Mood Games</h3>
-      <p>Play simple games to boost your mood and relax.</p>
-      <a class="button" href="games.html">Play Now</a>
-    </div>
-    <div class="card">
-      <h3>Contact Counsellor</h3>
-      <p>You are never alone!! We are here to listen...</p>
-      <a class="button" href="contact_counsellor.html">Start Now</a>
-    </div>
-    <div class="card">
-      <h3>To-Do-List</h3>
-      <p>Make your journey clear, concise and motivating!! Turn goals into reality!</p>
-      <a class="button" href="todo.html">Open To-Do List</a>
+      <h3>📚 Blog Zone</h3>
+      <p>Tips, tricks, and youth money hacks for smarter decisions.</p>
+      <a class="button" href="blog.html">Read Now</a>
     </div>
   </div>
 
   <footer>
-    &copy; 2025 Prerna | Built with love for kids’ mental wellness
+    &copy; 2025 Prerna | Empowering Youth for Financial Freedom 💼
   </footer>
 
   <!-- Scripts -->
@@ -207,7 +222,7 @@
       localStorage.removeItem('prernaName');
       localStorage.removeItem('prernaPhone');
       localStorage.removeItem('prernaPhoto');
-      location.reload(); // back to login state
+      location.reload();
     }
 
     window.onload = function () {
@@ -224,10 +239,5 @@
       }
     };
   </script>
-    <!-- Chatbot Script -->
-  <script src='https://www.noupe.com/embed/0198136fd83a791ea89fa00ccf4402499f08.js'></script>
-</body>
-</html>
-
 </body>
 </html>
