@@ -2,76 +2,172 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>About – Prerna</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About – Prerna Finance</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
       margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .about-container {
-      background: white;
-      padding: 30px;
-      border-radius: 14px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      max-width: 400px;
-      text-align: center;
-    }
-
-    .about-container h1 {
-      color: #673ab7;
-      margin-bottom: 10px;
-    }
-
-    .about-container p {
-      color: #444;
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .version {
-      margin-top: 20px;
-      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
       color: #333;
     }
 
-    .back-btn {
-      margin-top: 30px;
-      display: inline-block;
-      padding: 10px 20px;
-      background: #673ab7;
+    header {
+      background-color: #1e88e5;
       color: white;
-      border-radius: 6px;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #1565c0;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
       text-decoration: none;
+      margin: 0 15px;
       font-weight: bold;
     }
 
-    .back-btn:hover {
-      background: #5e35b1;
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: #1565c0;
+    }
+
+    .highlight {
+      color: #1e88e5;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+
+    .team-section {
+      margin-top: 60px;
+    }
+
+    .team-members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .member {
+      flex: 1 1 250px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .member img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .member h3 {
+      margin: 10px 0 5px;
+      color: #0d47a1;
+    }
+
+    .member p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+      background-color: #e0e0e0;
+      color: #666;
     }
   </style>
 </head>
 <body>
 
-  <div class="about-container">
-    <h1>About Prerna</h1>
+  <header>
+    <h1>About Prerna Finance</h1>
+    <p>Empowering youth with knowledge to earn, invest, and grow 🚀</p>
+  </header>
+
+  <nav>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="tools.html">Tools</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+    </div>
+    <div>
+      <a href="profile.html">👤</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Our Mission</h1>
     <p>
-      <strong>Prerna</strong> is your personal companion for better mental health. <br>
-      Designed for kids, it offers a safe and soothing space to talk, relax, and grow.
+      <span class="highlight">Prerna Finance</span> is a youth-focused platform created to simplify the journey of financial literacy and entrepreneurship for students, beginners, and hustlers. We believe everyone deserves the knowledge to manage money, start businesses, and achieve true financial freedom — no matter their background.
     </p>
     <p>
-      From mindfulness to fun games, journaling to talking with a friendly bot — 
-      Prerna helps you feel better, one step at a time.
+      We started as a mental wellness project but evolved into a startup hub where learning about <strong>budgeting</strong>, <strong>investing</strong>, and <strong>startup-building</strong> is made easy, fun, and real.
     </p>
-    <div class="version">App Version: 1.0</div>
-    <a class="back-btn" href="settings.html">← Back to Settings</a>
+
+    <h1>What We Offer</h1>
+    <p>
+      - 🔑 Free financial learning modules  
+      - 🚀 Entrepreneur startup guides  
+      - 📊 Easy tools like idea generators, loan calculators, and trackers  
+      - 💬 Community stories and growth hacks  
+      - 📚 Blog zone with real-world tips  
+    </p>
+
+    <div class="team-section">
+      <h1>Meet the Team</h1>
+      <div class="team-members">
+        <div class="member">
+          <img src="https://i.pravatar.cc/80?img=1" alt="Team member 1">
+          <h3>Hustle Bhai</h3>
+          <p>Founder & Dreamer</p>
+        </div>
+        <div class="member">
+          <img src="https://i.pravatar.cc/80?img=2" alt="Team member 2">
+          <h3>Code Buddy</h3>
+          <p>Frontend Dev & UX Lead</p>
+        </div>
+        <div class="member">
+          <img src="https://i.pravatar.cc/80?img=3" alt="Team member 3">
+          <h3>FinXpert</h3>
+          <p>Finance Content Creator</p>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <footer>
+    &copy; 2025 Prerna Finance | Made with ❤️ for desi hustlers
+  </footer>
 
 </body>
 </html>
