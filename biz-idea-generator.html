@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Biz Idea Generator – Udaan</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; padding: 30px; text-align: center; background: #f0f0f0; }
+    button { padding: 12px 20px; background: #6C63FF; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    #idea { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h2>Biz Idea Generator</h2>
+  <button onclick="generate()">Generate Idea</button>
+  <p id="idea"></p>
+
+  <script>
+    const ideas = [
+      "Online thrift store for college students 👕",
+      "Meal-prep & delivery for gym freaks 🍱",
+      "Eco-friendly packaging business 📦",
+      "Digital marketing agency for small biz 📲",
+      "Handmade candles with subscription 🕯️",
+      "Freelance resume-writing service ✍️"
+    ];
+    function generate() {
+      const random = ideas[Math.floor(Math.random() * ideas.length)];
+      document.getElementById('idea').innerText = random;
+    }
+  </script>
+</body>
+</html>
