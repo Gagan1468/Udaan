@@ -1,315 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Games - Prerna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Financial Quiz – Udaan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     body {
-      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #43ea7b, #2dbd6e, #007bff, #fdfbfb);
-      background-size: 400% 400%;
-      animation: gradientShift 10s ease infinite;
+      background-color: #f1f4fc;
+      margin: 0;
+      padding: 0;
     }
 
-    header {
-      padding: 20px;
+    .quiz-container {
+      max-width: 700px;
+      background: #fff;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #6C63FF;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .options li {
+      margin-bottom: 15px;
+    }
+
+    .options button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 2px solid #6C63FF;
       background-color: #fff;
-      text-align: center;
-      font-size: 24px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    main {
-      text-align: center;
-      padding: 40px;
-    }
-    .game-link {
-      display: inline-block;
-      margin: 20px;
-      padding: 20px 30px;
-      background: #007bff;
-      color: white;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 18px;
-    }
-    #chat-bubble {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 70px;
-      height: 70px;
-      background-color: #007bff;
-      border-radius: 50%;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      color: #333;
+      border-radius: 8px;
       cursor: pointer;
-      z-index: 1001;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .options button:hover {
+      background-color: #6C63FF;
       color: white;
     }
-    #chat-iframe {
-      position: fixed;
-      bottom: 100px;
-      right: 20px;
-      width: 400px;
-      height: 500px;
-      border: 2px solid #007bff;
-      border-radius: 10px;
-      display: none;
-      z-index: 1000;
+
+    .score {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-top: 30px;
+      color: #28a745;
     }
-    .quiz-option-btn {
-      background: linear-gradient(90deg, #43ea7b 0%, #2dbd6e 100%);
-      color: #fff;
+
+    .next-btn {
+      margin-top: 20px;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      background-color: #6C63FF;
+      color: white;
       border: none;
       border-radius: 8px;
-      padding: 12px 24px;
-      margin: 8px;
-      font-size: 17px;
-      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(34,139,34,0.15);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .quiz-option-btn:hover {
-      transform: scale(1.07);
-      box-shadow: 0 4px 16px rgba(34,139,34,0.25);
-      background: linear-gradient(90deg, #2dbd6e 0%, #43ea7b 100%);
-    }
-    .animated-gradient-text {
-      background: linear-gradient(90deg, #43ea7b, #2dbd6e, #007bff, #fdfbfb);
-      background-size: 400% 400%;
-      animation: gradientShift 3s linear infinite;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 24px;
-      margin: 8px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(34,139,34,0.15);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .animated-gradient-text:hover {
-      transform: scale(1.07);
-      box-shadow: 0 4px 16px rgba(34,139,34,0.25);
-      background-position: 100% 50%;
-    }
-    @keyframes gradientShift {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-    #quiz-final-result {
-      margin-top: 25px;
-      font-size: 22px;
-      color: #228B22;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <header>Relaxing Games</header>
-  <main>
-    <!-- Financial Market Quiz -->
-    <div style="margin-top:40px;">
-      <h2>Financial Market Quiz</h2>
-      <div id="quiz-question" style="font-size:18px; margin-bottom:15px;"></div>
-      <div id="quiz-options"></div>
-      <div id="quiz-result" style="margin-top:15px; font-weight:bold;"></div>
-      <button id="next-question" style="margin-top:15px; display:none;">Next Question</button>
-      <div id="quiz-final-result"></div>
-    </div>
 
-    <!-- Stock Price Guessing Game -->
-    <div style="margin-top:40px;">
-      <h2>Stock Price Guessing Game</h2>
-      <div>Guess the closing price of <b>ABC Corp</b> stock today (between ₹100 and ₹500):</div>
-      <input type="number" id="stock-guess" min="100" max="500" style="margin-top:10px;">
-      <button onclick="checkStockGuess()">Guess</button>
-      <div id="stock-result" style="margin-top:15px; font-weight:bold;"></div>
-    </div>
-  </main>
-
-  <div id="chat-bubble">??</div>
-  <iframe id="chat-iframe" src="https://chatannotator.com"></iframe>
+  <div class="quiz-container">
+    <h1>💸 Financial Quiz</h1>
+    <div class="question" id="question">Loading...</div>
+    <ul class="options" id="options"></ul>
+    <button class="next-btn" id="nextBtn" style="display: none;">Next</button>
+    <div class="score" id="scoreBox"></div>
+  </div>
 
   <script>
-    document.getElementById("chat-bubble").onclick = () => {
-      const iframe = document.getElementById("chat-iframe");
-      iframe.style.display = iframe.style.display === "none" ? "block" : "none";
-    };
-
-    // Financial Market Quiz Data
-    const quizQuestions = [
+    const quizData = [
       {
-        q: "What does 'IPO' stand for?",
-        options: ["Initial Public Offering", "International Price Order", "Investment Portfolio Option"],
-        answer: 0
+        question: "What is a budget?",
+        options: ["A way to spend more money", "A savings account", "A plan to manage income and expenses", "A bank loan"],
+        answer: "A plan to manage income and expenses"
       },
       {
-        q: "Which is NOT a type of financial market?",
-        options: ["Stock Market", "Bond Market", "Fruit Market"],
-        answer: 2
+        question: "Which of these is a good saving habit?",
+        options: ["Spending all your salary", "Buying every new gadget", "Saving a fixed % every month", "Not paying credit card bill"],
+        answer: "Saving a fixed % every month"
       },
       {
-        q: "What is a 'bull market'?",
-        options: ["Market going up", "Market going down", "Market staying flat"],
-        answer: 0
+        question: "What does 'EMI' stand for?",
+        options: ["Easy Money Installment", "Equated Monthly Instalment", "Electric Money Input", "Earning Monthly Income"],
+        answer: "Equated Monthly Instalment"
       },
       {
-        q: "Which is a safe investment?",
-        options: ["Lottery Ticket", "Government Bond", "Unregulated Crypto"],
-        answer: 1
+        question: "Which of the following is a type of investment?",
+        options: ["Fixed Deposit", "Shopping", "Taking Loans", "Paying Bills"],
+        answer: "Fixed Deposit"
       },
       {
-        q: "What does 'diversification' mean?",
-        options: ["Putting all money in one stock", "Spreading investments", "Buying only gold"],
-        answer: 1
-      },
-      {
-        q: "Sensex is an index of which country's stock market?",
-        options: ["India", "USA", "Japan"],
-        answer: 0
-      },
-      {
-        q: "What is a mutual fund?",
-        options: ["A group investment", "A type of loan", "A government tax"],
-        answer: 0
-      },
-      {
-        q: "Which is a financial asset?",
-        options: ["Car", "Stock", "Shoes"],
-        answer: 1
+        question: "Why is it important to have an emergency fund?",
+        options: ["For vacation trips", "To spend on weekends", "To buy gadgets", "To handle unexpected expenses"],
+        answer: "To handle unexpected expenses"
       }
     ];
 
-    // Add fill-in-the-blank questions
-    const fillBlanks = [
-      {
-        q: "The main stock exchange in India is called ______.",
-        answer: "NSE"
-      },
-      {
-        q: "A ______ market is when prices are falling.",
-        answer: "bear"
-      },
-      {
-        q: "Mutual funds pool money from many ______.",
-        answer: "investors"
-      }
-    ];
+    let currentQuestion = 0;
+    let score = 0;
 
-    // Combine MCQs and fill-in-the-blanks randomly
-    let allQuestions = [];
-    quizQuestions.forEach(q => allQuestions.push({ type: "mcq", ...q }));
-    fillBlanks.forEach(q => allQuestions.push({ type: "blank", ...q }));
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const nextBtn = document.getElementById("nextBtn");
+    const scoreBox = document.getElementById("scoreBox");
 
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      questionEl.textContent = `Q${currentQuestion + 1}. ${q.question}`;
+      optionsEl.innerHTML = "";
+      nextBtn.style.display = "none";
+
+      q.options.forEach(option => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.textContent = option;
+        btn.onclick = () => checkAnswer(btn, q.answer);
+        li.appendChild(btn);
+        optionsEl.appendChild(li);
+      });
     }
-    allQuestions = shuffle(allQuestions);
 
-    let quizScore = 0;
-    let quizIndex = 0;
-
-    function showQuizQuestion() {
-      if (quizIndex >= allQuestions.length) {
-        document.getElementById('quiz-question').innerText = '';
-        document.getElementById('quiz-options').innerHTML = '';
-        document.getElementById('quiz-result').innerText = '';
-        document.getElementById('next-question').style.display = 'none';
-        document.getElementById('quiz-final-result').innerText =
-          `Your Score: ${quizScore} / ${allQuestions.length}`;
-        return;
-      }
-      document.getElementById('quiz-final-result').innerText = '';
-      const q = allQuestions[quizIndex];
-      document.getElementById('quiz-result').innerText = '';
-      document.getElementById('next-question').style.display = 'none';
-      const optionsDiv = document.getElementById('quiz-options');
-      optionsDiv.innerHTML = '';
-
-      if (q.type === "mcq") {
-        document.getElementById('quiz-question').innerText = q.q;
-        q.options.forEach((opt, i) => {
-          const btn = document.createElement('button');
-          btn.innerText = opt;
-          btn.className = 'quiz-option-btn animated-gradient-text';
-          btn.onclick = () => checkQuizAnswer(i, btn, q.answer, q.options[q.answer]);
-          optionsDiv.appendChild(btn);
+    function checkAnswer(button, correctAnswer) {
+      if (button.textContent === correctAnswer) {
+        score++;
+        button.style.backgroundColor = "#28a745";
+        button.style.color = "#fff";
+      } else {
+        button.style.backgroundColor = "#dc3545";
+        button.style.color = "#fff";
+        // show correct one
+        Array.from(optionsEl.children).forEach(li => {
+          if (li.textContent === correctAnswer) {
+            li.firstChild.style.backgroundColor = "#28a745";
+            li.firstChild.style.color = "#fff";
+          }
         });
-      } else if (q.type === "blank") {
-        document.getElementById('quiz-question').innerText = q.q;
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'quiz-option-btn';
-        input.style.background = "#fff";
-        input.style.color = "#228B22";
-        input.style.fontWeight = "bold";
-        input.style.width = "180px";
-        input.style.textAlign = "center";
-        input.placeholder = "Type your answer";
-        optionsDiv.appendChild(input);
-
-        const btn = document.createElement('button');
-        btn.innerText = "Submit";
-        btn.className = 'quiz-option-btn animated-gradient-text';
-        btn.onclick = () => checkBlankAnswer(input.value, btn, q.answer);
-        optionsDiv.appendChild(btn);
       }
+      disableAll();
+      nextBtn.style.display = "block";
     }
 
-    function checkQuizAnswer(selected, btn, correctAnswer, correctText) {
-      if (selected === correctAnswer) {
-        document.getElementById('quiz-result').innerText = "Correct!";
-        quizScore++;
-        btn.style.background = "linear-gradient(90deg, #43ea7b 0%, #228B22 100%)";
+    function disableAll() {
+      const allButtons = document.querySelectorAll(".options button");
+      allButtons.forEach(btn => {
+        btn.disabled = true;
+        btn.style.cursor = "not-allowed";
+      });
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
       } else {
-        document.getElementById('quiz-result').innerText = `Wrong! Correct answer: ${correctText}`;
-        btn.style.background = "linear-gradient(90deg, #e74c3c 0%, #43ea7b 100%)";
+        showScore();
       }
-      Array.from(document.getElementsByClassName('quiz-option-btn')).forEach(b => b.disabled = true);
-      document.getElementById('next-question').style.display = 'inline-block';
+    });
+
+    function showScore() {
+      questionEl.style.display = "none";
+      optionsEl.style.display = "none";
+      nextBtn.style.display = "none";
+      scoreBox.innerHTML = `🎉 You scored ${score} out of ${quizData.length}`;
     }
 
-    function checkBlankAnswer(userAnswer, btn, correctAnswer) {
-      if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-        document.getElementById('quiz-result').innerText = "Correct!";
-        quizScore++;
-        btn.style.background = "linear-gradient(90deg, #43ea7b 0%, #228B22 100%)";
-      } else {
-        document.getElementById('quiz-result').innerText = `Wrong! Correct answer: ${correctAnswer}`;
-        btn.style.background = "linear-gradient(90deg, #e74c3c 0%, #43ea7b 100%)";
-      }
-      Array.from(document.getElementsByClassName('quiz-option-btn')).forEach(b => b.disabled = true);
-      document.getElementById('next-question').style.display = 'inline-block';
-    }
-
-    document.getElementById('next-question').onclick = () => {
-      quizIndex++;
-      showQuizQuestion();
-    };
-
-    showQuizQuestion();
-
-    // Stock Price Guessing Game
-    const stockPrice = Math.floor(Math.random() * 401) + 100; // Random price between 100 and 500
-    function checkStockGuess() {
-      const guess = Number(document.getElementById('stock-guess').value);
-      if (!guess) {
-        document.getElementById('stock-result').innerText = "Enter a valid number!";
-        return;
-      }
-      if (guess === stockPrice) {
-        document.getElementById('stock-result').innerText = "🎉 Perfect! You guessed the price!";
-      } else if (Math.abs)
+    loadQuestion();
+  </script>
+</body>
+</html>
