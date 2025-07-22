@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Investment Planner – Udaan</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; text-align: center; padding: 30px; background: #f5f5f5; }
+    input, button { padding: 10px; margin: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Investment Planner</h2>
+  <input type="number" id="goal" placeholder="Goal Amount (₹)">
+  <input type="number" id="years" placeholder="Years to Goal">
+  <input type="number" id="rate" placeholder="Expected Return (%)">
+  <button onclick="plan()">Calculate Monthly Investment</button>
+  <p id="output"></p>
+
+  <script>
+    function plan() {
+      let FV = parseFloat(document.getElementById('goal').value);
+      let r = parseFloat(document.getElementById('rate').value) / 12 / 100;
+      let n = parseFloat(document.getElementById('years').value) * 12;
+
+      let PMT = FV * r / (Math.pow(1 + r, n) - 1);
+      document.getElementById('output').innerText = `Invest ₹${PMT.toFixed(2)} per month`;
+    }
+  </script>
+</body>
+</html>
