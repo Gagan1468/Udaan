@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Budget Tracker – Udaan</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #f0f0f0; padding: 30px; text-align: center; }
+    input, button { padding: 10px; margin: 10px; border-radius: 5px; }
+    .log { margin-top: 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>Budget Tracker</h2>
+  <input type="number" id="income" placeholder="Monthly Income (₹)">
+  <input type="number" id="expenses" placeholder="Monthly Expenses (₹)">
+  <button onclick="trackBudget()">Track</button>
+  <div class="log" id="log"></div>
+
+  <script>
+    function trackBudget() {
+      const income = parseFloat(document.getElementById('income').value);
+      const expenses = parseFloat(document.getElementById('expenses').value);
+      const balance = income - expenses;
+
+      let message = balance >= 0 
+        ? `You are saving ₹${balance.toFixed(2)} this month 🎉`
+        : `You are overspending ₹${Math.abs(balance).toFixed(2)} 😬`;
+
+      document.getElementById('log').innerText = message;
+    }
+  </script>
+</body>
+</html>
