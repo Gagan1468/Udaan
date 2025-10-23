@@ -173,6 +173,47 @@
         <a href="#" onclick="logoutUser()">🚪 Logout</a>
       </div>
     </div>
+    <div id="onboardModal" class="onboard-modal">
+  <div class="onboard-content">
+    
+    <!-- Step 1: Language -->
+    <div class="onboard-step" id="stepLang">
+      <h2>Select Language</h2>
+      <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="other">Other</option>
+      </select>
+      <button onclick="nextStep('lang')">Next</button>
+    </div>
+
+    <!-- Step 2: Gender -->
+    <div class="onboard-step" id="stepGender">
+      <h2>Select Gender</h2>
+      <button onclick="nextStep('male')">Male</button>
+      <button onclick="nextStep('female')">Female</button>
+      <button onclick="nextStep('other')">Other</button>
+    </div>
+
+    <!-- Step 3: Register -->
+    <div class="onboard-step" id="stepRegister">
+      <h2>Register Account</h2>
+      <input type="text" id="regName" placeholder="Full Name" />
+      <input type="email" id="regEmail" placeholder="Email" />
+      <input type="password" id="regPass" placeholder="Password" />
+      <button onclick="nextStep('register')">Register</button>
+    </div>
+
+    <!-- Step 4: Login -->
+    <div class="onboard-step" id="stepLogin">
+      <h2>Login</h2>
+      <input type="email" id="loginEmail" placeholder="Email" />
+      <input type="password" id="loginPass" placeholder="Password" />
+      <button onclick="nextStep('login')">Login</button>
+    </div>
+  </div>
+</div>
+
 
     <!-- Login/Register Buttons -->
     <div class="auth-buttons" id="authLinks">
@@ -260,4 +301,5 @@
   <script src='https://www.noupe.com/embed/01983a7c61f7796895c23c4d4f7d4a145a00.js'></script>
 </body>
 </html>
+
 
