@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Udaan Onboarding</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+    body {
+      height: 100vh;
+      background: linear-gradient(to right, #bbdefb, #e3f2fd);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .onboard-container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      width: 320px;
+      text-align: center;
+    }
+
+    h2 { color: #0d47a1; margin-bottom: 20px; }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #1e88e5;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    button:hover { background-color: #1565c0; }
+
+    .step-screen { display: none; }
+    .active { display: block; }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: #1e88e5;
+      transition: width 0.4s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="onboard-container">
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+
+    <!-- Step 1: Language -->
+    <div class="step-screen active" id="step1">
+      <h2>Select Language</h2>
+      <select id="language">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+      </select>
+      <button onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 2: Gender -->
+    <div class="step-screen" id="step2">
+      <h2>Select Gender</h2>
+      <button onclick="selectGender('Male')">Male</button>
+      <button onclick="selectGender('Female')">Female</button>
+      <button onclick="selectGender('Other')">Other</button>
+    </div>
+
+    <!-- Step 3: Register -->
+    <div class="step-screen" id="step3">
+      <h2>Register</h2>
+      <input type="text" id="regName" placeholder="Full Name" required>
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <input type="password" id="regPass" placeholder="Password" required>
+      <button onclick="nextStep()">Register</button>
+    </div>
+
+    <!-- Step 4: Login -->
+    <div class="step-screen" id="step4">
+      <h2>Login</h2>
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPass" placeholder="Password" required>
+      <button onclick="finishOnboarding()">Login</button>
+    </div>
+  </div>
+
+  <script>
+    let step = 1;
+
+    function nextStep() {
+      document.getElementById("step" + step).classList.remove("active");
+      step++;
+      document.getElementById("step" + step).classList.add("active");
+      updateProgress();
+    }
+
+    function selectGender(value) {
+      localStorage.setItem("gender", value);
+      nextStep();
+    }
+
+    function updateProgress() {
+      const progress = document.getElementById("progress");
+      const percent = step * 25;
+      progress.style.width = percent + "%";
+    }
+
+    function finishOnboarding() {
+      localStorage.setItem("onboardingDone", "true");
+      window.location.href = "main.html"; // Redirect to your Udaan main webpage
+    }
+
+    window.onload = () => {
+      if (localStorage.getItem("onboardingDone")) {
+        window.location.href = "main.html";
+      }
+    };
+  </script>
+</body>
+</html>
