@@ -13,34 +13,6 @@
       padding: 0;
     }
 
-    .onboard-modal {
-  position: fixed;
-  z-index: 9999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.onboard-content {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
-  width: 280px;
-}
-
-.onboard-step {
-  display: none;
-}
-
-.onboard-step.active {
-  display: block;
-}
-
-
     header {
       background-color: #1e88e5;
       color: white;
@@ -201,47 +173,6 @@
         <a href="#" onclick="logoutUser()">🚪 Logout</a>
       </div>
     </div>
-    <div id="onboardModal" class="onboard-modal">
-  <div class="onboard-content">
-    
-    <!-- Step 1: Language -->
-    <div class="onboard-step" id="stepLang">
-      <h2>Select Language</h2>
-      <select id="languageSelect">
-        <option value="en">English</option>
-        <option value="hi">Hindi</option>
-        <option value="other">Other</option>
-      </select>
-      <button onclick="nextStep('lang')">Next</button>
-    </div>
-
-    <!-- Step 2: Gender -->
-    <div class="onboard-step" id="stepGender">
-      <h2>Select Gender</h2>
-      <button onclick="nextStep('male')">Male</button>
-      <button onclick="nextStep('female')">Female</button>
-      <button onclick="nextStep('other')">Other</button>
-    </div>
-
-    <!-- Step 3: Register -->
-    <div class="onboard-step" id="stepRegister">
-      <h2>Register Account</h2>
-      <input type="text" id="regName" placeholder="Full Name" />
-      <input type="email" id="regEmail" placeholder="Email" />
-      <input type="password" id="regPass" placeholder="Password" />
-      <button onclick="nextStep('register')">Register</button>
-    </div>
-
-    <!-- Step 4: Login -->
-    <div class="onboard-step" id="stepLogin">
-      <h2>Login</h2>
-      <input type="email" id="loginEmail" placeholder="Email" />
-      <input type="password" id="loginPass" placeholder="Password" />
-      <button onclick="nextStep('login')">Login</button>
-    </div>
-  </div>
-</div>
-
 
     <!-- Login/Register Buttons -->
     <div class="auth-buttons" id="authLinks">
@@ -324,37 +255,6 @@
         authLinks.style.display = 'block';
       }
     };
-
-    function startOnboarding() {
-  const onboardShown = localStorage.getItem('onboardDone');
-  if (onboardShown) return; // skip if already done
-
-  const steps = ['stepLang', 'stepGender', 'stepRegister', 'stepLogin'];
-  let current = 0;
-
-  function showStep(index) {
-    steps.forEach(id => document.getElementById(id).classList.remove('active'));
-    document.getElementById(steps[index]).classList.add('active');
-  }
-
-  showStep(current);
-  document.getElementById('onboardModal').style.display = 'flex';
-
-  window.nextStep = (action) => {
-    if (current < steps.length - 1) {
-      current++;
-      showStep(current);
-    } else {
-      localStorage.setItem('onboardDone', 'true');
-      document.getElementById('onboardModal').style.display = 'none';
-    }
-  };
-}
-
-window.onload = function() {
-  startOnboarding(); // show language→gender→register→login before website
-};
-
   </script>
 
   <script src='https://www.noupe.com/embed/01983a7c61f7796895c23c4d4f7d4a145a00.js'></script>
@@ -362,4 +262,4 @@ window.onload = function() {
 </html>
 
 
-
+bhai ye code mere main webpage ka hai ab tujhe mna isme add akrna hai ki jaise hi koi website khole toh usse pahle language choose kanre ka aaye fir gendeer aur phir directly register ka tab khule phir login ka phir main webpage
