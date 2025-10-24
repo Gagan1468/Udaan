@@ -1,255 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Udaan – By APS No.2</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f3f6f9;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Udaan – By APS No.2</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background: #f3f6f9; margin: 0; padding: 0; }
 
-        header {
-            background-color: #1e88e5;
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
+/* Header / Navbar */
+header {
+  background-color: #1e88e5;
+  color: white;
+  position: relative;
+  /* use flex layout for navbar */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px; /* smaller vertical padding so title sits nicely in corner */
+  box-sizing: border-box;
+}
 
-        .auth-buttons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
+/* Brand / Title (left) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 8px; /* proper padding from left corner */
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: white;
+  text-decoration: none;
 
-        .auth-buttons a {
-            color: white;
-            border: 2px solid white;
-            padding: 8px 16px;
-            margin-left: 10px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+  /* important for flex layout: allow shrinking and prevent overflow */
+  flex: 1 1 auto;
+  min-width: 0; /* allows text-overflow to work inside flex item */
+}
+.brand img { flex: 0 0 auto; }
+.brand span {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* truncate long title on small screens */
+}
 
-        .auth-buttons a:hover {
-            background-color: white;
-            color: #1e88e5;
-        }
+/* Desktop nav links (optional) */
+.nav-desktop {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-left: 24px;
+}
+.nav-desktop a {
+  color: rgba(255,255,255,0.95);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.nav-desktop a:hover {
+  background: rgba(255,255,255,0.12);
+}
 
-        .dropdown-wrapper {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            display: none;
-        }
+/* Right-side auth buttons */
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.auth-buttons a {
+  color: white;
+  border: 2px solid white;
+  padding: 8px 14px;
+  margin-left: 0;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  background: transparent;
+}
+.auth-buttons a:hover { background-color: white; color: #1e88e5; }
 
-        .dot-menu {
-            font-size: 24px;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-        }
+/* Profile / three-dot dropdown (mobile) */
+.dropdown-wrapper {
+  position: relative;
+  z-index: 1000;
+  display: none; /* shown on mobile via media query */
+  margin-left: 12px;    /* small gap from the brand */
+  /* if header is flex, use margin-left:auto to push it to far right when needed */
+  margin-left: auto;
+}
+.dot-menu {
+  font-size: 22px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 6px;
+  line-height: 1;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;    /* align to wrapper's right edge */
+  left: auto;
+  top: 42px;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  padding: 12px 8px;
+  border-radius: 10px;
+  z-index: 2000;
+}
+.dropdown-content a {
+  color: #333;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+}
+.dropdown-content a:hover { background-color: #f1f1f1; border-radius: 5px; }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            padding: 12px 16px;
-            border-radius: 10px;
-            z-index: 1;
-        }
+/* Hero and cards keep their previous styles */
+.hero { text-align: center; padding: 60px 20px; background: linear-gradient(to right, #e3f2fd, #ffffff); }
+.hero h1 { font-size: 2.5rem; margin-bottom: 10px; color: #0d47a1; }
+.hero p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; color: #333; }
+.container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 40px auto; padding: 20px; background-image: url('images.jpg'); background-size: cover; background-position: center; border-radius: 12px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); }
+.card { background: rgba(255, 255, 255, 0.92); padding: 20px; border-radius: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.08); text-align: center; }
+.card h3 { margin-bottom: 10px; color: #1565c0; }
+.card p { font-size: 0.95rem; color: #444; }
+.card a.button { background-color: #1e88e5; color: white; padding: 10px 20px; font-size: 14px; border: none; border-radius: 8px; text-decoration: none; display: inline-block; margin-top: 10px; }
+.card a.button:hover { background-color: #1565c0; }
+footer { text-align: center; padding: 20px; color: #888; font-size: 14px; margin-top: 40px; }
 
-        .dropdown-content a {
-            color: #333;
-            padding: 8px 0;
-            text-decoration: none;
-            display: block;
-            font-weight: 500;
-        }
+/* Responsive behavior */
+/* Mobile first: show dot menu and hide desktop nav */
+@media (max-width: 767px) {
+  .nav-desktop { display: none; }
+  .auth-buttons { display: none; } /* hide full auth buttons on small screens */
+  .dropdown-wrapper { display: block; } /* show three dots */
+  header { padding: 12px 14px; }
+  .brand { padding-left: 6px; font-size: 1.05rem; }
+}
 
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-            border-radius: 5px;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(to right, #e3f2fd, #ffffff);
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #0d47a1;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-            color: #333;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background-image: url('images.jpg');
-            background-size: cover;
-            background-position: center;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.92);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-            color: #1565c0;
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            color: #444;
-        }
-
-        .card a.button {
-            background-color: #1e88e5;
-            color: white;
-            padding: 10px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        .card a.button:hover {
-            background-color: #1565c0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #888;
-            font-size: 14px;
-            margin-top: 40px;
-        }
-    </style>
+/* Desktop: show full nav & auth buttons, hide three-dots */
+@media (min-width: 768px) {
+  .dropdown-wrapper { display: none; }
+  .nav-desktop { display: flex; }
+  .auth-buttons { display: flex; }
+}
+</style>
 </head>
 <body>
-    <header>
-        <div class="dropdown-wrapper" id="profileMenu">
-            <button class="dot-menu" onclick="toggleMenu()">⋮</button>
-            <div class="dropdown-content" id="dropdown-content">
-                <a href="profile.html">👤 Profile</a>
-                <a href="settings.html">⚙️ Settings</a>
-                <a href="#" onclick="logoutUser()">🚪 Logout</a>
-            </div>
-        </div>
+<header>
+  <!-- left: brand / title -->
+  <a class="brand" href="index.html">
+    <img src="favicon.png" style="width:30px;height:30px;border-radius:6px;object-fit:cover">
+    <span>Udaan – A step towards Richness</span>
+  </a>
 
-        <div class="auth-buttons" id="authLinks">
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-        </div>
+  <!-- optional desktop nav links -->
+  <nav class="nav-desktop" aria-label="Primary">
+    <a href="financial-literacy.html">Financial Literacy</a>
+    <a href="entrepreneurship.html">Entrepreneurship</a>
+    <a href="financial-tools.html">Tools</a>
+    <a href="blog.html">Blog</a>
+  </nav>
 
-        <h1>Udaan – A step towards Richness</h1>
-        <p>Learn. Grow. Earn. A step toward financial freedom 🚀</p>
-    </header>
-
-    <section class="hero">
-        <h1>Unlock Your Financial Power</h1>
-        <p>From budgeting and investing to launching your first startup, Prerna helps you master money and entrepreneurship skills that actually matter.</p>
-    </section>
-
-    <div class="container">
-        <div class="card">
-            <h3>💸 Financial Literacy</h3>
-            <p>Understand budgeting, saving, and smart investing from scratch.</p>
-            <a class="button" href="financial-literacy.html">Start Learning</a>
-        </div>
-        <div class="card">
-            <h3>🚀 Entrepreneurship</h3>
-            <p>Turn ideas into startups with real-world tools and guides.</p>
-            <a class="button" href="entrepreneurship.html">Explore</a>
-        </div>
-        <div class="card">
-            <h3>📊 Financial Tools</h3>
-            <p>Use expense trackers, calculators, and idea generators for free.</p>
-            <a class="button" href="financial-tools.html">Open Tools</a>
-        </div>
-        <div class="card">
-            <h3>📚 Blog Zone</h3>
-            <p>Tips, tricks, and youth money hacks for smarter decisions.</p>
-            <a class="button" href="blog.html">Read Now</a>
-        </div>
-        <div class="card">
-            <h3>💸 Financial Goal</h3>
-            <p>Make a step towards Richness</p>
-            <a class="button" href="financial goal.html">Start going</a>
-        </div>
-        <div class="card">
-            <h3>💸 Contact a Counsellor</h3>
-            <p>Ask Your Doubts About Financial Literacy and Entrepreneurship</p>
-            <a class="button" href="contact_counsellor.html">Start Asking</a>
-        </div>
+  <!-- mobile three-dot menu (left/top on small screens) -->
+  <div class="dropdown-wrapper" id="profileMenu">
+    <button class="dot-menu" onclick="toggleMenu()" aria-label="Open menu">⋮</button>
+    <div class="dropdown-content" id="dropdown-content">
+      <a href="profile.html">👤 Profile</a>
+      <a href="settings.html">⚙️ Settings</a>
+      <a href="#" onclick="logoutUser()">🚪 Logout</a>
+      <hr style="border:none;border-top:1px solid #eee;margin:8px 0;">
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
     </div>
+  </div>
 
-    <footer>
-        &copy; 2025 Udaan | Powered By Atal Technologies Pvt Ltd.
-    </footer>
+  <!-- right: auth buttons for desktop -->
+  <div class="auth-buttons" id="authLinks">
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+  </div>
+</header>
 
-    <script>
-        function toggleMenu() {
-            const dropdown = document.getElementById("dropdown-content");
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
+<section class="hero">
+<h1>Unlock Your Financial Power</h1>
+<p>From budgeting and investing to launching your first startup, Prerna helps you master money and entrepreneurship skills that actually matter.</p>
+</section>
 
-        function logoutUser() {
-            localStorage.removeItem('prernaLoggedIn');
-            localStorage.removeItem('prernaEmail');
-            localStorage.removeItem('prernaName');
-            localStorage.removeItem('prernaPhone');
-            localStorage.removeItem('prernaPhoto');
-            location.reload();
-        }
+<div class="container">
+<div class="card">
+<h3>💸 Financial Literacy</h3>
+<p>Understand budgeting, saving, and smart investing from scratch.</p>
+<a class="button" href="financial-literacy.html">Start Learning</a>
+</div>
+<div class="card">
+<h3>🚀 Entrepreneurship</h3>
+<p>Turn ideas into startups with real-world tools and guides.</p>
+<a class="button" href="entrepreneurship.html">Explore</a>
+</div>
+<div class="card">
+<h3>📊 Financial Tools</h3>
+<p>Use expense trackers, calculators, and idea generators for free.</p>
+<a class="button" href="financial-tools.html">Open Tools</a>
+</div>
+<div class="card">
+<h3>📚 Blog Zone</h3>
+<p>Tips, tricks, and youth money hacks for smarter decisions.</p>
+<a class="button" href="blog.html">Read Now</a>
+</div>
+<div class="card">
+<h3>💸 Financial Goal</h3>
+<p>Make a step towards Richness</p>
+<a class="button" href="financial goal.html">Start going</a>
+</div>
+<div class="card">
+<h3>💸 Contact a Counsellor</h3>
+<p>Ask Your Doubts About Financial Literacy and Entrepreneurship</p>
+<a class="button" href="contact_counsellor.html">Start Asking</a>
+</div>
+</div>
 
-        window.onload = function () {
-            const loggedIn = localStorage.getItem('prernaLoggedIn');
-            const profileMenu = document.getElementById('profileMenu');
-            const authLinks = document.getElementById('authLinks');
+<footer>
+&copy; 2025 Udaan | Powered By Atal Technologies Pvt Ltd.
+</footer>
 
-            if (loggedIn === 'true') {
-                profileMenu.style.display = 'block';
-                authLinks.style.display = 'none';
-            } else {
-                profileMenu.style.display = 'none';
-                authLinks.style.display = 'block';
-            }
-        };
-    </script>
+<script>
+function toggleMenu() {
+  const dropdown = document.getElementById("dropdown-content");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
 
-    <script src='https://www.noupe.com/embed/01983a7c61f7796895c23c4d4f7d4a145a00.js'></script>
+/* close dropdown if click outside */
+document.addEventListener('click', function (e) {
+  const wrapper = document.getElementById('profileMenu');
+  const dropdown = document.getElementById('dropdown-content');
+  if (!wrapper.contains(e.target)) {
+    if (dropdown) dropdown.style.display = 'none';
+  }
+});
+
+function logoutUser() {
+  localStorage.removeItem('prernaLoggedIn');
+  localStorage.removeItem('prernaEmail');
+  localStorage.removeItem('prernaName');
+  localStorage.removeItem('prernaPhone');
+  localStorage.removeItem('prernaPhoto');
+  location.reload();
+}
+
+window.onload = function () {
+  const loggedIn = localStorage.getItem('prernaLoggedIn');
+  const profileMenu = document.getElementById('profileMenu');
+  const authLinks = document.getElementById('authLinks');
+  if (loggedIn === 'true') {
+    if (profileMenu) profileMenu.style.display = (window.innerWidth < 768) ? 'block' : 'none';
+    if (authLinks) authLinks.style.display = (window.innerWidth >= 768) ? 'none' : 'none';
+    // On desktop we might show profile info somewhere else; for now hide auth links when logged in
+    if (authLinks) authLinks.style.display = 'none';
+  } else {
+    // Not logged in: show auth buttons on desktop, show menu on mobile (menu already includes login/register)
+    if (profileMenu) profileMenu.style.display = (window.innerWidth < 768) ? 'block' : 'none';
+    if (authLinks) authLinks.style.display = (window.innerWidth >= 768) ? 'flex' : 'none';
+  }
+};
+
+/* handle window resize to toggle showing mobile/desktop controls */
+window.addEventListener('resize', function () {
+  const profileMenu = document.getElementById('profileMenu');
+  const authLinks = document.getElementById('authLinks');
+  if (window.innerWidth >= 768) {
+    if (profileMenu) profileMenu.style.display = 'none';
+    if (authLinks) authLinks.style.display = 'flex';
+  } else {
+    if (profileMenu) profileMenu.style.display = 'block';
+    if (authLinks) authLinks.style.display = 'none';
+  }
+});
+</script>
+<script src='https://www.noupe.com/embed/01983a7c61f7796895c23c4d4f7d4a145a00.js'></script>
 </body>
 </html>
