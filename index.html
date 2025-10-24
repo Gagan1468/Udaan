@@ -26,7 +26,8 @@ header {
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; transition: transform 0.3s ease; }
 .brand img:hover { transform: scale(1.1); }
-.brand span { font-size: 1.2rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brand span { font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: color 0.3s; }
+.brand span:hover { color: #cce4ff; } /* hover effect like second code */
 
 /* Desktop nav links */
 .nav-desktop {
@@ -194,7 +195,7 @@ header {
 <header>
   <a class="brand" href="index.html">
     <img src="Modern%20Logo%20with%20Blue%20Bird%20and%20%27U%27%20Design.png" alt="Udaan Logo">
-    <span>Udaan – A step towards Richness</span>
+    <span>Udaan</span>
   </a>
 
   <!-- Desktop Nav -->
@@ -340,16 +341,8 @@ window.addEventListener('resize', function() {
     if (profileMenu) profileMenu.style.display = 'block';
     if (authLinks) authLinks.style.display = 'none';
   }
-
-  <!-- Noupe AI placeholder -->
-<div id="noupe-ai-widget"></div>
-
-<!-- Noupe AI script -->
-<script src="https://www.noupe.com/embed/01983a7c61f7796895c23c4d4f7d4a145a00.js"></script>
-
 });
 </script>
 
 </body>
 </html>
-
