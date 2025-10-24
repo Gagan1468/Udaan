@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Register – Prerna</title>
   <style>
     body {
@@ -14,7 +15,7 @@
       height: 100vh;
       margin: 0;
     }
-    .register-box {
+    .register-box, .otp-box {
       background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 10px;
@@ -45,46 +46,97 @@
   </style>
 </head>
 <body>
-
-  <div class="register-box">
+  <div class="register-box" id="registerBox">
     <h2>Register for Prerna</h2>
-    <input type="text" id="regName" placeholder="Full Name" required>
-    <input type="email" id="regEmail" placeholder="Email Address" required>
-    <input type="tel" id="regPhone" placeholder="Phone Number" required>
-    <input type="password" id="regPassword" placeholder="Password" required>
-    <button onclick="registerUser()">Register</button>
+    <input type="text" id="regName" placeholder="Full Name" required />
+    <input type="email" id="regEmail" placeholder="Email Address" required />
+    <input type="tel" id="regPhone" placeholder="Phone Number" required />
+    <input type="password" id="regPassword" placeholder="Password" required />
+    <button id="sign-in-button" onclick="sendOTP()">Send OTP</button>
   </div>
 
-  <script>
-    function registerUser() {
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const phone = document.getElementById('regPhone').value.trim();
-      const password = document.getElementById('regPassword').value.trim();
+  <div class="otp-box" id="otpBox" style="display:none;">
+    <h2>Enter OTP</h2>
+    <input type="text" id="otpInput" placeholder="Enter OTP" maxlength="6" />
+    <button onclick="verifyOTP()">Verify OTP</button>
+  </div>
 
-      if (!name || !email || !phone || !password) {
-        alert('Please fill in all fields.');
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAjSkNftpiTafS5XV9bz6jSUdn-btbL0uQ",
+      authDomain: "udaan-78b42.firebaseapp.com",
+      projectId: "udaan-78b42",
+      storageBucket: "udaan-78b42.firebasestorage.app",
+      messagingSenderId: "264783425309",
+      appId: "1:264783425309:web:8ad82d9a165b94933cfbf4",
+      measurementId: "G-ZCM00J8QVY"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
+      'size': 'invisible',
+      'callback': (response) => {
+        console.log('reCAPTCHA solved');
+      }
+    }, auth);
+
+    window.sendOTP = function() {
+      const phoneInput = document.getElementById('regPhone').value.trim();
+      if (!phoneInput) {
+        alert('Please enter a phone number.');
         return;
       }
+      const phoneNumber = '+91' + phoneInput;
+      signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+      .then(confirmationResult => {
+        window.confirmationResult = confirmationResult;
+        alert('OTP sent! Please check your phone.');
+        document.getElementById('registerBox').style.display = 'none';
+        document.getElementById('otpBox').style.display = 'block';
+      })
+      .catch(error => {
+        alert('Error sending OTP: ' + error.message);
+      });
+    };
 
-      if (localStorage.getItem(email)) {
-        alert("User already registered with this email.");
+    window.verifyOTP = function() {
+      const otpInput = document.getElementById('otpInput').value.trim();
+      if (!otpInput) {
+        alert('Please enter the OTP.');
         return;
       }
+      window.confirmationResult.confirm(otpInput)
+      .then(result => {
+        alert('Phone verified! Registration complete.');
+        // Register user here or redirect.
+        // Example - Store user info in localStorage:
+        const name = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const phone = document.getElementById('regPhone').value.trim();
+        const password = document.getElementById('regPassword').value.trim();
 
-      const user = {
-        name,
-        email,
-        phone,
-        password,
-        photo: "" // Default empty, can be updated from edit-profile
-      };
-
-      localStorage.setItem(email, JSON.stringify(user));
-      alert("Registration successful! Now login.");
-      window.location.href = "login.html";
-    }
+        if (!name || !email || !phone || !password) {
+          alert('Please fill all fields to complete registration.');
+          return;
+        }
+        if (localStorage.getItem(email)) {
+          alert('User already registered with this email.');
+          return;
+        }
+        const user = { name, email, phone, password, photo: "" };
+        localStorage.setItem(email, JSON.stringify(user));
+        alert('Registration successful! Now login.');
+        window.location.href = "login.html";
+      })
+      .catch(error => {
+       alert('Invalid OTP or verification failed: ' + error.message);
+      });
+    };
   </script>
-
 </body>
 </html>
