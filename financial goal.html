@@ -3,26 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Financial Goal Planner</title>
+<title>Financial Goal Planner – User Friendly</title>
 <style>
   body { font-family: 'Segoe UI', sans-serif; background: #f3f6f9; margin: 0; padding: 20px; }
-  .goal-section { max-width: 650px; margin: 50px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.1); }
+  .goal-section { max-width: 700px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.1); }
   .goal-section h2 { text-align: center; color: #0d47a1; margin-bottom: 20px; }
   .goal-section input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; }
   .goal-section button { width: 100%; padding: 12px; background-color: #1e88e5; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px; }
   .goal-section button:hover { background-color: #1565c0; }
   .result-box { background: #e3f2fd; padding: 20px; border-radius: 8px; margin-top: 15px; color: #0d47a1; font-weight: 600; }
   .result-box ul { margin-top: 5px; padding-left: 20px; }
+  .risk-select { margin: 10px 0; }
 </style>
 </head>
 <body>
 
 <section class="goal-section">
-  <h2>Financial Goal Planner</h2>
+  <h2>Financial Goal Planner – Realistic for Everyone</h2>
   <input type="number" id="targetAmount" placeholder="Enter your financial goal (₹)">
   <input type="number" id="years" placeholder="In how many years?">
   <input type="number" id="currentSavings" placeholder="Current savings (₹)">
   <input type="number" id="monthlySave" placeholder="Monthly saving (optional)">
+  <select id="riskProfile" class="risk-select">
+    <option value="low">Low Risk (Safe, Debt Focused)</option>
+    <option value="medium" selected>Medium Risk (Balanced Equity + Debt)</option>
+    <option value="high">High Risk (Equity Heavy, Growth Focused)</option>
+  </select>
   <button onclick="planGoal()">Calculate Plan</button>
   <div id="goalResult" class="result-box"></div>
 </section>
@@ -33,42 +39,54 @@ function planGoal() {
   const years = parseFloat(document.getElementById("years").value);
   const current = parseFloat(document.getElementById("currentSavings").value);
   let monthly = parseFloat(document.getElementById("monthlySave").value) || 0;
+  const risk = document.getElementById("riskProfile").value;
 
-  // Assuming a realistic expected return based on fund type
-  const rate = 0.12 / 12; // 12% annual, monthly compounded
+  // Expected annual returns by risk
+  let annualRate;
+  let funds;
+  if(risk === "low") {
+    annualRate = 0.06; // 6% annual safe return
+    funds = [
+      {name: "HDFC Liquid Fund", cagr: 6.2},
+      {name: "ICICI Prudential Debt Fund", cagr: 6.5}
+    ];
+  } else if(risk === "medium") {
+    annualRate = 0.10; // 10% balanced
+    funds = [
+      {name: "HDFC Hybrid Equity Fund", cagr: 11.3},
+      {name: "SBI Equity Hybrid Fund", cagr: 10.9}
+    ];
+  } else {
+    annualRate = 0.12; // 12% aggressive
+    funds = [
+      {name: "Motilal Oswal Midcap Fund", cagr: 35.16},
+      {name: "Quant Small Cap Fund", cagr: 31.48},
+      {name: "HDFC Mid Cap Fund", cagr: 30.83},
+      {name: "ICICI Prudential Retirement Fund", cagr: 29.67}
+    ];
+  }
+
+  const rate = annualRate / 12;
   const months = years * 12;
 
-  // Calculate required monthly SIP if user left it blank
   if(monthly === 0){
     monthly = (target - current * Math.pow(1 + rate, months)) / ((Math.pow(1 + rate, months) - 1)/rate);
   }
 
-  // Future value projection
   const futureValue = current * Math.pow(1 + rate, months) + monthly * ((Math.pow(1 + rate, months) - 1)/rate);
 
-  // Mutual funds recommendations based on past 5-year CAGR (example)
-  const funds = [
-    {name: "Motilal Oswal Midcap Fund", cagr: 35.16},
-    {name: "Quant Small Cap Fund", cagr: 31.48},
-    {name: "HDFC Mid Cap Fund", cagr: 30.83},
-    {name: "ICICI Prudential Retirement Fund", cagr: 29.67}
-  ];
-
   let fundList = "<ul>";
-  funds.forEach(f => {
-    fundList += `<li>${f.name} – ${f.cagr}% CAGR (last 5 years)</li>`;
-  });
+  funds.forEach(f => fundList += `<li>${f.name} – ${f.cagr}% CAGR (last 5 years)</li>`);
   fundList += "</ul>";
 
-  // Tips & tricks
   const tips = `
     <ul>
-      <li>Start SIP as early as possible – time in the market beats timing.</li>
-      <li>Increase SIP by ~10% annually as your income grows.</li>
-      <li>Prioritize debt repayment before investing heavily.</li>
-      <li>Diversify across equity, debt, and mid/small-cap funds.</li>
-      <li>Review your portfolio yearly and rebalance if necessary.</li>
-      <li>Track monthly expenses to save more efficiently.</li>
+      <li>Start SIP immediately – even ₹500/month can grow significantly over years.</li>
+      <li>Increase contributions by 5-10% annually when possible.</li>
+      <li>Use automatic deductions from bank for discipline.</li>
+      <li>Keep emergency fund of 3-6 months expenses before aggressive investing.</li>
+      <li>Diversify across 2-3 funds depending on your risk profile.</li>
+      <li>Review portfolio once a year, rebalance if needed.</li>
     </ul>
   `;
 
@@ -76,8 +94,8 @@ function planGoal() {
     🎯 <b>Goal:</b> ₹${target.toLocaleString()} in ${years} years.<br>
     💵 <b>Suggested Monthly SIP:</b> ₹${monthly.toFixed(2)}<br>
     💰 <b>Projected Future Value:</b> ₹${futureValue.toFixed(2)}<br><br>
-    <b>Recommended Mutual Funds (Past 5-Year Performance):</b> ${fundList}
-    <b>Actionable Tips & Tricks:</b> ${tips}
+    <b>Recommended Funds (Risk: ${risk.charAt(0).toUpperCase() + risk.slice(1)}):</b> ${fundList}
+    <b>Actionable Tips for Low/Mid Income Users:</b> ${tips}
   `;
 
   document.getElementById("goalResult").innerHTML = result;
