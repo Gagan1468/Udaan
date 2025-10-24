@@ -3,307 +3,183 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Udaan – By APS No.2</title>
+<title>Udaan – A Step Towards Richness</title>
+
 <style>
-body { font-family: 'Segoe UI', sans-serif; background: #f3f6f9; margin: 0; padding: 0; }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
 
-/* ===== HEADER / NAVBAR ===== */
-header {
-  background-color: #1e88e5;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  box-sizing: border-box;
-}
-.brand {
-  display: flex; align-items: center; gap: 10px;
-  font-weight: 700; font-size: 1.1rem;
-  color: white; text-decoration: none;
-}
-.brand img { width: 30px; height: 30px; border-radius: 6px; object-fit: cover; }
-.nav-desktop {
-  display: flex; gap: 15px; align-items: center;
-}
-.nav-desktop a {
-  color: rgba(255,255,255,0.95);
-  text-decoration: none; padding: 8px 12px;
-  border-radius: 6px; font-weight: 600;
-}
-.nav-desktop a:hover { background: rgba(255,255,255,0.12); }
+  body {
+    background: #f3f6f9;
+    overflow-x: hidden;
+  }
 
-.auth-buttons {
-  display: flex; gap: 10px; align-items: center;
-}
-.auth-buttons a {
-  color: white; border: 2px solid white;
-  padding: 8px 14px; border-radius: 6px;
-  text-decoration: none; font-weight: bold;
-  transition: 0.3s;
-}
-.auth-buttons a:hover { background-color: white; color: #1e88e5; }
+  /* ===== NAVBAR ===== */
+  header {
+    background-color: #1e88e5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 60px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-/* Mobile Dropdown Menu */
-.dropdown-wrapper { position: relative; display: none; margin-left: auto; }
-.dot-menu {
-  font-size: 22px; background: none; border: none;
-  color: white; cursor: pointer; padding: 6px;
-}
-.dropdown-content {
-  display: none; position: absolute; right: 0; top: 42px;
-  background-color: white; min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-  border-radius: 10px; z-index: 2000; padding: 10px;
-}
-.dropdown-content a {
-  color: #333; padding: 8px 12px; text-decoration: none;
-  display: block; font-weight: 500;
-}
-.dropdown-content a:hover { background-color: #f1f1f1; border-radius: 5px; }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-/* ===== HERO SECTION ===== */
-.hero {
-  text-align: center;
-  padding: 70px 20px;
-  background: linear-gradient(to right, #e3f2fd, #ffffff);
-}
-.hero h1 { font-size: 2.5rem; margin-bottom: 10px; color: #0d47a1; }
-.hero p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; color: #333; }
+  .logo img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
 
-/* ===== MAIN CONTENT CARDS ===== */
-.container {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px; max-width: 1000px; margin: 40px auto;
-  padding: 20px; background-image: url('images.jpg');
-  background-size: cover; background-position: center;
-  border-radius: 12px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-.card {
-  background: rgba(255, 255, 255, 0.92);
-  padding: 20px; border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.08);
-  text-align: center;
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-}
-.card h3 { margin-bottom: 10px; color: #1565c0; }
-.card p { font-size: 0.95rem; color: #444; }
-.card a.button {
-  background-color: #1e88e5; color: white;
-  padding: 10px 20px; border-radius: 8px;
-  text-decoration: none; display: inline-block;
-  margin-top: 10px; transition: 0.3s;
-}
-.card a.button:hover { background-color: #1565c0; }
+  .logo img:hover {
+    transform: scale(1.1);
+  }
 
-/* ===== INFO SECTION ===== */
-.info-section {
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: 40px; margin: 70px auto 0 auto;
-  max-width: 1200px; align-items: flex-start;
-}
-.info-section .fade-in {
-  flex: 1 1 280px; background: #fcfcfd;
-  border-radius: 13px; box-shadow: 0 6px 24px rgba(30,100,230,.05);
-  padding: 32px 30px 24px 30px; margin: 0 8px 24px 8px;
-  opacity: 0; transform: translateY(40px);
-  transition: opacity .7s, transform .95s;
-}
-.info-section .fade-in h2 { margin-bottom: 10px; color: #178AE1; font-weight: 700; }
-.info-section .fade-in ul { padding-left: 20px; margin: 10px 0 0 0; }
-.info-section .fade-in li { margin-bottom: 6px; }
+  .logo h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
 
-/* ===== PROFESSIONAL FOOTER ===== */
-.footer-pro {
-  background: #f5f6fa;
-  display: flex; flex-wrap: wrap; justify-content: space-between;
-  padding: 50px 10vw 20px 10vw;
-  border-top: 1.5px solid #e0e1e4;
-  font-size: 1.08em; margin-top: 40px; gap: 40px;
-}
-.footer-col {
-  flex: 1 1 180px; margin-bottom: 20px; min-width: 180px;
-  max-width: 320px; color: #222a3a;
-  opacity: 0; transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
-}
-.footer-col strong { font-size: 1.09em; color: #1e88e5; display: block; margin-bottom: 10px; }
-.footer-col a { color: #38485b; text-decoration: none; display: block; margin-bottom: 7px; transition: .2s; }
-.footer-col a:hover { color: #03487A; text-decoration: underline; }
-.footer-col p, .footer-col small { color: #7a869a; font-size: .97em; margin: 3px 0 9px 0; }
-.footer-col.active, .info-section .fade-in.active { opacity: 1; transform: translateY(0); }
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 990px) {
-  .footer-pro, .info-section { flex-direction: column; padding: 42px 5vw 20px 5vw; gap: 10px; }
-  .footer-col, .info-section .fade-in { min-width: 85vw; }
-}
-@media (max-width: 767px) {
-  .nav-desktop { display: none; }
-  .auth-buttons { display: none; }
-  .dropdown-wrapper { display: block; }
-  header { padding: 12px 14px; }
-}
-@media (min-width: 768px) {
-  .dropdown-wrapper { display: none; }
-  .nav-desktop { display: flex; }
-  .auth-buttons { display: flex; }
-}
+  nav a:hover {
+    color: #cce4ff;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer-pro {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #0d47a1;
+    color: white;
+    padding: 50px 10px;
+    animation: fadeInUp 1s ease;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 180px;
+    margin: 10px;
+  }
+
+  .footer-col strong {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+
+  .footer-col a {
+    color: #bbdefb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+  }
+
+  .footer-col a:hover {
+    color: white;
+  }
+
+  /* ===== COPYRIGHT BAR ===== */
+  .footer-bottom {
+    background: #1e88e5;
+    color: white;
+    text-align: center;
+    padding: 15px 10px;
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.5px;
+    animation: fadeIn 2s ease;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 </style>
 </head>
+
 <body>
-
-<!-- ===== HEADER ===== -->
-<header>
-  <a class="brand" href="index.html">
-    <img src="favicon.png">
-    <span>Udaan – A step towards Richness</span>
-  </a>
-  <nav class="nav-desktop">
-    <a href="profile.html">Profile</a>
-    <a href="settings.html">Settings</a>
-    <a href="about.html">About</a>
-    <a href="#" onclick="logoutUser()">Logout</a>
-  </nav>
-  <div class="dropdown-wrapper" id="profileMenu">
-    <button class="dot-menu" onclick="toggleMenu()">⋮</button>
-    <div class="dropdown-content" id="dropdown-content">
-      <a href="profile.html">👤 Profile</a>
-      <a href="settings.html">⚙️ Settings</a>
-      <a href="#" onclick="logoutUser()">🚪 Logout</a>
-      <hr style="border:none;border-top:1px solid #eee;margin:8px 0;">
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
+  <!-- ===== NAVBAR ===== -->
+  <header>
+    <div class="logo">
+      <img src="Modern Logo with Blue Bird and 'U' Design.png" alt="Udaan Logo">
+      <h1>Udaan</h1>
     </div>
-  </div>
-  <div class="auth-buttons" id="authLinks">
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
-  </div>
-</header>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Courses</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
 
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <h1>Unlock Your Financial Power</h1>
-  <p>From budgeting and investing to launching your first startup, Prerna helps you master money and entrepreneurship skills that actually matter.</p>
-</section>
+  <!-- ===== MAIN CONTENT ===== -->
+  <main style="padding: 60px; text-align:center;">
+    <h2>Welcome to <span style="color:#1e88e5;">Udaan</span></h2>
+    <p style="margin-top:10px; font-size:1.1rem; color:#555;">
+      A Step Towards Richness – Empowering Youth with Financial Literacy 🚀
+    </p>
+  </main>
 
-<!-- ===== CARDS ===== -->
-<div class="container">
-  <div class="card">
-    <h3>💸 Financial Literacy</h3>
-    <p>Understand budgeting, saving, and smart investing from scratch.</p>
-    <a class="button" href="financial-literacy.html">Start Learning</a>
-  </div>
-  <div class="card">
-    <h3>🚀 Entrepreneurship</h3>
-    <p>Turn ideas into startups with real-world tools and guides.</p>
-    <a class="button" href="entrepreneurship.html">Explore</a>
-  </div>
-  <div class="card">
-    <h3>📊 Financial Tools</h3>
-    <p>Use expense trackers, calculators, and idea generators for free.</p>
-    <a class="button" href="financial-tools.html">Open Tools</a>
-  </div>
-  <div class="card">
-    <h3>📚 Blog Zone</h3>
-    <p>Tips, tricks, and youth money hacks for smarter decisions.</p>
-    <a class="button" href="blog.html">Read Now</a>
-  </div>
-  <div class="card">
-    <h3>💡 Financial Goal</h3>
-    <p>Make a step towards Richness</p>
-    <a class="button" href="financial-goal.html">Start Going</a>
-  </div>
-</div>
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer-pro">
+    <div class="footer-col">
+      <strong>Udaan</strong>
+      <p>India’s Youth Financial Platform.</p>
+      <small>&copy; 2025 Udaan</small>
+    </div>
+    <div class="footer-col">
+      <strong>Company</strong>
+      <a href="#">About us</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact us</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <strong>Support</strong>
+      <a href="#">FAQs</a>
+      <a href="#">Help Center</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+    </div>
+    <div class="footer-col">
+      <strong>Resources</strong>
+      <a href="#">Financial Literacy</a>
+      <a href="#">Youth Guides</a>
+      <a href="#">Newsletter</a>
+      <a href="#">Community</a>
+    </div>
+  </footer>
 
-<!-- ===== INFO SECTION ===== -->
-<section class="info-section">
-  <div class="fade-in">
-    <h2>About Us</h2>
-    <p>Udaan is India’s most innovative financial learning platform. Our mission: Create a financially aware, self-reliant generation with smart money and skill-building habits.</p>
+  <div class="footer-bottom">
+    <p>© 2025 Udaan. All rights reserved. Powered by <strong>Atal Technologies Pvt. Ltd.</strong></p>
   </div>
-  <div class="fade-in">
-    <h2>Contact</h2>
-    <p>Need help? <br>Email: <a href="mailto:help@udaan.com">help@udaan.com</a><br>Phone: +91-9876543210</p>
-  </div>
-  <div class="fade-in">
-    <h2>Learn More</h2>
-    <ul>
-      <li><a href="blog.html">Blog & Tips</a></li>
-      <li><a href="faq.html">FAQs</a></li>
-      <li><a href="privacy.html">Privacy Policy</a></li>
-      <li><a href="terms.html">Terms of Use</a></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer class="footer-pro">
-  <div class="footer-col">
-    <strong>Udaan</strong>
-    <p>India’s Youth Financial Platform.</p>
-    <small>&copy; 2025 Udaan</small>
-  </div>
-  <div class="footer-col">
-    <strong>Company</strong>
-    <a href="about.html">About us</a>
-    <a href="careers.html">Careers</a>
-    <a href="contact.html">Contact us</a>
-    <a href="blog.html">Blog</a>
-  </div>
-  <div class="footer-col">
-    <strong>Support</strong>
-    <a href="faq.html">FAQs</a>
-    <a href="help.html">Help Center</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms</a>
-  </div>
-  <div class="footer-col">
-    <strong>Resources</strong>
-    <a href="resources.html">Financial Literacy</a>
-    <a href="youth.html">Youth Guides</a>
-    <a href="newsletter.html">Newsletter</a>
-    <a href="community.html">Community</a>
-  </div>
-</footer>
-
-<!-- ===== SCRIPT ===== -->
-<script>
-// Animate footer + info cards on scroll
-const io = new IntersectionObserver((entries, obs) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-      obs.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-document.querySelectorAll('.footer-col, .fade-in').forEach(el => io.observe(el));
-
-function toggleMenu() {
-  const dropdown = document.getElementById("dropdown-content");
-  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-}
-document.addEventListener('click', function (e) {
-  const wrapper = document.getElementById('profileMenu');
-  const dropdown = document.getElementById('dropdown-content');
-  if (!wrapper.contains(e.target)) {
-    if (dropdown) dropdown.style.display = 'none';
-  }
-});
-function logoutUser() {
-  localStorage.removeItem('prernaLoggedIn');
-  localStorage.removeItem('prernaEmail');
-  localStorage.removeItem('prernaName');
-  localStorage.removeItem('prernaPhone');
-  localStorage.removeItem('prernaPhoto');
-  location.reload();
-}
-</script>
 </body>
 </html>
