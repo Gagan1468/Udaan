@@ -1,200 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Financial Goal Planner – Udaan</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Goal Planner - Udaan</title>
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f4f8;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
 
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e3f2fd, #ffffff);
-      margin: 0;
-      padding: 0;
-    }
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 
-    header {
-      background-color: #1e88e5;
-      color: white;
-      text-align: center;
-      padding: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
+input, select, button {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 2.4rem;
-    }
+button {
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
 
-    p {
-      margin: 10px 0;
-      font-size: 1.1rem;
-    }
+button:hover {
+  background-color: #1565c0;
+}
 
-    .planner-box {
-      background: white;
-      max-width: 700px;
-      margin: 40px auto;
-      border-radius: 15px;
-      padding: 30px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.15);
-    }
+.result {
+  background: #e3f2fd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: left;
+}
 
-    .planner-box h2 {
-      text-align: center;
-      color: #1565c0;
-      margin-bottom: 20px;
-    }
-
-    .planner-box label {
-      font-weight: 600;
-      display: block;
-      margin-top: 12px;
-      color: #333;
-    }
-
-    .planner-box input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    button {
-      background-color: #1e88e5;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 20px;
-      width: 100%;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #1565c0;
-    }
-
-    .result {
-      margin-top: 25px;
-      background: #f0f7ff;
-      border-radius: 10px;
-      padding: 20px;
-      color: #0d47a1;
-    }
-
-    .tips {
-      margin-top: 20px;
-      background: #fffde7;
-      border-left: 5px solid #ffeb3b;
-      padding: 15px;
-      border-radius: 8px;
-    }
-
-    .tips h3 {
-      margin-top: 0;
-      color: #f57f17;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #888;
-      font-size: 14px;
-      padding: 20px;
-    }
-  </style>
+h2 {
+  color: #1e88e5;
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>Financial Goal Planner</h1>
-    <p>Plan, Save & Achieve Your Dreams 💰</p>
-  </header>
+<div class="container">
+  <h2>🎯 Ultimate Financial Goal Planner</h2>
+  <p>Fill your financial goal details and get a full roadmap</p>
 
-  <div class="planner-box">
-    <h2>Set Your Financial Goals</h2>
+  <input type="number" id="targetAmount" placeholder="Target Amount (₹)">
+  <input type="number" id="years" placeholder="Years to achieve goal">
+  <input type="number" id="currentSavings" placeholder="Current Savings (₹)">
+  <input type="number" id="monthlySave" placeholder="Monthly Saving Capacity (optional)">
+  <select id="riskLevel">
+    <option value="low">Low Risk</option>
+    <option value="medium" selected>Medium Risk</option>
+    <option value="high">High Risk</option>
+  </select>
+  <button onclick="planFinancialGoal()">Generate Plan</button>
 
-    <label>Current Age:</label>
-    <input type="number" id="age" placeholder="Enter your age">
+  <div id="goalResult" class="result"></div>
+</div>
 
-    <label>Monthly Income (₹):</label>
-    <input type="number" id="income" placeholder="Enter your monthly income">
+<script>
+function planFinancialGoal() {
+  const target = parseFloat(document.getElementById("targetAmount").value);
+  const years = parseFloat(document.getElementById("years").value);
+  const current = parseFloat(document.getElementById("currentSavings").value);
+  const monthlyInput = parseFloat(document.getElementById("monthlySave").value) || 0;
+  const risk = document.getElementById("riskLevel").value;
 
-    <label>Current Monthly Savings (₹):</label>
-    <input type="number" id="savings" placeholder="Enter your current savings">
+  if (!target || !years) {
+    alert("Please enter target amount and years");
+    return;
+  }
 
-    <label>Target Retirement Amount (₹):</label>
-    <input type="number" id="target" placeholder="Enter your retirement goal amount">
+  // Risk-based expected return
+  let annualReturn;
+  let allocation;
+  if (risk === "low") {
+    annualReturn = 0.05;
+    allocation = "60% Fixed Deposits, 30% Bonds, 10% Gold";
+  } else if (risk === "medium") {
+    annualReturn = 0.08;
+    allocation = "40% Mutual Funds (Equity+Debt), 30% Bonds, 20% SIP in ETFs, 10% Gold";
+  } else {
+    annualReturn = 0.12;
+    allocation = "60% Equity Mutual Funds, 20% ETFs, 10% Bonds, 10% Gold/Alternatives";
+  }
 
-    <label>Target Age (for goal):</label>
-    <input type="number" id="retirementAge" placeholder="Enter target age (like 60)">
+  const months = years * 12;
+  const monthlyRate = annualReturn / 12;
 
-    <button onclick="calculateGoal()">Plan My Future 🚀</button>
+  // Required monthly saving calculation
+  let requiredMonthly = (target - current * Math.pow(1 + monthlyRate, months)) / ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
 
-    <div id="result" class="result"></div>
-    <div id="tips" class="tips"></div>
-  </div>
-
-  <footer>
-    &copy; 2025 Udaan | Powered by Atal Technologies Pvt. Ltd. 💼
-  </footer>
-
-  <script>
-    function calculateGoal() {
-      let age = parseInt(document.getElementById('age').value);
-      let income = parseInt(document.getElementById('income').value);
-      let savings = parseInt(document.getElementById('savings').value);
-      let target = parseInt(document.getElementById('target').value);
-      let retirementAge = parseInt(document.getElementById('retirementAge').value);
-
-      if (isNaN(age) || isNaN(income) || isNaN(savings) || isNaN(target) || isNaN(retirementAge)) {
-        alert("Please fill all the fields properly!");
-        return;
-      }
-
-      let yearsLeft = retirementAge - age;
-      let annualSavings = savings * 12;
-      let totalSaved = annualSavings * yearsLeft;
-      let requiredGrowth = target - totalSaved;
-
-      let message = "";
-      let tipsList = [];
-
-      if (requiredGrowth <= 0) {
-        message = `🎉 Great job! You’re already on track to reach ₹${target} by age ${retirementAge}.`;
-        tipsList.push("Keep investing your savings for better returns.");
-        tipsList.push("Avoid unnecessary lifestyle inflation.");
-      } else {
-        let extra = Math.round(requiredGrowth / (yearsLeft * 12));
-        message = `To reach ₹${target} by age ${retirementAge}, you need to save an extra ₹${extra} per month.`;
-        if (extra > income * 0.2) {
-          tipsList.push("Try increasing income sources or investing smartly.");
-        }
-        if (savings < income * 0.1) {
-          tipsList.push("Try saving at least 10% of your income every month.");
-        }
-        tipsList.push("Invest in mutual funds or SIPs for compounding growth.");
-        tipsList.push("Avoid debt-based expenses and focus on emergency funds.");
-      }
-
-      document.getElementById('result').innerHTML = `
-        <h3>📊 Financial Summary</h3>
-        <p><strong>Years Left:</strong> ${yearsLeft}</p>
-        <p><strong>Total Savings (Current Rate):</strong> ₹${totalSaved.toLocaleString()}</p>
-        <p>${message}</p>
-      `;
-
-      document.getElementById('tips').innerHTML = `
-        <h3>💡 Tips to Improve:</h3>
-        <ul>${tipsList.map(t => `<li>${t}</li>`).join('')}</ul>
-      `;
+  // If user already gave monthly saving, recalc years needed
+  let estimatedYears;
+  if (monthlyInput > 0) {
+    let total = current;
+    let m = 0;
+    while (total < target) {
+      total = total * (1 + monthlyRate) + monthlyInput;
+      m++;
+      if (m > 1000) break; // safety
     }
-  </script>
+    estimatedYears = (m/12).toFixed(1);
+  }
 
+  let result = `<h3>💡 Your Personalized Financial Plan</h3>`;
+  result += `<p>Target Amount: ₹${target.toLocaleString()}<br>`;
+  result += `Timeline: ${years} years<br>`;
+  result += `Risk Profile: ${risk.charAt(0).toUpperCase() + risk.slice(1)}<br>`;
+  result += `Recommended Monthly Saving: ₹${requiredMonthly.toFixed(2)}</p>`;
+
+  if (monthlyInput > 0) {
+    result += `<p>With your monthly saving of ₹${monthlyInput.toLocaleString()}, you can reach your goal in ~${estimatedYears} years.</p>`;
+  }
+
+  result += `<h4>📊 Suggested Investment Allocation</h4>`;
+  result += `<p>${allocation}</p>`;
+
+  result += `<h4>📝 Step-by-Step Roadmap</h4>`;
+  result += `<ol>
+    <li>Start a SIP in Mutual Funds/ETFs according to your risk profile.</li>
+    <li>Invest in bonds and FDs for stability (especially low-risk).</li>
+    <li>Review and increase monthly savings by 10% each year as income grows.</li>
+    <li>Track expenses and cut unnecessary costs.</li>
+    <li>Rebalance portfolio every 6-12 months.</li>
+    <li>Use bonuses/incentives for additional investments.</li>
+    <li>Stay invested and avoid withdrawing early.</li>
+  </ol>`;
+
+  document.getElementById("goalResult").innerHTML = result;
+}
+</script>
 </body>
 </html>
