@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Udaan – By APS No.2</title>
+  <title>Udaan – By Atal Technologies Pvt. Ltd.</title>
 
   <style>
     body {
@@ -109,8 +109,6 @@
       max-width: 1000px;
       margin: 40px auto;
       padding: 20px;
-
-      /* 👇 background image behind cards */
       background-image: url('images.jpg');
       background-size: cover;
       background-position: center;
@@ -159,74 +157,158 @@
       font-size: 14px;
       margin-top: 40px;
     }
+
+    /* Financial Calculator Section */
+    .calculator-section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+
+    .calculator-section h2 {
+      text-align: center;
+      color: #0d47a1;
+      margin-bottom: 20px;
+    }
+
+    .calc-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .calc-box {
+      width: 300px;
+      margin: 15px;
+      padding: 20px;
+      border-radius: 10px;
+      background: #f9f9f9;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .calc-box input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .calc-box button {
+      width: 100%;
+      background-color: #1e88e5;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .calc-box button:hover {
+      background-color: #1565c0;
+    }
+
+    .result {
+      margin-top: 10px;
+      color: #1565c0;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 <body>
 
   <header>
-    <!-- Dropdown (Three Dots Menu) -->
     <div class="dropdown-wrapper" id="profileMenu">
       <button class="dot-menu" onclick="toggleMenu()">⋮</button>
       <div class="dropdown-content" id="dropdown-content">
-        <a href="profile.html">👤 Profile</a>
-        <a href="settings.html">⚙️ Settings</a>
+        <a href="#">👤 Profile</a>
+        <a href="#">⚙️ Settings</a>
         <a href="#" onclick="logoutUser()">🚪 Logout</a>
       </div>
     </div>
 
-    <!-- Login/Register Buttons -->
     <div class="auth-buttons" id="authLinks">
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
+      <a href="#">Login</a>
+      <a href="#">Register</a>
     </div>
 
-    <h1>Udaan – By Prerna</h1>
+    <h1>Udaan – By Atal Technologies Pvt. Ltd.</h1>
     <p>Learn. Grow. Earn. A step toward financial freedom 🚀</p>
   </header>
 
   <section class="hero">
-    <h1>Unlock Your Financial Power</h1>
-    <p>From budgeting and investing to launching your first startup, Prerna helps you master money and entrepreneurship skills that actually matter.</p>
+    <h1>Master Financial Literacy</h1>
+    <p>Understand money, investments, and the path to true financial independence.</p>
   </section>
 
   <div class="container">
     <div class="card">
-      <h3>💸 Financial Literacy</h3>
-      <p>Understand budgeting, saving, and smart investing from scratch.</p>
-      <a class="button" href="financial-literacy.html">Start Learning</a>
+      <h3>💡 Budgeting Basics</h3>
+      <p>Learn how to manage income, track expenses, and build smart saving habits.</p>
     </div>
     <div class="card">
-      <h3>🚀 Entrepreneurship</h3>
-      <p>Turn ideas into startups with real-world tools and guides.</p>
-      <a class="button" href="entrepreneurship.html">Explore</a>
+      <h3>🏦 Banking & Digital Payments</h3>
+      <p>Understand UPI, online banking, and safe digital transaction habits.</p>
     </div>
     <div class="card">
-      <h3>📊 Financial Tools</h3>
-      <p>Use expense trackers, calculators, and idea generators for free.</p>
-      <a class="button" href="financial-tools.html">Open Tools</a>
+      <h3>📈 Investing 101</h3>
+      <p>Get started with SIPs, mutual funds, and long-term wealth creation.</p>
     </div>
     <div class="card">
-      <h3>📚 Blog Zone</h3>
-      <p>Tips, tricks, and youth money hacks for smarter decisions.</p>
-      <a class="button" href="blog.html">Read Now</a>
+      <h3>💰 Retirement Planning</h3>
+      <p>Set your financial goals and calculate how much to save every month.</p>
     </div>
     <div class="card">
-      <h3>💸 Financial Quiz</h3>
-      <p>Play Games Based on Financial literacy</p>
-      <a class="button" href="games.html">Start Playing</a>
+      <h3>💳 Credit & Loans</h3>
+      <p>Know how interest works and how to avoid debt traps.</p>
     </div>
     <div class="card">
-      <h3>💸 Contact a Counsellor</h3>
-      <p>Ask Your Doubts About Financial Literacy and Entrepreneurship</p>
-      <a class="button" href="contact_counsellor.html">Start Asking</a>
+      <h3>🧠 Financial Safety</h3>
+      <p>Learn to identify scams, manage risks, and protect your money online.</p>
     </div>
   </div>
 
+  <!-- Financial Calculators -->
+  <section class="calculator-section">
+    <h2>Financial Calculators</h2>
+    <div class="calc-group">
+      <div class="calc-box">
+        <h3>SIP Calculator</h3>
+        <input type="number" id="sipAmount" placeholder="Monthly Investment (₹)">
+        <input type="number" id="sipRate" placeholder="Annual Return (%)">
+        <input type="number" id="sipYears" placeholder="Duration (Years)">
+        <button onclick="calculateSIP()">Calculate</button>
+        <div id="sipResult" class="result"></div>
+      </div>
+
+      <div class="calc-box">
+        <h3>Budget Planner</h3>
+        <input type="number" id="income" placeholder="Monthly Income (₹)">
+        <input type="number" id="expenses" placeholder="Monthly Expenses (₹)">
+        <button onclick="calculateBudget()">Check Savings</button>
+        <div id="budgetResult" class="result"></div>
+      </div>
+
+      <div class="calc-box">
+        <h3>EMI Calculator</h3>
+        <input type="number" id="loanAmount" placeholder="Loan Amount (₹)">
+        <input type="number" id="loanRate" placeholder="Interest Rate (%)">
+        <input type="number" id="loanYears" placeholder="Duration (Years)">
+        <button onclick="calculateEMI()">Calculate EMI</button>
+        <div id="emiResult" class="result"></div>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    &copy; 2025 Udaan | Empowering Youth for Financial Freedom 💼
+    &copy; 2025 Udaan | Powered by Atal Technologies Pvt. Ltd. 💼
   </footer>
 
-  <!-- Scripts -->
   <script>
     function toggleMenu() {
       const dropdown = document.getElementById("dropdown-content");
@@ -234,29 +316,37 @@
     }
 
     function logoutUser() {
-      localStorage.removeItem('prernaLoggedIn');
-      localStorage.removeItem('prernaEmail');
-      localStorage.removeItem('prernaName');
-      localStorage.removeItem('prernaPhone');
-      localStorage.removeItem('prernaPhoto');
+      localStorage.clear();
       location.reload();
     }
 
-    window.onload = function () {
-      const loggedIn = localStorage.getItem('prernaLoggedIn');
-      const profileMenu = document.getElementById('profileMenu');
-      const authLinks = document.getElementById('authLinks');
+    function calculateSIP() {
+      let P = parseFloat(document.getElementById("sipAmount").value);
+      let r = parseFloat(document.getElementById("sipRate").value) / 100 / 12;
+      let n = parseFloat(document.getElementById("sipYears").value) * 12;
+      let finalValue = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+      document.getElementById("sipResult").innerText = 
+        "Expected Amount: ₹" + finalValue.toFixed(2);
+    }
 
-      if (loggedIn === 'true') {
-        profileMenu.style.display = 'block';
-        authLinks.style.display = 'none';
-      } else {
-        profileMenu.style.display = 'none';
-        authLinks.style.display = 'block';
-      }
-    };
+    function calculateBudget() {
+      let income = parseFloat(document.getElementById("income").value);
+      let expenses = parseFloat(document.getElementById("expenses").value);
+      let savings = income - expenses;
+      let message = savings > 0 
+        ? "You save ₹" + savings.toFixed(2) + " per month 🎯"
+        : "You are overspending by ₹" + Math.abs(savings).toFixed(2);
+      document.getElementById("budgetResult").innerText = message;
+    }
+
+    function calculateEMI() {
+      let P = parseFloat(document.getElementById("loanAmount").value);
+      let R = parseFloat(document.getElementById("loanRate").value) / 12 / 100;
+      let N = parseFloat(document.getElementById("loanYears").value) * 12;
+      let emi = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+      document.getElementById("emiResult").innerText = 
+        "Monthly EMI: ₹" + emi.toFixed(2);
+    }
   </script>
-
-  <script src='https://www.noupe.com/embed/01983a7c61f7796895c23c4d4f7d4a145a00.js'></script>
 </body>
 </html>
