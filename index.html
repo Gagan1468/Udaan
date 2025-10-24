@@ -122,6 +122,12 @@
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0,0,0,0.08);
       text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
     }
 
     .card h3 {
@@ -134,90 +140,72 @@
       color: #444;
     }
 
-    .card a.button {
-      background-color: #1e88e5;
-      color: white;
-      padding: 10px 20px;
-      font-size: 14px;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
-    .card a.button:hover {
-      background-color: #1565c0;
-    }
-
     footer {
       text-align: center;
-      padding: 20px;
-      color: #888;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-
-    /* Financial Calculator Section */
-    .calculator-section {
-      max-width: 1000px;
-      margin: 40px auto;
       padding: 30px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      background-color: #0d47a1;
+      color: white;
+      margin-top: 60px;
     }
 
-    .calculator-section h2 {
+    footer a {
+      color: #ffeb3b;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Goal Planner Section */
+    .goal-section {
+      max-width: 900px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .goal-section h2 {
       text-align: center;
       color: #0d47a1;
       margin-bottom: 20px;
     }
 
-    .calc-group {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-    }
-
-    .calc-box {
-      width: 300px;
-      margin: 15px;
-      padding: 20px;
-      border-radius: 10px;
-      background: #f9f9f9;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    }
-
-    .calc-box input {
+    .goal-section input, select {
       width: 100%;
-      padding: 8px;
-      margin: 6px 0;
-      border-radius: 6px;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
       border: 1px solid #ccc;
     }
 
-    .calc-box button {
+    .goal-section button {
       width: 100%;
+      padding: 12px;
       background-color: #1e88e5;
       color: white;
       border: none;
-      padding: 10px;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
-    .calc-box button:hover {
+    .goal-section button:hover {
       background-color: #1565c0;
     }
 
-    .result {
-      margin-top: 10px;
-      color: #1565c0;
-      font-weight: bold;
+    .result-box {
+      background: #e3f2fd;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+      color: #0d47a1;
+      font-weight: 600;
     }
-
   </style>
 </head>
 <body>
@@ -237,76 +225,55 @@
       <a href="#">Register</a>
     </div>
 
-    <h1>Udaan – By Atal Technologies Pvt. Ltd.</h1>
+    <h1>Udaan – A Step towards Financial Literacy</h1>
     <p>Learn. Grow. Earn. A step toward financial freedom 🚀</p>
   </header>
 
   <section class="hero">
-    <h1>Master Financial Literacy</h1>
-    <p>Understand money, investments, and the path to true financial independence.</p>
+    <h1>Plan Your Financial Future</h1>
+    <p>Set your goal, know your timeline, and follow personalized saving strategies to reach financial independence.</p>
   </section>
 
+  <!-- Cards Section -->
   <div class="container">
-    <div class="card">
-      <h3>💡 Budgeting Basics</h3>
-      <p>Learn how to manage income, track expenses, and build smart saving habits.</p>
+    <div class="card" onclick="scrollToGoal()">
+      <h3>🎯 Goal Planner</h3>
+      <p>Set your retirement or wealth goal and see how to achieve it.</p>
     </div>
     <div class="card">
-      <h3>🏦 Banking & Digital Payments</h3>
-      <p>Understand UPI, online banking, and safe digital transaction habits.</p>
+      <h3>💡 Investment Tips</h3>
+      <p>Discover practical saving strategies and compound growth tricks.</p>
     </div>
     <div class="card">
-      <h3>📈 Investing 101</h3>
-      <p>Get started with SIPs, mutual funds, and long-term wealth creation.</p>
+      <h3>📈 SIP & Mutual Funds</h3>
+      <p>Learn how systematic investments can help you grow steadily.</p>
     </div>
     <div class="card">
-      <h3>💰 Retirement Planning</h3>
-      <p>Set your financial goals and calculate how much to save every month.</p>
-    </div>
-    <div class="card">
-      <h3>💳 Credit & Loans</h3>
-      <p>Know how interest works and how to avoid debt traps.</p>
-    </div>
-    <div class="card">
-      <h3>🧠 Financial Safety</h3>
-      <p>Learn to identify scams, manage risks, and protect your money online.</p>
+      <h3>📊 Smart Budgeting</h3>
+      <p>Optimize spending, cut unnecessary costs, and save smarter.</p>
     </div>
   </div>
 
-  <!-- Financial Calculators -->
-  <section class="calculator-section">
-    <h2>Financial Calculators</h2>
-    <div class="calc-group">
-      <div class="calc-box">
-        <h3>SIP Calculator</h3>
-        <input type="number" id="sipAmount" placeholder="Monthly Investment (₹)">
-        <input type="number" id="sipRate" placeholder="Annual Return (%)">
-        <input type="number" id="sipYears" placeholder="Duration (Years)">
-        <button onclick="calculateSIP()">Calculate</button>
-        <div id="sipResult" class="result"></div>
-      </div>
-
-      <div class="calc-box">
-        <h3>Budget Planner</h3>
-        <input type="number" id="income" placeholder="Monthly Income (₹)">
-        <input type="number" id="expenses" placeholder="Monthly Expenses (₹)">
-        <button onclick="calculateBudget()">Check Savings</button>
-        <div id="budgetResult" class="result"></div>
-      </div>
-
-      <div class="calc-box">
-        <h3>EMI Calculator</h3>
-        <input type="number" id="loanAmount" placeholder="Loan Amount (₹)">
-        <input type="number" id="loanRate" placeholder="Interest Rate (%)">
-        <input type="number" id="loanYears" placeholder="Duration (Years)">
-        <button onclick="calculateEMI()">Calculate EMI</button>
-        <div id="emiResult" class="result"></div>
-      </div>
-    </div>
+  <!-- Financial Goal Planner -->
+  <section class="goal-section" id="goal-section">
+    <h2>Financial Goal Planner</h2>
+    <input type="number" id="targetAmount" placeholder="Enter your financial goal (₹)">
+    <input type="number" id="years" placeholder="In how many years?">
+    <input type="number" id="currentSavings" placeholder="Current savings (₹)">
+    <input type="number" id="monthlySave" placeholder="Monthly saving (optional)">
+    <button onclick="planGoal()">Calculate Plan</button>
+    <div id="goalResult" class="result-box"></div>
   </section>
 
+  <!-- Footer -->
   <footer>
-    &copy; 2025 Udaan | Powered by Atal Technologies Pvt. Ltd. 💼
+    <p>&copy; 2025 Udaan | Powered by Atal Technologies Pvt. Ltd. 💼</p>
+    <p>
+      <a href="#">About Us</a> | 
+      <a href="#">Our Team</a> | 
+      <a href="#">Contact Us</a> | 
+      <a href="#">Privacy Policy</a>
+    </p>
   </footer>
 
   <script>
@@ -320,32 +287,33 @@
       location.reload();
     }
 
-    function calculateSIP() {
-      let P = parseFloat(document.getElementById("sipAmount").value);
-      let r = parseFloat(document.getElementById("sipRate").value) / 100 / 12;
-      let n = parseFloat(document.getElementById("sipYears").value) * 12;
-      let finalValue = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
-      document.getElementById("sipResult").innerText = 
-        "Expected Amount: ₹" + finalValue.toFixed(2);
+    function scrollToGoal() {
+      document.getElementById('goal-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function calculateBudget() {
-      let income = parseFloat(document.getElementById("income").value);
-      let expenses = parseFloat(document.getElementById("expenses").value);
-      let savings = income - expenses;
-      let message = savings > 0 
-        ? "You save ₹" + savings.toFixed(2) + " per month 🎯"
-        : "You are overspending by ₹" + Math.abs(savings).toFixed(2);
-      document.getElementById("budgetResult").innerText = message;
-    }
+    function planGoal() {
+      const target = parseFloat(document.getElementById("targetAmount").value);
+      const years = parseFloat(document.getElementById("years").value);
+      const current = parseFloat(document.getElementById("currentSavings").value);
+      const monthly = parseFloat(document.getElementById("monthlySave").value) || 0;
+      const rate = 0.08 / 12; // 8% yearly return
 
-    function calculateEMI() {
-      let P = parseFloat(document.getElementById("loanAmount").value);
-      let R = parseFloat(document.getElementById("loanRate").value) / 12 / 100;
-      let N = parseFloat(document.getElementById("loanYears").value) * 12;
-      let emi = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
-      document.getElementById("emiResult").innerText = 
-        "Monthly EMI: ₹" + emi.toFixed(2);
+      let months = years * 12;
+      let requiredMonthly = (target - current * Math.pow(1 + rate, months)) / ((Math.pow(1 + rate, months) - 1) / rate);
+
+      let result = `
+        🎯 Your Goal: ₹${target.toLocaleString()} in ${years} years.<br>
+        💵 You should save around <b>₹${requiredMonthly.toFixed(2)}</b> per month.
+      `;
+
+      result += "<br><br>💡 <b>Tips & Tricks:</b><ul>" +
+        "<li>Start a SIP early – time in market beats timing the market.</li>" +
+        "<li>Increase SIP by 10% every year as your income grows.</li>" +
+        "<li>Avoid debt; invest your bonuses and incentives.</li>" +
+        "<li>Track your expenses monthly.</li>" +
+        "</ul>";
+
+      document.getElementById("goalResult").innerHTML = result;
     }
   </script>
 </body>
