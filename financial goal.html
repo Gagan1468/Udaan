@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Financial Goal Planner – User Friendly</title>
+<title>Middle Class Family Financial Planner</title>
 <style>
   body { font-family: 'Segoe UI', sans-serif; background: #f3f6f9; margin: 0; padding: 20px; }
   .goal-section { max-width: 700px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.1); }
@@ -13,22 +13,16 @@
   .goal-section button:hover { background-color: #1565c0; }
   .result-box { background: #e3f2fd; padding: 20px; border-radius: 8px; margin-top: 15px; color: #0d47a1; font-weight: 600; }
   .result-box ul { margin-top: 5px; padding-left: 20px; }
-  .risk-select { margin: 10px 0; }
 </style>
 </head>
 <body>
 
 <section class="goal-section">
-  <h2>Financial Goal Planner – Realistic for Everyone</h2>
+  <h2>Financial Goal Planner – Middle Class Family Edition</h2>
   <input type="number" id="targetAmount" placeholder="Enter your financial goal (₹)">
   <input type="number" id="years" placeholder="In how many years?">
   <input type="number" id="currentSavings" placeholder="Current savings (₹)">
   <input type="number" id="monthlySave" placeholder="Monthly saving (optional)">
-  <select id="riskProfile" class="risk-select">
-    <option value="low">Low Risk (Safe, Debt Focused)</option>
-    <option value="medium" selected>Medium Risk (Balanced Equity + Debt)</option>
-    <option value="high">High Risk (Equity Heavy, Growth Focused)</option>
-  </select>
   <button onclick="planGoal()">Calculate Plan</button>
   <div id="goalResult" class="result-box"></div>
 </section>
@@ -39,63 +33,66 @@ function planGoal() {
   const years = parseFloat(document.getElementById("years").value);
   const current = parseFloat(document.getElementById("currentSavings").value);
   let monthly = parseFloat(document.getElementById("monthlySave").value) || 0;
-  const risk = document.getElementById("riskProfile").value;
 
-  // Expected annual returns by risk
-  let annualRate;
-  let funds;
-  if(risk === "low") {
-    annualRate = 0.06; // 6% annual safe return
-    funds = [
-      {name: "HDFC Liquid Fund", cagr: 6.2},
-      {name: "ICICI Prudential Debt Fund", cagr: 6.5}
-    ];
-  } else if(risk === "medium") {
-    annualRate = 0.10; // 10% balanced
-    funds = [
-      {name: "HDFC Hybrid Equity Fund", cagr: 11.3},
-      {name: "SBI Equity Hybrid Fund", cagr: 10.9}
-    ];
-  } else {
-    annualRate = 0.12; // 12% aggressive
-    funds = [
-      {name: "Motilal Oswal Midcap Fund", cagr: 35.16},
-      {name: "Quant Small Cap Fund", cagr: 31.48},
-      {name: "HDFC Mid Cap Fund", cagr: 30.83},
-      {name: "ICICI Prudential Retirement Fund", cagr: 29.67}
-    ];
-  }
-
-  const rate = annualRate / 12;
   const months = years * 12;
 
+  // Allocation percentages for middle-class family
+  const allocation = {
+    safe: 0.4,       // 40% in debt/liquid fund
+    balanced: 0.4,   // 40% in hybrid/balanced mutual funds
+    growth: 0.2      // 20% in aggressive equity funds
+  };
+
+  // Expected monthly returns for each type
+  const rate = {
+    safe: 0.06 / 12,
+    balanced: 0.10 / 12,
+    growth: 0.12 / 12
+  };
+
+  // Monthly SIP calculation if blank
   if(monthly === 0){
-    monthly = (target - current * Math.pow(1 + rate, months)) / ((Math.pow(1 + rate, months) - 1)/rate);
+    monthly = (target - current) / months; // simple base monthly, later adjust by allocation
   }
 
-  const futureValue = current * Math.pow(1 + rate, months) + monthly * ((Math.pow(1 + rate, months) - 1)/rate);
+  // Monthly allocations
+  const monthlySafe = monthly * allocation.safe;
+  const monthlyBalanced = monthly * allocation.balanced;
+  const monthlyGrowth = monthly * allocation.growth;
 
-  let fundList = "<ul>";
-  funds.forEach(f => fundList += `<li>${f.name} – ${f.cagr}% CAGR (last 5 years)</li>`);
-  fundList += "</ul>";
+  // Future value calculation for each fund type
+  const fvSafe = current*allocation.safe*Math.pow(1+rate.safe, months) + monthlySafe*((Math.pow(1+rate.safe, months)-1)/rate.safe);
+  const fvBalanced = current*allocation.balanced*Math.pow(1+rate.balanced, months) + monthlyBalanced*((Math.pow(1+rate.balanced, months)-1)/rate.balanced);
+  const fvGrowth = current*allocation.growth*Math.pow(1+rate.growth, months) + monthlyGrowth*((Math.pow(1+rate.growth, months)-1)/rate.growth);
 
-  const tips = `
-    <ul>
-      <li>Start SIP immediately – even ₹500/month can grow significantly over years.</li>
-      <li>Increase contributions by 5-10% annually when possible.</li>
-      <li>Use automatic deductions from bank for discipline.</li>
-      <li>Keep emergency fund of 3-6 months expenses before aggressive investing.</li>
-      <li>Diversify across 2-3 funds depending on your risk profile.</li>
-      <li>Review portfolio once a year, rebalance if needed.</li>
-    </ul>
-  `;
+  const totalFutureValue = fvSafe + fvBalanced + fvGrowth;
+
+  // Funds list
+  const funds = {
+    safe: ["HDFC Liquid Fund", "ICICI Prudential Debt Fund"],
+    balanced: ["HDFC Hybrid Equity Fund", "SBI Equity Hybrid Fund"],
+    growth: ["Motilal Oswal Midcap Fund", "Quant Small Cap Fund"]
+  };
 
   let result = `
     🎯 <b>Goal:</b> ₹${target.toLocaleString()} in ${years} years.<br>
-    💵 <b>Suggested Monthly SIP:</b> ₹${monthly.toFixed(2)}<br>
-    💰 <b>Projected Future Value:</b> ₹${futureValue.toFixed(2)}<br><br>
-    <b>Recommended Funds (Risk: ${risk.charAt(0).toUpperCase() + risk.slice(1)}):</b> ${fundList}
-    <b>Actionable Tips for Low/Mid Income Users:</b> ${tips}
+    💵 <b>Total Monthly Investment Needed:</b> ₹${monthly.toFixed(2)}<br><br>
+    <b>Suggested Allocation:</b>
+    <ul>
+      <li>💰 Safe (Debt/Liquid Fund 40%): ₹${monthlySafe.toFixed(2)}/month - ${funds.safe.join(", ")}</li>
+      <li>📊 Balanced (Hybrid Mutual Fund 40%): ₹${monthlyBalanced.toFixed(2)}/month - ${funds.balanced.join(", ")}</li>
+      <li>🚀 Growth (Equity 20%): ₹${monthlyGrowth.toFixed(2)}/month - ${funds.growth.join(", ")}</li>
+    </ul>
+    💰 <b>Projected Total Future Value:</b> ₹${totalFutureValue.toFixed(2)}<br><br>
+    <b>Actionable Tips for Middle-Class Family:</b>
+    <ul>
+      <li>Start with what you can – even ₹500/month matters.</li>
+      <li>Increase SIP by 5-10% yearly as income grows.</li>
+      <li>Prioritize emergency fund (3-6 months expenses) before aggressive investment.</li>
+      <li>Diversify across safe, balanced, and growth funds.</li>
+      <li>Review portfolio annually, adjust if necessary.</li>
+      <li>Use automatic SIPs from bank account to stay disciplined.</li>
+    </ul>
   `;
 
   document.getElementById("goalResult").innerHTML = result;
