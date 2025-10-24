@@ -3,27 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Middle Class Family Financial Planner</title>
+<title>Middle Class Family Risk-Safe Financial Planner</title>
 <style>
   body { font-family: 'Segoe UI', sans-serif; background: #f3f6f9; margin: 0; padding: 20px; }
-  .goal-section { max-width: 700px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.1); }
+  .goal-section { max-width: 750px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.1); }
   .goal-section h2 { text-align: center; color: #0d47a1; margin-bottom: 20px; }
   .goal-section input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; }
   .goal-section button { width: 100%; padding: 12px; background-color: #1e88e5; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px; }
   .goal-section button:hover { background-color: #1565c0; }
   .result-box { background: #e3f2fd; padding: 20px; border-radius: 8px; margin-top: 15px; color: #0d47a1; font-weight: 600; }
   .result-box ul { margin-top: 5px; padding-left: 20px; }
+  .highlight { color: #d32f2f; font-weight: bold; }
+  .safe { color: #388e3c; font-weight: bold; }
 </style>
 </head>
 <body>
 
 <section class="goal-section">
-  <h2>Financial Goal Planner </h2>
+  <h2>Financial Planner with Risk Management</h2>
   <input type="number" id="targetAmount" placeholder="Enter your financial goal (₹)">
   <input type="number" id="years" placeholder="In how many years?">
   <input type="number" id="currentSavings" placeholder="Current savings (₹)">
   <input type="number" id="monthlySave" placeholder="Monthly saving (optional)">
-  <button onclick="planGoal()">Calculate Plan</button>
+  <button onclick="planGoal()">Calculate Full Plan</button>
   <div id="goalResult" class="result-box"></div>
 </section>
 
@@ -33,66 +35,80 @@ function planGoal() {
   const years = parseFloat(document.getElementById("years").value);
   const current = parseFloat(document.getElementById("currentSavings").value);
   let monthly = parseFloat(document.getElementById("monthlySave").value) || 0;
-
   const months = years * 12;
 
-  // Allocation percentages for middle-class family
+  // Allocation for middle class: Safe / Balanced / Growth
   const allocation = {
-    safe: 0.4,       // 40% in debt/liquid fund
-    balanced: 0.4,   // 40% in hybrid/balanced mutual funds
-    growth: 0.2      // 20% in aggressive equity funds
+    safe: 0.5,       // 50% safe (emergency + debt/liquid)
+    balanced: 0.3,   // 30% moderate risk hybrid
+    growth: 0.2      // 20% aggressive equity
   };
 
-  // Expected monthly returns for each type
+  // Expected monthly return per type
   const rate = {
-    safe: 0.06 / 12,
-    balanced: 0.10 / 12,
-    growth: 0.12 / 12
+    safe: 0.06/12,
+    balanced: 0.10/12,
+    growth: 0.12/12
   };
 
-  // Monthly SIP calculation if blank
+  // Monthly investment if left blank
   if(monthly === 0){
-    monthly = (target - current) / months; // simple base monthly, later adjust by allocation
+    monthly = (target - current)/months; // base monthly amount
   }
 
-  // Monthly allocations
-  const monthlySafe = monthly * allocation.safe;
-  const monthlyBalanced = monthly * allocation.balanced;
-  const monthlyGrowth = monthly * allocation.growth;
+  const monthlySafe = monthly*allocation.safe;
+  const monthlyBalanced = monthly*allocation.balanced;
+  const monthlyGrowth = monthly*allocation.growth;
 
-  // Future value calculation for each fund type
+  // Future value calculation
   const fvSafe = current*allocation.safe*Math.pow(1+rate.safe, months) + monthlySafe*((Math.pow(1+rate.safe, months)-1)/rate.safe);
   const fvBalanced = current*allocation.balanced*Math.pow(1+rate.balanced, months) + monthlyBalanced*((Math.pow(1+rate.balanced, months)-1)/rate.balanced);
   const fvGrowth = current*allocation.growth*Math.pow(1+rate.growth, months) + monthlyGrowth*((Math.pow(1+rate.growth, months)-1)/rate.growth);
 
-  const totalFutureValue = fvSafe + fvBalanced + fvGrowth;
+  const totalFV = fvSafe + fvBalanced + fvGrowth;
 
-  // Funds list
+  // Suggested funds
   const funds = {
     safe: ["HDFC Liquid Fund", "ICICI Prudential Debt Fund"],
     balanced: ["HDFC Hybrid Equity Fund", "SBI Equity Hybrid Fund"],
     growth: ["Motilal Oswal Midcap Fund", "Quant Small Cap Fund"]
   };
 
-  let result = `
-    🎯 <b>Goal:</b> ₹${target.toLocaleString()} in ${years} years.<br>
-    💵 <b>Total Monthly Investment Needed:</b> ₹${monthly.toFixed(2)}<br><br>
-    <b>Suggested Allocation:</b>
+  // Explain risk
+  const riskExplanation = `
     <ul>
-      <li>💰 Safe (Debt/Liquid Fund 40%): ₹${monthlySafe.toFixed(2)}/month - ${funds.safe.join(", ")}</li>
-      <li>📊 Balanced (Hybrid Mutual Fund 40%): ₹${monthlyBalanced.toFixed(2)}/month - ${funds.balanced.join(", ")}</li>
-      <li>🚀 Growth (Equity 20%): ₹${monthlyGrowth.toFixed(2)}/month - ${funds.growth.join(", ")}</li>
+      <li><span class="safe">Safe Funds:</span> Very low risk, emergency fund, money guaranteed + small returns (~6% per year)</li>
+      <li>Balanced/Hybrid Funds: Moderate risk, mix of equity & debt, ~10% annual returns</li>
+      <li><span class="highlight">Growth/Equity Funds:</span> High risk, high returns (~12% annual), can lose short-term value, only invest surplus money</li>
     </ul>
-    💰 <b>Projected Total Future Value:</b> ₹${totalFutureValue.toFixed(2)}<br><br>
-    <b>Actionable Tips for Middle-Class Family:</b>
+  `;
+
+  const tips = `
     <ul>
-      <li>Start with what you can – even ₹500/month matters.</li>
-      <li>Increase SIP by 5-10% yearly as income grows.</li>
-      <li>Prioritize emergency fund (3-6 months expenses) before aggressive investment.</li>
-      <li>Diversify across safe, balanced, and growth funds.</li>
-      <li>Review portfolio annually, adjust if necessary.</li>
-      <li>Use automatic SIPs from bank account to stay disciplined.</li>
+      <li>Start with whatever you can – even ₹500/month helps in long-term compounding.</li>
+      <li>Emergency fund (3-6 months expenses) must be in safe funds first.</li>
+      <li>Increase SIP by 5-10% every year as income grows.</li>
+      <li>Diversify across safe, balanced, and growth.</li>
+      <li>Review portfolio yearly and rebalance if required.</li>
+      <li>Automate investments via SIP to maintain discipline.</li>
+      <li>High-risk funds only with surplus money, never emergency funds.</li>
     </ul>
+  `;
+
+  const result = `
+    🎯 <b>Financial Goal:</b> ₹${target.toLocaleString()} in ${years} years<br>
+    💵 <b>Total Monthly Investment:</b> ₹${monthly.toFixed(2)}<br><br>
+
+    <b>Monthly Allocation:</b>
+    <ul>
+      <li><span class="safe">Safe (50%)</span>: ₹${monthlySafe.toFixed(2)} - ${funds.safe.join(", ")}</li>
+      <li>Balanced/Hybrid (30%): ₹${monthlyBalanced.toFixed(2)} - ${funds.balanced.join(", ")}</li>
+      <li><span class="highlight">Growth/Equity (20%)</span>: ₹${monthlyGrowth.toFixed(2)} - ${funds.growth.join(", ")}</li>
+    </ul>
+
+    💰 <b>Projected Future Value:</b> ₹${totalFV.toFixed(2)}<br><br>
+    <b>Risk & Safety Explanation:</b> ${riskExplanation}<br>
+    <b>Actionable Tips:</b> ${tips}
   `;
 
   document.getElementById("goalResult").innerHTML = result;
