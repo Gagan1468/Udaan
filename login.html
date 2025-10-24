@@ -1,355 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Udaan – A Step Towards Richness</title>
-<style>
-/* ===== GLOBAL ===== */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-body { background: #f3f6f9; overflow-x: hidden; }
-
-/* ===== HEADER / NAVBAR ===== */
-header {
-  background-color: #1e88e5;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-/* Brand / Logo */
-.brand { display: flex; align-items: center; gap: 12px; }
-.brand img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; transition: transform 0.3s ease; }
-.brand img:hover { transform: scale(1.1); }
-.brand span { font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: color 0.3s; }
-.brand span:hover { color: #cce4ff; } /* hover effect like second code */
-
-/* Desktop nav links */
-.nav-desktop {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-left: 24px;
-}
-.nav-desktop a {
-  color: rgba(255,255,255,0.95);
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-weight: 600;
-}
-.nav-desktop a:hover { background: rgba(255,255,255,0.12); }
-
-/* Auth buttons for desktop */
-.auth-buttons {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.auth-buttons a {
-  color: white;
-  border: 2px solid white;
-  padding: 8px 14px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-  background: transparent;
-}
-.auth-buttons a:hover { background-color: white; color: #1e88e5; }
-
-/* Mobile three-dot menu */
-.dropdown-wrapper {
-  position: relative;
-  z-index: 1000;
-  display: none; 
-  margin-left: auto;
-}
-.dot-menu {
-  font-size: 22px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  padding: 6px;
-  line-height: 1;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 42px;
-  background-color: white;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-  padding: 12px 8px;
-  border-radius: 10px;
-  z-index: 2000;
-}
-.dropdown-content a {
-  color: #333;
-  padding: 8px 12px;
-  text-decoration: none;
-  display: block;
-  font-weight: 500;
-}
-.dropdown-content a:hover { background-color: #f1f1f1; border-radius: 5px; }
-
-/* ===== HERO SECTION ===== */
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-  background: linear-gradient(to right, #e3f2fd, #ffffff);
-}
-.hero h1 { font-size: 2.5rem; margin-bottom: 10px; color: #0d47a1; }
-.hero p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; color: #333; }
-
-/* ===== CARDS ===== */
-.container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 20px;
-}
-.card {
-  background: rgba(255, 255, 255, 0.92);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.08);
-  text-align: center;
-}
-.card h3 { margin-bottom: 10px; color: #1565c0; }
-.card p { font-size: 0.95rem; color: #444; }
-.card a.button {
-  background-color: #1e88e5;
-  color: white;
-  padding: 10px 20px;
-  font-size: 14px;
-  border: none;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 10px;
-}
-.card a.button:hover { background-color: #1565c0; }
-
-/* ===== FOOTER ===== */
-.footer-pro {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  background-color: #0d47a1;
-  color: white;
-  padding: 50px 10px;
-  animation: fadeInUp 1s ease;
-}
-.footer-col {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 180px;
-  margin: 10px;
-}
-.footer-col strong { font-size: 1.2rem; margin-bottom: 5px; }
-.footer-col a { color: #bbdefb; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
-.footer-col a:hover { color: white; }
-.footer-bottom {
-  background: #1e88e5;
-  color: white;
-  text-align: center;
-  padding: 15px 10px;
-  font-size: 0.95rem;
-  border-top: 1px solid rgba(255,255,255,0.15);
-  letter-spacing: 0.5px;
-  animation: fadeIn 2s ease;
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 767px) {
-  .nav-desktop, .auth-buttons { display: none; }
-  .dropdown-wrapper { display: block; }
-  header { padding: 12px 14px; }
-  .brand span { font-size: 1.05rem; }
-}
-@media (min-width: 768px) {
-  .dropdown-wrapper { display: none; }
-  .nav-desktop { display: flex; }
-  .auth-buttons { display: flex; }
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Login – Prerna</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1508780709619-79562169bc64') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 360px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      background: #673ab7;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #5e35b1;
+    }
+  </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
-<header>
-  <a class="brand" href="index.html">
-    <img src="Modern%20Logo%20with%20Blue%20Bird%20and%20%27U%27%20Design.png" alt="Udaan Logo">
-    <span>Udaan</span>
-  </a>
-
-  <!-- Desktop Nav -->
-  <nav class="nav-desktop" aria-label="Primary">
-    <a href="profile.html">Profile</a>
-    <a href="settings.html">Settings</a>
-    <a href="about.html">About</a>
-    <a href="#" onclick="logoutUser()">Logout</a>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <div class="dropdown-wrapper" id="profileMenu">
-    <button class="dot-menu" onclick="toggleMenu()">⋮</button>
-    <div class="dropdown-content" id="dropdown-content">
-      <a href="profile.html">👤 Profile</a>
-      <a href="settings.html">⚙️ Settings</a>
-      <a href="#" onclick="logoutUser()">🚪 Logout</a>
-      <hr style="border:none;border-top:1px solid #eee;margin:8px 0;">
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-    </div>
+  <div class="login-box">
+    <h2>Login to Prerna</h2>
+    <input type="email" id="loginEmail" placeholder="Email Address" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+    <button onclick="loginUser()">Login</button>
   </div>
 
-  <!-- Desktop Auth Buttons -->
-  <div class="auth-buttons" id="authLinks">
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
-  </div>
-</header>
+  <script>
+    function loginUser() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
 
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <h1>Unlock Your Financial Power</h1>
-  <p>From budgeting and investing to launching your first startup, Prerna helps you master money and entrepreneurship skills that actually matter.</p>
-</section>
+      if (!email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
 
-<!-- ===== CARDS ===== -->
-<div class="container">
-  <div class="card">
-    <h3>💸 Financial Literacy</h3>
-    <p>Understand budgeting, saving, and smart investing from scratch.</p>
-    <a class="button" href="financial-literacy.html">Start Learning</a>
-  </div>
-  <div class="card">
-    <h3>🚀 Entrepreneurship</h3>
-    <p>Turn ideas into startups with real-world tools and guides.</p>
-    <a class="button" href="entrepreneurship.html">Explore</a>
-  </div>
-  <div class="card">
-    <h3>📊 Financial Tools</h3>
-    <p>Use expense trackers, calculators, and idea generators for free.</p>
-    <a class="button" href="financial-tools.html">Open Tools</a>
-  </div>
-  <div class="card">
-    <h3>📚 Blog Zone</h3>
-    <p>Tips, tricks, and youth money hacks for smarter decisions.</p>
-    <a class="button" href="blog.html">Read Now</a>
-  </div>
-  <div class="card">
-    <h3>💸 Financial Goal</h3>
-    <p>Make a step towards Richness</p>
-    <a class="button" href="financial goal.html">Start going</a>
-  </div>
-</div>
+      const storedUser = localStorage.getItem(email);
+      if (!storedUser) {
+        alert("No user found with this email. Please register first.");
+        return;
+      }
 
-<!-- ===== FOOTER ===== -->
-<footer class="footer-pro">
-  <div class="footer-col">
-    <strong>Udaan</strong>
-    <p>India’s Youth Financial Platform.</p>
-    <small>&copy; 2025 Udaan</small>
-  </div>
-  <div class="footer-col">
-    <strong>Company</strong>
-    <a href="#">About us</a>
-    <a href="#">Careers</a>
-    <a href="#">Contact us</a>
-    <a href="#">Blog</a>
-  </div>
-  <div class="footer-col">
-    <strong>Support</strong>
-    <a href="#">FAQs</a>
-    <a href="#">Help Center</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Terms</a>
-  </div>
-  <div class="footer-col">
-    <strong>Resources</strong>
-    <a href="#">Financial Literacy</a>
-    <a href="#">Youth Guides</a>
-    <a href="#">Newsletter</a>
-    <a href="#">Community</a>
-  </div>
-</footer>
+      const user = JSON.parse(storedUser);
+      if (user.password !== password) {
+        alert("Incorrect password. Try again.");
+        return;
+      }
 
-<div class="footer-bottom">
-  <p>© 2025 Udaan. All rights reserved. Powered by <strong>Atal Technologies Pvt. Ltd.</strong></p>
-</div>
+      // Login success: save to session
+      localStorage.setItem('prernaLoggedIn', 'true');
+      localStorage.setItem('prernaEmail', user.email);
+      localStorage.setItem('prernaName', user.name);
+      localStorage.setItem('prernaPhone', user.phone);
+      localStorage.setItem('prernaPhoto', user.photo);
 
-<script>
-function toggleMenu() {
-  const dropdown = document.getElementById("dropdown-content");
-  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-}
-
-document.addEventListener('click', function(e) {
-  const wrapper = document.getElementById('profileMenu');
-  const dropdown = document.getElementById('dropdown-content');
-  if (!wrapper.contains(e.target)) {
-    if (dropdown) dropdown.style.display = 'none';
-  }
-});
-
-function logoutUser() {
-  localStorage.removeItem('prernaLoggedIn');
-  localStorage.removeItem('prernaEmail');
-  localStorage.removeItem('prernaName');
-  localStorage.removeItem('prernaPhone');
-  localStorage.removeItem('prernaPhoto');
-  location.reload();
-}
-
-window.onload = function() {
-  const loggedIn = localStorage.getItem('prernaLoggedIn');
-  const profileMenu = document.getElementById('profileMenu');
-  const authLinks = document.getElementById('authLinks');
-  if (loggedIn === 'true') {
-    if (profileMenu) profileMenu.style.display = (window.innerWidth < 768) ? 'block' : 'none';
-    if (authLinks) authLinks.style.display = 'none';
-  } else {
-    if (profileMenu) profileMenu.style.display = (window.innerWidth < 768) ? 'block' : 'none';
-    if (authLinks) authLinks.style.display = (window.innerWidth >= 768) ? 'flex' : 'none';
-  }
-};
-
-window.addEventListener('resize', function() {
-  const profileMenu = document.getElementById('profileMenu');
-  const authLinks = document.getElementById('authLinks');
-  if (window.innerWidth >= 768) {
-    if (profileMenu) profileMenu.style.display = 'none';
-    if (authLinks) authLinks.style.display = 'flex';
-  } else {
-    if (profileMenu) profileMenu.style.display = 'block';
-    if (authLinks) authLinks.style.display = 'none';
-  }
-
-  <!-- Noupe AI placeholder -->
-<div id="noupe-ai-widget"></div>
-
-<!-- Noupe AI script -->
-<script src="https://www.noupe.com/embed/01983a7c61f7796895c23c4d4f7d4a145a00.js"></script>
-
-});
-</script>
+      alert("Login successful!");
+      window.location.href = "index.html"; // redirect to homepage
+    }
+  </script>
 
 </body>
 </html>
