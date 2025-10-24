@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Forgot Password - Prerna</title>
+  <style>
+    body { /* Like login, soft bg */ ... }
+    .box { /* Card styling */ ... }
+    .box input, .box button { width:100%; ... }
+    .hide { display:none; }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>Forgot Password</h2>
+  <div id="step1">
+    <input type="email" id="fpEmail" placeholder="Enter your email">
+    <button onclick="sendCode()">Send Code</button>
+  </div>
+  <div id="step2" class="hide">
+    <input type="text" id="fpOtp" placeholder="Enter code received">
+    <button onclick="verifyCode()">Verify</button>
+  </div>
+  <div id="step3" class="hide">
+    <input type="password" id="newPass" placeholder="New password">
+    <input type="password" id="cnfPass" placeholder="Confirm password">
+    <button onclick="setNewPass()">Set Password</button>
+  </div>
+</div>
+<script>
+let genOtp = "";
+function sendCode() {
+  const email = document.getElementById('fpEmail').value.trim();
+  if (!email) return alert('Enter your email.');
+  if (!localStorage.getItem(email)) return alert('User not found!');
+  // For demo: generate 6-digit code and show onscreen (in production, must send real email!)
+  genOtp = Math.floor(100000 + Math.random() * 900000).toString();
+  alert("Demo: Your reset code is "+genOtp);
+  document.getElementById('step1').classList.add('hide');
+  document.getElementById('step2').classList.remove('hide');
+}
+function verifyCode() {
+  const code = document.getElementById('fpOtp').value.trim();
+  if (code === genOtp) {
+    document.getElementById('step2').classList.add('hide');
+    document.getElementById('step3').classList.remove('hide');
+  } else {
+    alert('Invalid code!');
+  }
+}
+function setNewPass() {
+  const email = document.getElementById('fpEmail').value.trim();
+  const newp = document.getElementById('newPass').value;
+  const cnp = document.getElementById('cnfPass').value;
+  if (!newp || newp.length < 5) return alert('Password must be at least 5 chars.');
+  if (newp !== cnp) return alert('Passwords do not match.');
+  let user = JSON.parse(localStorage.getItem(email));
+  user.password = newp;
+  localStorage.setItem(email, JSON.stringify(user));
+  alert('Password reset successful! Login now.');
+  window.location.href = 'login.html';
+}
+</script>
+</body>
+</html>
