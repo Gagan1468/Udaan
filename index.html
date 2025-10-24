@@ -109,6 +109,8 @@
       max-width: 1000px;
       margin: 40px auto;
       padding: 20px;
+
+      /* 👇 background image behind cards */
       background-image: url('images.jpg');
       background-size: cover;
       background-position: center;
@@ -150,73 +152,6 @@
       background-color: #1565c0;
     }
 
-    /* Financial Planner Section */
-    .goal-section {
-      max-width: 600px;
-      margin: 50px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-
-    .goal-section h2 {
-      color: #0d47a1;
-      margin-bottom: 10px;
-    }
-
-    .goal-section p {
-      color: #555;
-      margin-bottom: 20px;
-    }
-
-    .goal-section label {
-      display: block;
-      margin-top: 10px;
-      color: #333;
-      font-weight: bold;
-    }
-
-    .goal-section input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    .goal-section button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #1e88e5;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .goal-section button:hover {
-      background-color: #1565c0;
-    }
-
-    #result, #tips {
-      background: #e3f2fd;
-      padding: 20px;
-      border-radius: 12px;
-      margin-top: 25px;
-    }
-
-    #result h3, #tips h3 {
-      color: #0d47a1;
-      margin-bottom: 10px;
-    }
-
-    #tips ul {
-      padding-left: 20px;
-      color: #333;
-    }
-
     footer {
       text-align: center;
       padding: 20px;
@@ -229,6 +164,7 @@
 <body>
 
   <header>
+    <!-- Dropdown (Three Dots Menu) -->
     <div class="dropdown-wrapper" id="profileMenu">
       <button class="dot-menu" onclick="toggleMenu()">⋮</button>
       <div class="dropdown-content" id="dropdown-content">
@@ -238,46 +174,19 @@
       </div>
     </div>
 
+    <!-- Login/Register Buttons -->
     <div class="auth-buttons" id="authLinks">
       <a href="login.html">Login</a>
       <a href="register.html">Register</a>
     </div>
 
-    <h1>Udaan – By Atal Technologies Pvt LTD.</h1>
+    <h1>Udaan – By Prerna</h1>
     <p>Learn. Grow. Earn. A step toward financial freedom 🚀</p>
   </header>
 
   <section class="hero">
     <h1>Unlock Your Financial Power</h1>
     <p>From budgeting and investing to launching your first startup, Prerna helps you master money and entrepreneurship skills that actually matter.</p>
-  </section>
-
-  <!-- Financial Goal Planner -->
-  <section class="goal-section">
-    <h2>🎯 Set Your Financial Goal</h2>
-    <p>Plan your journey toward financial independence by calculating your target and savings strategy.</p>
-
-    <form id="goalForm">
-      <label>Current Age:</label>
-      <input type="number" id="age" required>
-
-      <label>Monthly Income (₹):</label>
-      <input type="number" id="income" required>
-
-      <label>Monthly Savings (₹):</label>
-      <input type="number" id="savings" required>
-
-      <label>Target Amount for Retirement (₹):</label>
-      <input type="number" id="target" required>
-
-      <label>Retirement Age:</label>
-      <input type="number" id="retirementAge" required>
-
-      <button type="submit">Plan My Future 🚀</button>
-    </form>
-
-    <div id="result"></div>
-    <div id="tips"></div>
   </section>
 
   <div class="container">
@@ -307,7 +216,7 @@
       <a class="button" href="games.html">Start Playing</a>
     </div>
     <div class="card">
-      <h3>💬 Contact a Counsellor</h3>
+      <h3>💸 Contact a Counsellor</h3>
       <p>Ask Your Doubts About Financial Literacy and Entrepreneurship</p>
       <a class="button" href="contact_counsellor.html">Start Asking</a>
     </div>
@@ -317,7 +226,7 @@
     &copy; 2025 Udaan | Empowering Youth for Financial Freedom 💼
   </footer>
 
-  <!-- JS Logic -->
+  <!-- Scripts -->
   <script>
     function toggleMenu() {
       const dropdown = document.getElementById("dropdown-content");
@@ -346,51 +255,8 @@
         authLinks.style.display = 'block';
       }
     };
-
-    // 💰 Financial Planner Logic
-    document.getElementById('goalForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const age = parseInt(document.getElementById('age').value);
-      const income = parseInt(document.getElementById('income').value);
-      const savings = parseInt(document.getElementById('savings').value);
-      const target = parseInt(document.getElementById('target').value);
-      const retirementAge = parseInt(document.getElementById('retirementAge').value);
-
-      const yearsLeft = retirementAge - age;
-      const annualSavings = savings * 12;
-      const totalSaved = annualSavings * yearsLeft;
-      const requiredGrowth = target - totalSaved;
-
-      let msg = "";
-      let tips = [];
-
-      if (requiredGrowth <= 0) {
-        msg = "🔥 Brooo! You're already on track to retire rich. Keep your consistency going.";
-      } else {
-        const extra = Math.round(requiredGrowth / (yearsLeft * 12));
-        msg = `To hit ₹${target.toLocaleString()} by age ${retirementAge}, save about ₹${extra.toLocaleString()} more per month.`;
-      }
-
-      // Tips section logic
-      if (savings < income * 0.1) tips.push("Try saving at least 10% of your income every month.");
-      if (income < 30000) tips.push("Focus on improving your skills or side hustles to increase income 💪.");
-      if (target > 10000000) tips.push("Start SIPs or mutual funds for long-term compounding growth 📈.");
-      if (yearsLeft < 10) tips.push("Since you’ve less time, try investing in high-yield but safe instruments.");
-      if (savings > income * 0.3) tips.push("Nice discipline! You’re saving more than 30% — keep it up champ 👑.");
-
-      document.getElementById('result').innerHTML = `
-        <h3>📊 Your Financial Roadmap</h3>
-        <p>${msg}</p>
-        <p><strong>Years Left:</strong> ${yearsLeft}</p>
-        <p><strong>Total Savings (Current Rate):</strong> ₹${totalSaved.toLocaleString()}</p>
-      `;
-
-      document.getElementById('tips').innerHTML = `
-        <h3>💡 Personalized Money Tips</h3>
-        <ul>${tips.map(t => `<li>${t}</li>`).join('')}</ul>
-      `;
-    });
   </script>
+
+  <script src='https://www.noupe.com/embed/01983a7c61f7796895c23c4d4f7d4a145a00.js'></script>
 </body>
 </html>
