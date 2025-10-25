@@ -57,34 +57,30 @@
 
   <script>
     function registerUser() {
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const phone = document.getElementById('regPhone').value.trim();
-      const password = document.getElementById('regPassword').value.trim();
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
 
-      if (!name || !email || !phone || !password) {
-        alert('Please fill in all fields.');
-        return;
-      }
-
-      if (localStorage.getItem(email)) {
-        alert("User already registered with this email.");
-        return;
-      }
-
-      const user = {
-        name,
-        email,
-        phone,
-        password,
-        photo: "" // Default empty, can be updated from edit-profile
-      };
-
-      localStorage.setItem(email, JSON.stringify(user));
-      alert("Registration successful! Now login.");
-      window.location.href = "login.html";
+    if(!name || !email || !phone || !password) { 
+        alert("Fill all fields"); 
+        return; 
     }
+
+    fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        window.location.href = "login.html";
+    });
+}
+
   </script>
 
 </body>
 </html>
+
