@@ -65,57 +65,69 @@
 
   <script>
     function loginUser() {
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
 
-      if (!email || !password) {
+    if(!email || !password) {
         alert("Please fill in all fields.");
         return;
-      }
-
-      const storedUser = localStorage.getItem(email);
-      if (!storedUser) {
-        alert("No user found with this email. Please register first.");
-        return;
-      }
-
-      const user = JSON.parse(storedUser);
-      if (user.password !== password) {
-        alert("Incorrect password. Try again.");
-        return;
-      }
-
-      // Login success: save to session
-      localStorage.setItem('prernaLoggedIn', 'true');
-      localStorage.setItem('prernaEmail', user.email);
-      localStorage.setItem('prernaName', user.name);
-      localStorage.setItem('prernaPhone', user.phone);
-      localStorage.setItem('prernaPhoto', user.photo);
-
-      alert("Login successful!");
-      window.location.href = "index.html"; // redirect to homepage
     }
 
-    function forgotPassword() {
-      const email = prompt("Enter your registered email to reset password:");
-      if (!email) return;
+    fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            // Save session info in localStorage if needed
+            localStorage.setItem('prernaLoggedIn', 'true');
+            localStorage.setItem('prernaEmail', data.user.email);
+            localStorage.setItem('prernaName', data.user.name);
+            localStorage.setItem('prernaPhone', data.user.phone);
+            localStorage.setItem('prernaPhoto', data.user.photo);
 
-      const storedUser = localStorage.getItem(email);
-      if (!storedUser) {
-        alert("No user found with this email.");
-        return;
-      }
+            alert("Login successful!");
+            window.location.href = "index.html"; // redirect to homepage
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Something went wrong. Try again.");
+    });
+}
 
-      const newPassword = prompt("Enter your new password:");
-      if (!newPassword) return;
+function forgotPassword() {
+    const email = prompt("Enter your registered email to reset password:");
+    if(!email) return;
 
-      const user = JSON.parse(storedUser);
-      user.password = newPassword; // update password
-      localStorage.setItem(email, JSON.stringify(user));
+    const newPassword = prompt("Enter your new password:");
+    if(!newPassword) return;
 
-      alert("Password updated successfully! You can now login with your new password.");
-    }
+    fetch('http://localhost:3000/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, newPassword })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            alert("Password updated successfully! You can now login with your new password.");
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Something went wrong. Try again.");
+    });
+}
+
   </script>
 
 </body>
 </html>
+
