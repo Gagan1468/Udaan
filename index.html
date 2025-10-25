@@ -87,6 +87,19 @@ header {
   margin-left: auto;
   transition: opacity 0.4s ease;
 }
+.dot-menu {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: background 0.3s;
+  border-radius: 5px;
+}
+.dot-menu:hover {
+  background: rgba(255,255,255,0.15);
+}
 .dropdown-content {
   display: none;
   position: absolute;
@@ -187,11 +200,11 @@ header {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 767px) {
-  .nav-desktop, .auth-buttons { display: none; }
-  .dropdown-wrapper { display: block; }
+  .nav-desktop, .auth-buttons { display: none !important; }
+  .dropdown-wrapper { display: block !important; }
 }
 @media (min-width: 768px) {
-  .dropdown-wrapper { display: none; }
+  .dropdown-wrapper { display: none !important; }
 }
 </style>
 </head>
@@ -205,7 +218,7 @@ header {
   </a>
 
   <!-- Desktop Nav -->
-  <nav class="nav-desktop">
+  <nav class="nav-desktop hidden">
     <a href="profile.html">Profile</a>
     <a href="settings.html">Settings</a>
     <a href="about.html">About</a>
@@ -213,7 +226,7 @@ header {
   </nav>
 
   <!-- Mobile Menu -->
-  <div class="dropdown-wrapper" id="profileMenu">
+  <div class="dropdown-wrapper" id="profileMenu" style="display: none;">
     <button class="dot-menu" onclick="toggleMenu()">⋮</button>
     <div class="dropdown-content" id="dropdown-content">
       <a href="profile.html">👤 Profile</a>
@@ -226,7 +239,7 @@ header {
   </div>
 
   <!-- Auth Buttons -->
-  <div class="auth-buttons" id="authLinks">
+  <div class="auth-buttons hidden" id="authLinks">
     <a href="login.html">Login</a>
     <a href="register.html">Register</a>
   </div>
@@ -271,7 +284,7 @@ header {
 <footer class="footer-pro">
   <div class="footer-col">
     <strong>Udaan</strong>
-    <p>India’s Youth Financial Platform.</p>
+    <p>India's Youth Financial Platform.</p>
     <small>&copy; 2025 Udaan</small>
   </div>
   <div class="footer-col">
@@ -302,40 +315,52 @@ header {
 </div>
 
 <script>
+// Toggle mobile dropdown menu
 function toggleMenu() {
   const dropdown = document.getElementById("dropdown-content");
   dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
 
+// Close dropdown when clicking outside
 document.addEventListener('click', function(e) {
   const wrapper = document.getElementById('profileMenu');
   const dropdown = document.getElementById('dropdown-content');
-  if (!wrapper.contains(e.target)) dropdown.style.display = 'none';
+  if (wrapper && !wrapper.contains(e.target)) {
+    dropdown.style.display = 'none';
+  }
 });
 
+// Logout function
 function logoutUser() {
   localStorage.removeItem('prernaLoggedIn');
   localStorage.removeItem('prernaEmail');
   localStorage.removeItem('prernaName');
   localStorage.removeItem('prernaPhone');
   localStorage.removeItem('prernaPhoto');
+  alert('Logged out successfully!');
   location.reload();
 }
 
+// Update navbar based on login status
 function updateNavbar() {
-  const loggedIn = localStorage.getItem('prernaLoggedIn');
+  const loggedIn = localStorage.getItem('prernaLoggedIn') === 'true';
   const navDesktop = document.querySelector('.nav-desktop');
   const authLinks = document.getElementById('authLinks');
   const profileMenu = document.getElementById('profileMenu');
 
-  if (loggedIn === 'true') {
+  console.log('Logged in status:', loggedIn); // Debug
+
+  if (loggedIn) {
+    // User is logged in - show profile nav, hide auth buttons
     navDesktop.classList.remove('hidden');
     authLinks.classList.add('hidden');
   } else {
+    // User is NOT logged in - show auth buttons, hide profile nav
     navDesktop.classList.add('hidden');
     authLinks.classList.remove('hidden');
   }
 
+  // Mobile menu visibility
   if (window.innerWidth < 768) {
     profileMenu.style.display = 'block';
   } else {
@@ -343,7 +368,12 @@ function updateNavbar() {
   }
 }
 
-window.onload = updateNavbar;
+// Run on page load
+window.onload = function() {
+  updateNavbar();
+};
+
+// Run on window resize
 window.addEventListener('resize', updateNavbar);
 </script>
 
