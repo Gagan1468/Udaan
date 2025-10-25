@@ -42,6 +42,15 @@
     button:hover {
       background: #5e35b1;
     }
+    .forgot-btn {
+      margin-top: 10px;
+      background: transparent;
+      color: #673ab7;
+      text-decoration: underline;
+    }
+    .forgot-btn:hover {
+      color: #5e35b1;
+    }
   </style>
 </head>
 <body>
@@ -51,6 +60,7 @@
     <input type="email" id="loginEmail" placeholder="Email Address" required>
     <input type="password" id="loginPassword" placeholder="Password" required>
     <button onclick="loginUser()">Login</button>
+    <button class="forgot-btn" onclick="forgotPassword()">Forgot Password?</button>
   </div>
 
   <script>
@@ -84,6 +94,26 @@
 
       alert("Login successful!");
       window.location.href = "index.html"; // redirect to homepage
+    }
+
+    function forgotPassword() {
+      const email = prompt("Enter your registered email to reset password:");
+      if (!email) return;
+
+      const storedUser = localStorage.getItem(email);
+      if (!storedUser) {
+        alert("No user found with this email.");
+        return;
+      }
+
+      const newPassword = prompt("Enter your new password:");
+      if (!newPassword) return;
+
+      const user = JSON.parse(storedUser);
+      user.password = newPassword; // update password
+      localStorage.setItem(email, JSON.stringify(user));
+
+      alert("Password updated successfully! You can now login with your new password.");
     }
   </script>
 
