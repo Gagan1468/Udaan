@@ -27,7 +27,7 @@ header {
 .brand img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; transition: transform 0.3s ease; }
 .brand img:hover { transform: scale(1.1); }
 .brand span { font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: color 0.3s; }
-.brand span:hover { color: #cce4ff; } /* hover effect like second code */
+.brand span:hover { color: #cce4ff; }
 
 /* Desktop nav links */
 .nav-desktop {
@@ -295,6 +295,11 @@ header {
   <p>© 2025 Udaan. All rights reserved. Powered by <strong>Atal Technologies Pvt. Ltd.</strong></p>
 </div>
 
+<!-- ====== TEST LOGIN BUTTON (REMOVE LATER) ===== -->
+<div style="text-align:center; margin:40px;">
+  <button onclick="localStorage.setItem('prernaLoggedIn','true');location.reload();" style="padding:10px 20px;background:#1e88e5;color:white;border:none;border-radius:6px;cursor:pointer;">Fake Login for Test</button>
+</div>
+
 <script>
 function toggleMenu() {
   const dropdown = document.getElementById("dropdown-content");
@@ -320,26 +325,47 @@ function logoutUser() {
 
 window.onload = function() {
   const loggedIn = localStorage.getItem('prernaLoggedIn');
+  const navDesktop = document.querySelector('.nav-desktop');
   const profileMenu = document.getElementById('profileMenu');
   const authLinks = document.getElementById('authLinks');
+
   if (loggedIn === 'true') {
-    if (profileMenu) profileMenu.style.display = (window.innerWidth < 768) ? 'block' : 'none';
+    if (navDesktop) navDesktop.style.display = (window.innerWidth >= 768) ? 'flex' : 'none';
     if (authLinks) authLinks.style.display = 'none';
-  } else {
     if (profileMenu) profileMenu.style.display = (window.innerWidth < 768) ? 'block' : 'none';
+  } else {
+    if (navDesktop) navDesktop.style.display = 'none';
     if (authLinks) authLinks.style.display = (window.innerWidth >= 768) ? 'flex' : 'none';
+    if (profileMenu) profileMenu.style.display = (window.innerWidth < 768) ? 'block' : 'none';
   }
 };
 
 window.addEventListener('resize', function() {
+  const loggedIn = localStorage.getItem('prernaLoggedIn');
+  const navDesktop = document.querySelector('.nav-desktop');
   const profileMenu = document.getElementById('profileMenu');
   const authLinks = document.getElementById('authLinks');
-  if (window.innerWidth >= 768) {
-    if (profileMenu) profileMenu.style.display = 'none';
-    if (authLinks) authLinks.style.display = 'flex';
+
+  if (loggedIn === 'true') {
+    if (window.innerWidth >= 768) {
+      navDesktop.style.display = 'flex';
+      profileMenu.style.display = 'none';
+      authLinks.style.display = 'none';
+    } else {
+      navDesktop.style.display = 'none';
+      profileMenu.style.display = 'block';
+      authLinks.style.display = 'none';
+    }
   } else {
-    if (profileMenu) profileMenu.style.display = 'block';
-    if (authLinks) authLinks.style.display = 'none';
+    if (window.innerWidth >= 768) {
+      navDesktop.style.display = 'none';
+      authLinks.style.display = 'flex';
+      profileMenu.style.display = 'none';
+    } else {
+      navDesktop.style.display = 'none';
+      authLinks.style.display = 'none';
+      profileMenu.style.display = 'block';
+    }
   }
 });
 </script>
