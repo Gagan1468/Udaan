@@ -1,0 +1,147 @@
+const express = require('express');
+const mysql = require('mysql2');
+const bcrypt = require('bcrypt');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+
+// MySQL Database Connection
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',           // Tumhara MySQL username
+    password: '',           // Tumhara MySQL password (blank ya jo bhi ho)
+    database: 'prerna_db'
+});
+
+db.connect((err) => {
+    if (err) {
+        console.error('Database connection failed:', err);
+        return;
+    }
+    console.log('✅ Connected to MySQL database: prerna_db');
+});
+
+// ============================================
+// REGISTER ENDPOINT
+// ============================================
+app.post('/register', async (req, res) => {
+    const { name, email, phone, password } = req.body;
+
+    if (!name || !email || !phone || !password) {
+        return res.json({ success: false, message: 'All fields are required' });
+    }
+
+    const checkQuery = 'SELECT * FROM user WHERE email = ?';
+    db.query(checkQuery, [email], async (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.json({ success: false, message: 'Database error' });
+        }
+
+        if (results.length > 0) {
+            return res.json({ success: false, message: 'Email already registered' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const username = email.split('@')[0];
+
+        const insertQuery = 'INSERT INTO user (name, username, email, password, phone) VALUES (?, ?, ?, ?, ?)';
+        db.query(insertQuery, [name, username, email, hashedPassword, phone], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.json({ success: false, message: 'Registration failed' });
+            }
+
+            res.json({ success: true, message: 'Registration successful!' });
+        });
+    });
+});
+
+// ============================================
+// LOGIN ENDPOINT
+// ============================================
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.json({ success: false, message: 'Email and password required' });
+    }
+
+    const query = 'SELECT * FROM user WHERE email = ? AND status = "active"';
+    db.query(query, [email], async (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.json({ success: false, message: 'Database error' });
+        }
+
+        if (results.length === 0) {
+            return res.json({ success: false, message: 'User not found or inactive' });
+        }
+
+        const user = results[0];
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.json({ success: false, message: 'Invalid password' });
+        }
+
+        res.json({
+            success: true,
+            message: 'Login successful',
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                photo: user.photo || '',
+                role: user.role
+            }
+        });
+    });
+});
+
+// ============================================
+// FORGOT PASSWORD ENDPOINT
+// ============================================
+app.post('/forgot-password', async (req, res) => {
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+        return res.json({ success: false, message: 'Email and new password required' });
+    }
+
+    const checkQuery = 'SELECT * FROM user WHERE email = ?';
+    db.query(checkQuery, [email], async (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.json({ success: false, message: 'Database error' });
+        }
+
+        if (results.length === 0) {
+            return res.json({ success: false, message: 'Email not found' });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        const updateQuery = 'UPDATE user SET password = ? WHERE email = ?';
+        db.query(updateQuery, [hashedPassword, email], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.json({ success: false, message: 'Password update failed' });
+            }
+
+            res.json({ success: true, message: 'Password updated successfully' });
+        });
+    });
+});
+
+// Start Server
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
