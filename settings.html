@@ -113,21 +113,6 @@
     .setting-option:hover i, .setting-option:focus i {
       color: var(--primary);
     }
-    .delete-button {
-      width: 100%;
-      margin-top: 28px;
-      padding: 13px;
-      background: var(--danger);
-      color: #fff;
-      border: none;
-      border-radius: 9px;
-      font-size: 1.06rem;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      cursor: pointer;
-      transition: filter 0.18s, background 0.24s;
-    }
-    .delete-button:hover { background: #c62828; filter: brightness(0.95); }
 
     .back-btn {
       margin-top: 30px;
@@ -205,9 +190,6 @@
     <button class="setting-option" onclick="showAbout()">
       <i class="fas fa-info-circle"></i><span>About</span>
     </button>
-    <button class="delete-button" onclick="deleteAccount()">
-      <i class="fas fa-user-slash"></i> Delete Account
-    </button>
     <div class="back-btn" onclick="goBack()">← Back to Home</div>
   </div>
   <!-- About Popup -->
@@ -240,18 +222,6 @@
 
     function goBack() {
       window.location.href = "index.html";
-    }
-    function deleteAccount() {
-      const confirmDelete = confirm("Are you sure you want to delete your account permanently?");
-      if (confirmDelete) {
-        const email = localStorage.getItem('prernaEmail');
-        if (email) {
-          localStorage.removeItem(email);
-        }
-        localStorage.removeItem('prernaEmail');
-        localStorage.removeItem('prernaLoggedIn');
-        window.location.href = "register.html";
-      }
     }
     function showAbout() {
       document.getElementById("aboutPopup").style.display = "block";
