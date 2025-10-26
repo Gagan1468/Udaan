@@ -3,160 +3,244 @@
 <head>
   <meta charset="UTF-8">
   <title>Settings – Prerna</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
+    :root {
+      --primary: #673ab7;
+      --danger: #e53935;
+      --bg-light: #f6f8fc;
+      --container-bg: #fff;
+      --shadow: 0 0 18px rgba(70,64,94,0.07);
+      --text: #222;
+      --grey: #7f8c8d;
+      --option-hover: #f3f0fb;
+    }
+    [data-theme='dark'] {
+      --primary: #a491fb;
+      --danger: #e57373;
+      --bg-light: #1a1930;
+      --container-bg: #232244;
+      --shadow: 0 0 16px rgba(51,43,80,0.2);
+      --text: #f4f8fb;
+      --grey: #aaa;
+      --option-hover: #28274e;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e0eafc, #cfdef3);
-      margin: 0;
-      padding: 0;
+      background: var(--bg-light);
+      color: var(--text);
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .theme-switcher {
+      position: fixed;
+      right: 24px;
+      top: 24px;
+      background: var(--container-bg);
+      color: var(--primary);
+      border: none;
+      box-shadow: var(--shadow);
+      border-radius: 50px;
+      font-size: 1.25rem;
+      padding: 8px 18px 8px 18px;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .theme-switcher:hover {
+      background: var(--option-hover);
     }
 
     .container {
-      max-width: 400px;
-      margin: 50px auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      padding: 20px;
+      max-width: 440px;
+      margin: 60px auto 0 auto;
+      background: var(--container-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 38px 26px 26px 26px;
+      animation: fadeInUp 0.6s;
+      transition: background 0.3s, box-shadow 0.3s;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 25px;
-      color: #333;
+      margin-bottom: 32px;
+      color: var(--primary);
+      letter-spacing: 1px;
     }
 
     .setting-option {
       display: flex;
       align-items: center;
-      padding: 14px;
-      border-bottom: 1px solid #eee;
+      justify-content: flex-start;
+      padding: 15px 16px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.08rem;
+      font-weight: 500;
+      border: none;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: background 0.18s, color 0.2s;
+      gap: 16px;
+      box-sizing: border-box;
     }
 
-    .setting-option:hover {
-      background-color: #f9f9f9;
-    }
+    .setting-option:visited { color: var(--text); }
 
     .setting-option i {
-      font-size: 18px;
-      margin-right: 12px;
-      color: #673ab7;
+      font-size: 1.32em;
+      min-width: 25px;
+      color: var(--primary);
+      transition: color 0.2s;
     }
 
-    .setting-option span {
-      font-size: 16px;
-      color: #333;
+    .setting-option:hover, .setting-option:focus {
+      background: var(--option-hover);
+      color: var(--primary);
+      outline: none;
     }
-
+    .setting-option:hover i, .setting-option:focus i {
+      color: var(--primary);
+    }
     .delete-button {
-      display: block;
       width: 100%;
-      margin-top: 30px;
-      padding: 12px;
-      background-color: #e53935;
-      color: white;
+      margin-top: 28px;
+      padding: 13px;
+      background: var(--danger);
+      color: #fff;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      border-radius: 9px;
+      font-size: 1.06rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
       cursor: pointer;
+      transition: filter 0.18s, background 0.24s;
     }
-
-    .delete-button:hover {
-      background-color: #c62828;
-    }
+    .delete-button:hover { background: #c62828; filter: brightness(0.95); }
 
     .back-btn {
-      margin-top: 20px;
-      display: block;
+      margin-top: 30px;
       text-align: center;
-      color: #673ab7;
+      color: var(--primary);
       text-decoration: underline;
       cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      letter-spacing: 0.1px;
     }
+    .back-btn:hover { color: #492e72; }
 
-    /* Popup Styles */
     .about-popup {
       display: none;
       position: fixed;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      width: 300px;
+      background: var(--container-bg);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 32px 18px 22px 18px;
+      width: 325px;
       text-align: center;
-      z-index: 9999;
+      z-index: 1001;
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
     }
-
-    .about-popup h3 {
-      margin-bottom: 10px;
-    }
-
+    .about-popup h3 { margin-bottom: 12px; color: var(--primary); }
+    .about-popup p { color: var(--grey); }
     .about-popup button {
       margin-top: 15px;
-      padding: 8px 16px;
-      background: #673ab7;
+      padding: 9px 24px;
+      background: var(--primary);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 9px;
       cursor: pointer;
+      font-weight: 500;
+      font-size: 1rem;
     }
+    .about-popup button:hover { background: #4c2c7f; }
 
     .overlay {
       display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.4);
-      z-index: 9998;
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    @keyframes fadeInUp {
+      from {opacity:0; transform: translateY(26px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+    @media (max-width: 600px) {
+      .container { max-width: 98vw; padding: 18px 4vw 16px 4vw; }
+      .about-popup { width: 90vw; padding: 18px 6vw; }
+      .theme-switcher { top:8px; right:8px; font-size:1rem; padding: 6px 13px;}
     }
   </style>
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-
+  <button class="theme-switcher" id="themeBtn" title="Toggle light/dark mode" onclick="toggleTheme()">
+    <i class="fas fa-moon" id="themeIcon"></i> Theme
+  </button>
   <div class="container">
     <h2>Settings</h2>
-
-<a href="notification.html" class="setting-option">
-  <i class="fas fa-bell"></i><span>Notifications</span>
-</a>
-
-<a href="help.html" class="setting-option">
-  <i class="fas fa-question-circle"></i><span>Help & Support</span>
-</a>
-
-<a href="about.html" class="setting-option">
-  <i class="fas fa-info-circle"></i><span>About</span>
-</a>
-
-
-    <button class="delete-button" onclick="deleteAccount()">🗑 Delete Account</button>
-
+    <a href="notification.html" class="setting-option">
+      <i class="fas fa-bell"></i><span>Notifications</span>
+    </a>
+    <a href="help.html" class="setting-option">
+      <i class="fas fa-question-circle"></i><span>Help & Support</span>
+    </a>
+    <button class="setting-option" onclick="showAbout()">
+      <i class="fas fa-info-circle"></i><span>About</span>
+    </button>
+    <button class="delete-button" onclick="deleteAccount()">
+      <i class="fas fa-user-slash"></i> Delete Account
+    </button>
     <div class="back-btn" onclick="goBack()">← Back to Home</div>
   </div>
-
   <!-- About Popup -->
   <div class="overlay" id="overlay"></div>
   <div class="about-popup" id="aboutPopup">
     <h3>About Prerna</h3>
     <p><strong>Version:</strong> 1.0</p>
-    <p>Prerna is a space for kids to feel better, relax and grow emotionally strong.</p>
+    <p>Prerna is a space for kids to feel better, relax, and grow emotionally strong.</p>
     <button onclick="closeAbout()">Close</button>
   </div>
-
-  <!-- Script -->
   <script>
+    // --- Theme Switcher ----
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('prerna-theme', theme);
+      document.getElementById('themeIcon').className =
+        theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    function toggleTheme() {
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      setTheme(theme);
+    }
+    // Set saved or OS theme on load
+    (function() {
+      const saved = localStorage.getItem('prerna-theme');
+      if(saved) setTheme(saved);
+      else if(window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+      else setTheme('light');
+    })();
+
     function goBack() {
       window.location.href = "index.html";
     }
-
     function deleteAccount() {
       const confirmDelete = confirm("Are you sure you want to delete your account permanently?");
       if (confirmDelete) {
@@ -169,17 +253,16 @@
         window.location.href = "register.html";
       }
     }
-
     function showAbout() {
       document.getElementById("aboutPopup").style.display = "block";
       document.getElementById("overlay").style.display = "block";
     }
-
     function closeAbout() {
       document.getElementById("aboutPopup").style.display = "none";
       document.getElementById("overlay").style.display = "none";
     }
+    // Close about popup if overlay clicked
+    document.getElementById("overlay").onclick = closeAbout;
   </script>
-
 </body>
 </html>
