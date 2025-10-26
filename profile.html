@@ -34,7 +34,6 @@
       --button-hover: #483175;
       --button-edit: #f3d392;
     }
-
     body {
       background: linear-gradient(120deg, var(--back1), var(--back2));
       font-family: 'Segoe UI', sans-serif;
@@ -195,20 +194,25 @@
       else setTheme('light');
     })();
 
-    // PROFILE DATA
-    const email = localStorage.getItem('prernaEmail');
-    const data = JSON.parse(localStorage.getItem(email));
-    if (!localStorage.getItem('prernaLoggedIn')) {
-      window.location.href = "login.html";
+    // PROFILE DATA FROM BACKEND (replace endpoint as needed)
+    async function loadProfile() {
+      try {
+        const response = await fetch('/api/get-profile', { credentials: 'include' });
+        if (!response.ok) throw new Error('User data not found');
+        const data = await response.json();
+        document.getElementById('userName').innerText = data.name || 'Unknown User';
+        document.getElementById('userEmail').innerText = data.email || 'No email found';
+        if (data.photo) {
+          document.getElementById('userPhoto').src = data.photo;
+        }
+        document.getElementById('userRole').innerText = data.role ? data.role : "Member";
+      } catch (err) {
+        alert('User data not found');
+        window.location.href = 'login.html';
+      }
     }
-    document.getElementById('userName').innerText = data?.name || 'Unknown User';
-    document.getElementById('userEmail').innerText = email || 'No email found';
-    if (data?.photo) {
-      document.getElementById('userPhoto').src = data.photo;
-    }
-    document.getElementById('userRole').innerText = data?.role ? data.role : "Member";
+    loadProfile();
 
-    // ACTIONS
     function goBack() {
       window.location.href = "index.html";
     }
@@ -216,9 +220,9 @@
       window.location.href = "editprofile.html";
     }
     function logoutUser() {
-      localStorage.removeItem('prernaLoggedIn');
-      localStorage.removeItem('prernaEmail');
-      window.location.href = "login.html";
+      fetch('/api/logout', { method: 'POST', credentials: 'include' }).finally(() => {
+        window.location.href = "login.html";
+      });
     }
   </script>
 </body>
