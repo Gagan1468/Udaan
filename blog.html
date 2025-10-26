@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog Zone – Udaan</title>
+
+  <!-- Google fonts (match site) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- shared site stylesheet (if present) -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* blog-specific improvements (keeps shared look) */
+    body { background: linear-gradient(180deg,#fbfcff 0%, #f6f9ff 100%); }
+    header {
+      padding: 36px 18px;
+      text-align: center;
+      color: #fff;
+      background: linear-gradient(135deg,var(--accent, #1a73e8), var(--accent-2, #174ea6));
+      box-shadow: 0 10px 30px rgba(20,30,60,0.08);
+    }
+    header h1 { font-family: "Poppins", sans-serif; font-size: clamp(1.6rem,3.8vw,2.6rem); margin-bottom:6px; }
+    header p { margin:0 auto; max-width:880px; opacity:0.95; font-weight:500; }
+
+    .blog-container {
+      max-width: 1120px;
+      margin: 28px auto;
+      padding: 0 20px 56px;
+      display: grid;
+      gap: 28px;
+    }
+
+    /* improved responsive grid */
+    .post-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .post-card {
+      background: var(--surface, #fff);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 28px rgba(12,18,33,0.06);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .post-card:hover { transform: translateY(-8px); box-shadow: 0 22px 48px rgba(12,18,33,0.10); }
+
+    .post-thumb {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s cubic-bezier(.2,.9,.3,1);
+    }
+    .post-card:hover .post-thumb { transform: scale(1.05); }
+
+    .post-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 140px;
+    }
+    .post-meta { font-size: .84rem; color: var(--muted, #5f6368); }
+    .post-title { margin:0; font-size: 1rem; font-weight:700; color:var(--text, #202124); }
+    .post-excerpt { margin:0; color:var(--muted, #5f6368); line-height:1.45; flex:1; }
+
+    .post-actions { display:flex; gap:10px; align-items:center; margin-top:6px; }
+    .read-more {
+      background: transparent;
+      border: none;
+      color: var(--accent, #1a73e8);
+      font-weight:700;
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      transition: background .14s ease, transform .12s ease;
+      text-decoration: none;
+    }
+    .read-more:hover { background: rgba(26,115,232,0.06); transform: translateY(-3px); }
+
+    /* featured/large card style */
+    .post-card.featured { grid-column: span 2; }
+    @media (max-width: 880px) { .post-card.featured { grid-column: span 1; } }
+
+    /* compact mobile */
+    @media (max-width: 480px) {
+      header { padding: 22px 12px; }
+      .post-thumb { height: 120px; }
+      .blog-container { padding: 0 14px 36px; gap:16px; }
+    }
+
+    /* subtle reveal */
+    .reveal { opacity: 0; transform: translateY(10px); transition: all .6s cubic-bezier(.2,.9,.3,1); }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📚 Udaan Blog Zone</h1>
+    <p>Explore practical finance guides, stories, and actionable tips — short, clear, and designed to help you act.</p>
+  </header>
+
+  <main class="blog-container">
+    <section class="post-grid" id="posts">
+      <article class="post-card reveal featured">
+        <img class="post-thumb" src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&q=60&auto=format&fit=crop" alt="Budgeting tips">
+        <div class="post-body">
+          <div class="post-meta">Mar 12 · Finance · Tips</div>
+          <h3 class="post-title">5 Budgeting Tips for Beginners</h3>
+          <p class="post-excerpt">A simple, repeatable framework to allocate income toward essentials, savings and goals — without overcomplicating your life.</p>
+          <div class="post-actions">
+            <a class="read-more" href="blog/budgeting-tips.html">Read article →</a>
+            <a class="read-more" href="VISA_StudentWorkbook.pdf" target="_blank">📄 Open Guide</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="post-card reveal">
+        <img class="post-thumb" src="https://images.unsplash.com/photo-1523264766116-8b8a7f2b9b3b?w=1200&q=60&auto=format&fit=crop" alt="Investing basics">
+        <div class="post-body">
+          <div class="post-meta">Feb 26 · Investing</div>
+          <h3 class="post-title">Beginner's Guide to Index Funds</h3>
+          <p class="post-excerpt">Why index funds are a great starting point, how to pick one and the simple rules to stay invested through different market cycles.</p>
+          <div class="post-actions"><a class="read-more" href="blog/index-funds.html">Read article →</a></div>
+        </div>
+      </article>
+
+      <article class="post-card reveal">
+        <img class="post-thumb" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1200&q=60&auto=format&fit=crop" alt="Loan planning">
+        <div class="post-body">
+          <div class="post-meta">Jan 18 · Loans</div>
+          <h3 class="post-title">Smart Loan Repayment Strategies</h3>
+          <p class="post-excerpt">Compare snowball vs avalanche methods and learn which approach fits different goals and financial peace of mind.</p>
+          <div class="post-actions"><a class="read-more" href="blog/loan-strategies.html">Read article →</a></div>
+        </div>
+      </article>
+
+      <article class="post-card reveal">
+        <img class="post-thumb" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=60&auto=format&fit=crop" alt="Side hustles">
+        <div class="post-body">
+          <div class="post-meta">Dec 02 · Careers</div>
+          <h3 class="post-title">Side Hustles That Actually Work</h3>
+          <p class="post-excerpt">A curated list of practical side hustles you can start with low upfront cost and realistic time commitments.</p>
+          <div class="post-actions"><a class="read-more" href="blog/side-hustles.html">Read article →</a></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer style="text-align:center;padding:18px 12px;color:var(--muted);">
+    &copy; 2025 Udaan | Powered by Knowledge 📖
+  </footer>
+
+  <script>
+    // stagger reveal
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = Array.from(document.querySelectorAll('.reveal'));
+      items.forEach((el, i) => setTimeout(() => el.classList.add('show'), 120 + i * 80));
+    });
+  </script>
+</body>
+</html>
