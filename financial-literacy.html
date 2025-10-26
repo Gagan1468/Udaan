@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Financial Literacy – Udaan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #f7f9fc;
+      color: #333;
+    }
+
+    /* header — static shimmer pass */
+    header {
+      background-color: #6C63FF;
+      padding: 36px 18px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: visible;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      margin: 0;
+      display: inline-block;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      z-index: 2;
+    }
+    header h1::before { /* single shimmer pass */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,235,148,0.85) 40%,
+        rgba(255,215,64,0.95) 50%,
+        rgba(255,235,148,0.85) 60%,
+        rgba(255,255,255,0) 100%);
+      mix-blend-mode: screen;
+      transform: translateX(-120%);
+      pointer-events: none;
+      filter: blur(6px) contrast(1.05) saturate(1.1);
+      animation: shimmer-once 1.0s ease 0.25s both;
+    }
+    @keyframes shimmer-once {
+      0%   { transform: translateX(-120%); opacity: 0; }
+      30%  { opacity: 1; }
+      70%  { opacity: 1; }
+      100% { transform: translateX(120%); opacity: 0; }
+    }
+
+    /* CONTENT CARD: expanded to near-full width, diagonal purple -> white glow */
+    .content {
+      /* expanded: use full available width with comfortable side gutters */
+      max-width: none;
+      width: calc(100% - 64px);    /* leaves 32px gutter each side on large screens */
+      margin: 28px auto;
+      padding: 28px 36px;          /* slightly larger padding for readability */
+      background: linear-gradient(135deg, rgba(108,99,255,0.12) 0%, rgba(255,255,255,0.98) 80%);
+      border-radius: 12px;
+      box-shadow:
+        0 10px 30px rgba(108,99,255,0.12),     /* soft purple glow */
+        0 2px 8px rgba(0,0,0,0.04);
+      filter: blur(10px);             /* start blurred */
+      opacity: 0;
+      transform: translateY(6px);
+      transition: filter 520ms cubic-bezier(.2,.9,.3,1), opacity 360ms ease, transform 360ms ease;
+    }
+    .content.unblur {
+      filter: blur(0);
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* WORD BY WORD: start blurred + hidden, then reveal per-word */
+    .word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(6px);
+      transition: opacity 220ms ease, filter 360ms ease, transform 260ms ease;
+      will-change: opacity, transform, filter;
+      white-space: pre; /* preserve spaces between wrapped spans and text nodes */
+    }
+    .word.show {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+
+    /* section children baseline */
+    .content .section > * { margin-bottom: 10px; color: #222; line-height: 1.6; }
+
+    /* larger subheadings */
+    .content h2 {
+      margin: 0 0 12px 0;
+      color: #6C63FF;
+      font-weight: 700;
+      font-size: 1.25rem;      /* increased subheading size */
+    }
+
+    ul { padding-left: 1.2rem; margin: 6px 0 12px; }
+    ul li { margin-bottom: 8px; }
+
+    footer {
+      text-align: center;
+      padding: 16px;
+      background: #6C63FF;
+      color: white;
+      margin-top: 36px;
+      font-size: 0.95rem;
+    }
+
+    @media(max-width:1100px) {
+      .content { width: calc(100% - 48px); padding: 22px; }
+    }
+    @media(max-width:800px) {
+      header h1 { font-size: 1.9rem; }
+      .content { padding: 18px; margin: 18px 12px; width: calc(100% - 32px); }
+    }
+    @media(max-width:600px) {
+      header h1 { font-size: 1.75rem; }
+      .content { padding: 14px; margin: 12px 10px; width: calc(100% - 20px); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Financial Literacy</h1>
+    <div class="sparkles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <p>Unlocking the power of money – the smart way 🧠💰</p>
+  </header>
+
+  <div class="content">
+    <div class="section">
+      <h2>💡 What is Financial Literacy?</h2>
+      <p>Financial literacy means understanding how money works – how you earn it, save it, invest it, and spend it. It’s about making smart choices so you can control your future, not let your finances control you.</p>
+      <p>⟶ Key components of financial literacy:</p>
+      <p>1. Budgeting and saving: Creating a plan for spending and allocating funds for future goals.</p>
+      <p>2. Investing: Understanding different investment vehicles to grow wealth over time.</p>
+      <p>3. Debt management: Knowing how to borrow responsibly and manage existing debt, including understanding interest rates and loan terms.</p>
+      <p>4. Financial planning: Setting and working toward long-term goals such as retirement, education, or purchasing a home.</p>
+      <p>5. Risk management: Understanding and managing the financial risks associated with different decisions and investments.</p>
+    </div>
+
+    <div class="section">
+      <h2>📚 Why It Matters</h2>
+      <ul>
+        <li>Helps avoid debt traps 🕳️</li>
+        <li>Improves savings and budgeting skills 💼</li>
+        <li>Makes you investment-ready 📈</li>
+        <li>Builds strong financial independence 🔐</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🚀 Basic Concepts You Should Know</h2>
+      <ul>
+        <li><strong>Income vs Expenses:</strong> Know what comes in and what goes out.</li>
+        <li><strong>Budgeting:</strong> Create monthly budgets to avoid overspending.</li>
+        <li><strong>Saving & Emergency Funds:</strong> Always keep backup 💸</li>
+        <li><strong>Investments:</strong> Let money grow (mutual funds, stocks, SIPs etc.)</li>
+        <li><strong>Loans & Credit:</strong> Know the terms before taking one. Interest rate matters!</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🧠 Ready to Learn More?</h2>
+      <p>Check out our <a href="financial-tools.html">Financial Tools</a> to put your knowledge into action – like EMI calculators, budget planners & more.</p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Udaan | Learn. Grow. Fly High 🚀
+  </footer>
+
+  <script>
+    // small, word-by-word Gaussian blur reveal
+    (function () {
+      const selectors = '.content .section h2, .content .section p, .content .section li';
+      const elems = Array.from(document.querySelectorAll(selectors));
+
+      // wrap each text node's words with span.word
+      function wrapWords(el) {
+        const text = el.textContent || '';
+        const words = text.trim().split(/\s+/);
+        if (!words.length) return;
+        el.innerHTML = ''; // clear
+        words.forEach((w, i) => {
+          const span = document.createElement('span');
+          span.className = 'word';
+          span.textContent = w;
+          el.appendChild(span);
+          if (i !== words.length - 1) el.appendChild(document.createTextNode(' '));
+        });
+      }
+
+      elems.forEach(wrapWords);
+
+      // small entrance sequence
+      window.addEventListener('DOMContentLoaded', () => {
+        const content = document.querySelector('.content');
+        if (!content) return;
+
+        // unblur the card quickly
+        setTimeout(() => content.classList.add('unblur'), 320);
+
+        // reveal words word-by-word with short stagger
+        const allWords = Array.from(document.querySelectorAll('.content .word'));
+        const baseDelay = 420;        // start revealing after card begins to clear
+        const perWord = 28;           // small stagger for quicker effect
+
+        allWords.forEach((w, i) => {
+          setTimeout(() => w.classList.add('show'), baseDelay + i * perWord);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
