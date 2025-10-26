@@ -52,27 +52,36 @@
     <button onclick="goToEdit()">Edit Profile</button>
   </div>
 
-  <script>
-    const email = localStorage.getItem('prernaEmail');
-    const data = JSON.parse(localStorage.getItem(email));
-
-    if (!localStorage.getItem('prernaLoggedIn')) {
-      window.location.href = "login.html";
+ <script>
+    const prernaEmail = localStorage.getItem('prernaEmail');
+    if (!localStorage.getItem('prernaLoggedIn') || !prernaEmail) {
+        window.location.href = "login.html";
     }
 
-    document.getElementById('userName').innerText = data?.name || 'Unknown User';
-    document.getElementById('userEmail').innerText = email || 'No email found';
-    if (data?.photo) {
-      document.getElementById('userPhoto').src = data.photo;
-    }
+    // Fetch profile info from backend
+    fetch(`http://localhost:3000/profile/${encodeURIComponent(prernaEmail)}`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) {
+                document.getElementById('userName').innerText = 'Unknown User';
+                document.getElementById('userEmail').innerText = prernaEmail || 'No email found';
+                return;
+            }
+            document.getElementById('userName').innerText = data.user.name || 'No name';
+            document.getElementById('userEmail').innerText = data.user.email;
+            if (data.user.photo) {
+                document.getElementById('userPhoto').src = data.user.photo;
+            }
+        });
 
     function goBack() {
       window.location.href = "index.html";
     }
-
     function goToEdit() {
       window.location.href = "editprofile.html";
     }
-  </script>
+</script>
+
 </body>
 </html>
+
