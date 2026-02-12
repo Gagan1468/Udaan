@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services – Udaan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#0b1c2d;
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(120deg,#1e88e5,#1565c0);
+  color:white;
+  padding:90px 30px;
+  text-align:center;
+}
+
+.header h1{
+  font-size:3rem;
+  font-weight:800;
+}
+
+.header p{
+  margin-top:18px;
+  color:#e3f2fd;
+}
+
+/* SERVICES */
+.services{
+  max-width:1200px;
+  margin:90px auto;
+  padding:0 25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:32px;
+}
+
+.service-card{
+  background:white;
+  padding:42px 32px;
+  border-radius:22px;
+  box-shadow:0 18px 50px rgba(0,0,0,.08);
+  transition:.35s;
+}
+
+.service-card:hover{
+  transform:translateY(-10px);
+}
+
+.service-card h3{
+  font-size:1.4rem;
+  margin-bottom:14px;
+}
+
+.service-card p{
+  color:#555;
+  line-height:1.6;
+}
+
+/* FOOTER */
+footer{
+  background:#0b1c2d;
+  color:#bcd1ec;
+  padding:35px;
+  text-align:center;
+  font-size:.9rem;
+}
+
+footer a{
+  color:#bcd1ec;
+  text-decoration:none;
+  margin:0 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>Our Services</h1>
+  <p>Everything Udaan offers to build your financial future</p>
+</div>
+
+<div class="services">
+
+  <div class="service-card">
+    <h3>📘 Financial Literacy</h3>
+    <p>Learn budgeting, saving, investing, and stock market fundamentals.</p>
+  </div>
+
+  <div class="service-card">
+    <h3>🚀 Entrepreneurship</h3>
+    <p>Turn ideas into startups with structured guidance and frameworks.</p>
+  </div>
+
+  <div class="service-card">
+    <h3>📊 Financial Tools</h3>
+    <p>Expense trackers, calculators, and planners built for youth.</p>
+  </div>
+
+  <div class="service-card">
+    <h3>🎯 Financial Goals</h3>
+    <p>Set, track, and achieve personal and professional financial goals.</p>
+  </div>
+
+</div>
+
+<footer>
+  © 2025 Udaan  
+  <br><br>
+  <a href="index.html">Home</a>
+  <a href="faqs.html">FAQs</a>
+  <a href="contact.html">Contact</a>
+</footer>
+
+</body>
+</html>
