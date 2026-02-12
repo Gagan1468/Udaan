@@ -1,397 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Udaan – Financial Freedom for Youth</title>
-
-<!-- GOOGLE FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Udaan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{
-  --primary:#1e88e5;
-  --dark:#0b1c2d;
-  --light:#f4f7fb;
-  --muted:#9db0c9;
-  --glass:rgba(255,255,255,0.08);
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Inter',sans-serif;
-}
-
-body{
-  background:var(--light);
-  color:var(--dark);
-  overflow-x:hidden;
-}
-
-/* ================= NAVBAR ================= */
-header{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:1000;
-  background:rgba(11,28,45,0.85);
-  backdrop-filter:blur(12px);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:18px 70px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:white;
-  font-weight:800;
-  font-size:1.35rem;
-  text-decoration:none;
-}
-
-.brand img{
-  width:42px;
-  height:42px;
-  border-radius:10px;
-}
-
-.nav-actions a{
-  text-decoration:none;
-  margin-left:14px;
-  padding:10px 20px;
-  border-radius:10px;
-  font-weight:600;
-}
-
-.nav-actions .login{
-  color:white;
-}
-
-.nav-actions .register{
-  background:var(--primary);
-  color:white;
-}
-
-/* ================= HERO ================= */
-.hero{
-  min-height:100vh;
-  background:
-    linear-gradient(120deg,rgba(11,28,45,.88),rgba(11,28,45,.75)),
-    url("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3");
-  background-size:cover;
-  background-position:center;
-  display:flex;
-  align-items:center;
-  padding:120px 70px;
-  color:white;
-}
-
-.hero-content{
-  max-width:720px;
-}
-
-.hero h1{
-  font-size:3.6rem;
-  font-weight:800;
-  line-height:1.15;
-}
-
-.hero p{
-  margin-top:22px;
-  font-size:1.15rem;
-  color:#dbe4f3;
-}
-
-.hero-buttons{
-  margin-top:40px;
-}
-
-.hero-buttons a{
-  display:inline-block;
-  padding:14px 34px;
-  border-radius:12px;
-  text-decoration:none;
-  font-weight:600;
-  margin-right:14px;
-}
-
-.hero-buttons .primary{
-  background:var(--primary);
-  color:white;
-}
-
-.hero-buttons .secondary{
-  border:1px solid rgba(255,255,255,0.35);
-  color:white;
-}
-
-/* ================= SECTIONS ================= */
-.section{
-  max-width:1300px;
-  margin:auto;
-  padding:90px 70px;
-}
-
-.section-title{
-  font-size:2.3rem;
-  font-weight:700;
-  margin-bottom:14px;
-}
-
-.section-sub{
-  color:#5b6f8d;
-  margin-bottom:50px;
-  max-width:700px;
-}
-
-/* ================= CARDS ================= */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
-}
-
-.card{
-  background:white;
-  border-radius:20px;
-  padding:40px 32px;
-  box-shadow:0 18px 50px rgba(0,0,0,.08);
-  transition:.35s;
-}
-
-.card:hover{
-  transform:translateY(-10px);
-}
-
-.card h3{
-  font-size:1.35rem;
-  margin-bottom:14px;
-}
-
-.card p{
-  color:#555;
-  line-height:1.6;
-}
-
-/* ================= TRUST STRIP ================= */
-.trust{
-  background:linear-gradient(120deg,#0b1c2d,#102c47);
-  color:white;
-  padding:70px;
-  text-align:center;
-}
-
-.trust h2{
-  font-size:2rem;
-  margin-bottom:14px;
-}
-
-.trust p{
-  color:#cfd9e8;
-}
-
-/* ================= FOOTER ================= */
-footer{
+body { margin:0; font-family:Arial, sans-serif; }
+header {
   background:#0b1c2d;
   color:white;
-  padding:70px;
-}
-
-.footer-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:40px;
-}
-
-footer strong{
-  font-size:1.1rem;
-}
-
-footer a{
-  display:block;
-  margin-top:8px;
-  color:#bcd1ec;
-  text-decoration:none;
-  font-size:.95rem;
-}
-
-footer small{
-  display:block;
-  margin-top:30px;
-  color:#8fa3bf;
-}
-
-/* ================= COOKIE CONSENT ================= */
-.cookie{
-  position:fixed;
-  bottom:25px;
-  left:50%;
-  transform:translateX(-50%);
-  background:white;
-  max-width:920px;
-  width:calc(100% - 40px);
-  padding:26px;
-  border-radius:18px;
-  box-shadow:0 20px 50px rgba(0,0,0,.18);
-  display:none;
-  z-index:2000;
-}
-
-.cookie p{
-  font-size:.95rem;
-  color:#444;
-}
-
-.cookie-actions{
-  margin-top:16px;
+  padding:15px 40px;
   display:flex;
-  gap:12px;
+  justify-content:space-between;
+  align-items:center;
 }
-
-.cookie-actions button{
-  border:none;
-  padding:10px 20px;
-  border-radius:8px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.accept{
-  background:var(--primary);
-  color:white;
-}
-
-.reject{
-  background:#e4e4e4;
-}
-
-/* ================= RESPONSIVE ================= */
-@media(max-width:768px){
-  header{padding:16px 25px}
-  .hero{padding:110px 25px}
-  .hero h1{font-size:2.6rem}
-  .section{padding:70px 25px}
-}
+a { color:white; text-decoration:none; margin-left:15px; }
+main { padding:40px; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <a href="#" class="brand">
-    <img src="Modern Logo with Blue Bird and 'U' Design.png" alt="Udaan">
-    Udaan
-  </a>
-  <div class="nav-actions">
-    <a href="login.html" class="login">Login</a>
-    <a href="register.html" class="register">Get Started</a>
+  <strong>Udaan</strong>
+
+  <!-- GUEST -->
+  <div id="guestNav">
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+  </div>
+
+  <!-- USER -->
+  <div id="userNav" style="display:none;">
+    <a href="#">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
   </div>
 </header>
 
-<section class="hero">
-  <div class="hero-content">
-    <h1>Financial Power<br>Built for the Youth</h1>
-    <p>
-      Learn investing, master money, and turn ideas into startups.
-      Udaan helps you build real financial confidence — not theory.
-    </p>
-    <div class="hero-buttons">
-      <a href="#" class="primary">Start Learning</a>
-      <a href="#" class="secondary">Explore Tools</a>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <h2 class="section-title">What Udaan Offers</h2>
-  <p class="section-sub">
-    Everything a young mind needs to grow financially — designed simply, built professionally.
-  </p>
-
-  <div class="cards">
-    <div class="card">
-      <h3>📈 Financial Literacy</h3>
-      <p>Understand saving, investing, stock markets and long-term wealth building.</p>
-    </div>
-
-    <div class="card">
-      <h3>🚀 Entrepreneurship</h3>
-      <p>Turn your ideas into structured startups with guidance and frameworks.</p>
-    </div>
-
-    <div class="card">
-      <h3>🧠 Smart Tools</h3>
-      <p>Expense trackers, calculators and planners designed for Indian youth.</p>
-    </div>
-  </div>
-</section>
-
-<section class="trust">
-  <h2>Built for Trust. Designed for Growth.</h2>
-  <p>
-    Inspired by global fintech leaders — focused on India’s next generation.
-  </p>
-</section>
-
-<footer>
-  <div class="footer-grid">
-    <div>
-      <strong>Udaan</strong>
-      <p>India’s Youth Financial Platform</p>
-    </div>
-    <div>
-      <strong>Company</strong>
-      <a href="#">About</a>
-      <a href="#">Careers</a>
-      <a href="#">Contact</a>
-    </div>
-    <div>
-      <strong>Resources</strong>
-      <a href="#">Blog</a>
-      <a href="#">Guides</a>
-      <a href="#">Community</a>
-    </div>
-    <div>
-      <strong>Legal</strong>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms</a>
-    </div>
-  </div>
-
-  <small>© 2025 Udaan • Powered by Atal Technologies Pvt. Ltd.</small>
-</footer>
-
-<!-- COOKIE -->
-<div class="cookie" id="cookieBox">
-  <p>
-    We use cookies to improve performance, analyze traffic and personalize content.
-    You can manage your preferences anytime.
-  </p>
-  <div class="cookie-actions">
-    <button class="accept" onclick="acceptCookies()">Accept All</button>
-    <button class="reject" onclick="rejectCookies()">Reject</button>
-  </div>
-</div>
+<main>
+  <h1>Welcome to Udaan</h1>
+  <p>Session-based authentication working.</p>
+</main>
 
 <script>
-function acceptCookies(){
-  localStorage.setItem("cookies","accepted");
-  document.getElementById("cookieBox").style.display="none";
-}
-function rejectCookies(){
-  localStorage.setItem("cookies","rejected");
-  document.getElementById("cookieBox").style.display="none";
-}
-window.onload=()=>{
-  if(!localStorage.getItem("cookies")){
-    document.getElementById("cookieBox").style.display="block";
+async function checkAuth() {
+  try {
+    const res = await fetch("http://localhost:3000/api/auth/status", {
+      credentials: "include"
+    });
+    const data = await res.json();
+
+    document.getElementById("guestNav").style.display =
+      data.loggedIn ? "none" : "block";
+    document.getElementById("userNav").style.display =
+      data.loggedIn ? "block" : "none";
+
+  } catch (e) {
+    console.error("Auth check failed");
   }
 }
+
+function logout() {
+  fetch("http://localhost:3000/api/auth/logout", {
+    method: "POST",
+    credentials: "include"
+  }).then(() => location.reload());
+}
+
+window.onload = checkAuth;
 </script>
 
 </body>
