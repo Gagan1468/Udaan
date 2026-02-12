@@ -171,47 +171,41 @@
       }
     });
 
-    // BACKEND API CALL FOR REGISTRATION
-    function registerUser() {
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const phone = document.getElementById('regPhone').value.trim();
-      const password = document.getElementById('regPassword').value.trim();
-      const noPhone = document.getElementById('noPhoneCheckbox').checked;
+function registerUser() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const password = document.getElementById('regPassword').value.trim();
+  const noPhone = document.getElementById('noPhoneCheckbox').checked;
 
-      if (!name || !email || (!phone && !noPhone) || !password) {
-        alert('Please fill in all required fields.');
-        return;
-      }
+  if (!name || !email || (!phone && !noPhone) || !password) {
+    alert('Please fill all required fields');
+    return;
+  }
 
-      // Send data to backend API
-      fetch('http://localhost:3000/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          name, 
-          email, 
-          phone: noPhone ? "" : phone, 
-          password 
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log('Register Response:', data);
-        
-        if(data.success) {
-          alert(data.message || "Registration successful! Please login.");
-          window.location.href = "login.html";
-        } else {
-          alert(data.message || 'Registration failed.');
-        }
-      })
-      .catch(err => {
-        console.error('Registration Error:', err);
-        alert("Registration failed! Make sure backend server is running.");
-      });
+  fetch('http://localhost:3000/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name,
+      email,
+      phone: noPhone ? "" : phone,
+      password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert("Registration successful! Please login.");
+      window.location.href = "login.html";
+    } else {
+      alert(data.msg || "Registration failed");
     }
+  })
+  .catch(() => alert("Backend not responding"));
+}
   </script>
 
 </body>
 </html>
+
