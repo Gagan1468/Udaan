@@ -1,86 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Udaan – Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Udaan – A Step Towards Richness</title>
 
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
+
+    body {
+      background: #f3f6f9;
+      overflow-x: hidden;
+      transition: background 0.5s ease;
+    }
+
+    /* ===== HEADER / NAVBAR ===== */
     header {
-      background: #0b1c2d;
+      background-color: #1e88e5;
       color: white;
-      padding: 15px 40px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: all 0.4s ease;
     }
-    a {
-      color: white;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .brand img:hover {
+      transform: scale(1.1);
+    }
+
+    .brand span {
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .brand span:hover {
+      color: #cce4ff;
+    }
+
+    .nav-desktop {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-left: 24px;
+      opacity: 1;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .nav-desktop.hidden {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+    .nav-desktop a {
+      color: rgba(255,255,255,0.95);
       text-decoration: none;
-      margin-left: 15px;
-      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s, color 0.3s;
     }
-    main {
-      padding: 40px;
+
+    .nav-desktop a:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .auth-buttons.hidden {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+    .auth-buttons a {
+      color: white;
+      border: 2px solid white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      background: transparent;
+    }
+
+    .auth-buttons a:hover {
+      background-color: white;
+      color: #1e88e5;
+    }
+
+    /* Mobile Menu */
+    .dropdown-wrapper {
+      position: relative;
+      z-index: 1000;
+      display: none;
+      margin-left: auto;
+    }
+
+    .dot-menu {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .dot-menu:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 42px;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      padding: 12px 8px;
+      border-radius: 10px;
+      z-index: 2000;
+    }
+
+    .dropdown-content a {
+      color: #333;
+      padding: 8px 12px;
+      text-decoration: none;
+      display: block;
+      font-weight: 500;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      border-radius: 5px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #0d47a1;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #333;
+    }
+
+    /* ===== CARDS ===== */
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 48px auto;
+      padding: 32px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.97);
+      padding: 38px 30px;
+      border-radius: 18px;
+      box-shadow: 0 2px 28px rgba(33,150,243,0.12);
+      text-align: center;
+      transition: transform 0.26s, box-shadow 0.26s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.025);
+      box-shadow: 0 10px 38px rgba(33,150,243,0.18);
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: #1565c0;
+    }
+
+    .card p {
+      font-size: 1.08rem;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .card a.button {
+      background-color: #1e88e5;
+      color: white;
+      padding: 14px 36px;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 12px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer-pro {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      background-color: #0d47a1;
+      color: white;
+      padding: 50px 10px;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 180px;
+      margin: 10px;
+    }
+
+    .footer-col a {
+      color: #bbdefb;
+      text-decoration: none;
+    }
+
+    .footer-bottom {
+      background: #1e88e5;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+    }
+
+    @media (max-width: 767px) {
+      .nav-desktop,
+      .auth-buttons {
+        display: none !important;
+      }
+      .dropdown-wrapper {
+        display: block !important;
+      }
     }
   </style>
 </head>
+
 <body>
 
 <header>
-  <div><strong>Udaan</strong></div>
+  <a class="brand" href="index.html">
+    <img src="Modern%20Logo%20with%20Blue%20Bird%20and%20%27U%27%20Design.png">
+    <span>Udaan</span>
+  </a>
 
-  <!-- GUEST NAV -->
-  <div id="guestNav">
+  <nav class="nav-desktop hidden">
+    <a href="profile.html">Profile</a>
+    <a href="settings.html">Settings</a>
+    <a href="about.html">About</a>
+    <a href="#" onclick="logoutUser()">Logout</a>
+  </nav>
+
+  <div class="dropdown-wrapper" id="profileMenu" style="display:none;">
+    <button class="dot-menu" onclick="toggleMenu()">⋮</button>
+    <div class="dropdown-content" id="dropdown-content">
+      <a href="profile.html">Profile</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="logoutUser()">Logout</a>
+      <hr>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+  </div>
+
+  <div class="auth-buttons hidden" id="authLinks">
     <a href="login.html">Login</a>
     <a href="register.html">Register</a>
   </div>
-
-  <!-- USER NAV -->
-  <div id="userNav" style="display:none;">
-    <a href="#">Profile</a>
-    <a href="#" onclick="logout()">Logout</a>
-  </div>
 </header>
 
-<main>
-  <h1>Welcome to Udaan</h1>
-  <p>Node + MySQL + Session authentication working.</p>
-</main>
+<section class="hero">
+  <h1>Unlock Your Financial Power</h1>
+  <p>From budgeting and investing to launching your first startup.</p>
+</section>
 
 <script>
-async function checkAuth() {
-  try {
-    const res = await fetch("http://localhost:3000/api/auth/status", {
-      credentials: "include"
-    });
-    const data = await res.json();
-
-    document.getElementById("guestNav").style.display =
-      data.loggedIn ? "none" : "block";
-
-    document.getElementById("userNav").style.display =
-      data.loggedIn ? "block" : "none";
-  } catch (err) {
-    console.error("Auth check failed");
-  }
+function toggleMenu() {
+  const dropdown = document.getElementById("dropdown-content");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
 
-function logout() {
-  fetch("http://localhost:3000/api/auth/logout", {
-    method: "POST",
-    credentials: "include"
-  }).then(() => {
-    window.location.reload();
-  });
+function logoutUser() {
+  localStorage.clear();
+  alert("Logged out successfully!");
+  location.reload();
 }
 
-window.onload = checkAuth;
+function updateNavbar() {
+  const loggedIn = localStorage.getItem("prernaLoggedIn") === "true";
+  document.querySelector(".nav-desktop").classList.toggle("hidden", !loggedIn);
+  document.getElementById("authLinks").classList.toggle("hidden", loggedIn);
+}
+
+window.onload = updateNavbar;
 </script>
 
 </body>
