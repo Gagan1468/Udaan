@@ -1,238 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Udaan – A Step Towards Richness</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Udaan – Financial Freedom for Youth</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    body {
-      background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
-      color: #0f172a;
-      overflow-x: hidden;
-    }
+<style>
+:root{
+  --primary:#1e88e5;
+  --dark:#0b1c2d;
+  --light:#f4f7fb;
+  --muted:#9db0c9;
+}
 
-    /* ===== HEADER ===== */
-    header {
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(14px);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 28px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+body{
+  background:var(--light);
+  color:var(--dark);
+}
 
-    .brand img {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-    }
+/* ================= NAVBAR ================= */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+  background:rgba(11,28,45,0.85);
+  backdrop-filter:blur(12px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 70px;
+}
 
-    .brand span {
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-    }
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:white;
+  font-weight:800;
+  font-size:1.35rem;
+  text-decoration:none;
+}
 
-    .nav-desktop a {
-      color: #e5e7eb;
-      text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-weight: 600;
-    }
+.brand img{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+}
 
-    .nav-desktop a:hover {
-      background: rgba(255,255,255,0.08);
-    }
+/* ===== NAV ACTIONS ===== */
+.nav-actions a{
+  text-decoration:none;
+  margin-left:14px;
+  padding:10px 20px;
+  border-radius:10px;
+  font-weight:600;
+}
 
-    .auth-buttons a {
-      border: 1px solid rgba(255,255,255,0.6);
-      padding: 8px 16px;
-      border-radius: 10px;
-      font-weight: 700;
-    }
+/* logged OUT */
+.login-btn{ color:white; }
+.register-btn{
+  background:var(--primary);
+  color:white;
+}
 
-    /* ===== HERO ===== */
-    .hero {
-      max-width: 1100px;
-      margin: 80px auto 0;
-      padding: 80px 40px;
-      text-align: center;
-      background: rgba(255,255,255,0.92);
-      border-radius: 26px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-    }
+/* logged IN */
+.nav-user{
+  display:none;
+}
+.nav-user a{
+  color:white;
+  margin-left:16px;
+  font-weight:600;
+}
 
-    .hero h1 {
-      font-size: 3.1rem;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 18px;
-    }
+/* ================= HERO ================= */
+.hero{
+  min-height:100vh;
+  background:
+    linear-gradient(120deg,rgba(11,28,45,.88),rgba(11,28,45,.75)),
+    url("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  padding:120px 70px;
+  color:white;
+}
 
-    .hero p {
-      font-size: 1.25rem;
-      color: #334155;
-      max-width: 760px;
-      margin: auto;
-      line-height: 1.7;
-    }
+.hero-content{
+  max-width:720px;
+}
 
-    /* ===== CARDS ===== */
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 36px;
-      max-width: 1200px;
-      margin: 80px auto;
-      padding: 20px;
-    }
+.hero h1{
+  font-size:3.6rem;
+  font-weight:800;
+}
 
-    .card {
-      background: linear-gradient(145deg, #ffffff, #f1f5f9);
-      padding: 44px 30px;
-      border-radius: 22px;
-      box-shadow: 0 12px 30px rgba(15,23,42,0.15);
-      text-align: center;
-      transition: all 0.35s ease;
-    }
+.hero p{
+  margin-top:22px;
+  font-size:1.15rem;
+  color:#dbe4f3;
+}
 
-    .card:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 25px 60px rgba(15,23,42,0.25);
-    }
+.hero-buttons{
+  margin-top:40px;
+}
 
-    .card h3 {
-      font-size: 1.55rem;
-      color: #0f172a;
-      margin-bottom: 14px;
-    }
+.hero-buttons a{
+  display:inline-block;
+  padding:14px 34px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:600;
+  margin-right:14px;
+}
 
-    .card p {
-      font-size: 1.05rem;
-      color: #475569;
-      margin-bottom: 22px;
-    }
+.primary{
+  background:var(--primary);
+  color:white;
+}
 
-    .card a.button {
-      background: linear-gradient(135deg, #2563eb, #1e40af);
-      color: white;
-      padding: 14px 34px;
-      border-radius: 999px;
-      font-weight: 700;
-      text-decoration: none;
-      display: inline-block;
-    }
+.secondary{
+  border:1px solid rgba(255,255,255,0.35);
+  color:white;
+}
 
-    /* ===== FOOTER ===== */
-    .footer-pro {
-      background: #020617;
-      color: #cbd5f5;
-      padding: 60px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-    }
+/* ================= SECTIONS ================= */
+.section{
+  max-width:1300px;
+  margin:auto;
+  padding:90px 70px;
+}
 
-    .footer-col a {
-      color: #94a3b8;
-      text-decoration: none;
-    }
+.section-title{
+  font-size:2.3rem;
+  font-weight:700;
+  margin-bottom:14px;
+}
 
-    .footer-bottom {
-      background: #020617;
-      text-align: center;
-      padding: 14px;
-      color: #64748b;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
+.section-sub{
+  color:#5b6f8d;
+  margin-bottom:50px;
+}
 
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2.4rem; }
-      .hero { padding: 50px 20px; }
-    }
-  </style>
+/* ================= CARDS ================= */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:40px 32px;
+  box-shadow:0 18px 50px rgba(0,0,0,.08);
+  transition:.35s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+}
+
+/* ================= FOOTER ================= */
+footer{
+  background:#0b1c2d;
+  color:white;
+  padding:70px;
+}
+
+footer a{
+  color:#bcd1ec;
+  text-decoration:none;
+  display:block;
+  margin-top:8px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+  header{padding:16px 25px}
+  .hero{padding:110px 25px}
+  .hero h1{font-size:2.6rem}
+  .section{padding:70px 25px}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <a class="brand" href="index.html">
-    <img src="Modern%20Logo%20with%20Blue%20Bird%20and%20%27U%27%20Design.png">
-    <span>Udaan</span>
+  <a href="index.html" class="brand">
+    <img src="Modern Logo with Blue Bird and 'U' Design.png">
+    Udaan
   </a>
 
-  <nav class="nav-desktop hidden">
+  <!-- LOGGED OUT -->
+  <div class="nav-actions" id="guestNav">
+    <a href="login.html" class="login-btn">Login</a>
+    <a href="register.html" class="register-btn">Get Started</a>
+  </div>
+
+  <!-- LOGGED IN -->
+  <div class="nav-user" id="userNav">
     <a href="profile.html">Profile</a>
     <a href="settings.html">Settings</a>
-    <a href="about.html">About</a>
     <a href="#" onclick="logoutUser()">Logout</a>
-  </nav>
-
-  <div class="auth-buttons hidden" id="authLinks">
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
   </div>
 </header>
 
 <section class="hero">
-  <h1>Build Wealth. Create Impact.</h1>
-  <p>
-    Udaan empowers the next generation with financial intelligence,
-    investment awareness, and entrepreneurial confidence.
-  </p>
+  <div class="hero-content">
+    <h1>Financial Power<br>Built for the Youth</h1>
+    <p>
+      Learn investing, master money, and turn ideas into startups.
+      Udaan helps you build real financial confidence.
+    </p>
+    <div class="hero-buttons">
+      <a href="#" class="primary">Start Learning</a>
+      <a href="#" class="secondary">Explore Tools</a>
+    </div>
+  </div>
 </section>
 
-<div class="container">
-  <div class="card">
-    <h3>Financial Literacy</h3>
-    <p>Master budgeting, saving, and smart investing from the ground up.</p>
-    <a class="button" href="#">Start Learning</a>
-  </div>
+<section class="section">
+  <h2 class="section-title">What Udaan Offers</h2>
+  <p class="section-sub">
+    Everything a young mind needs to grow financially — designed professionally.
+  </p>
 
-  <div class="card">
-    <h3>Entrepreneurship</h3>
-    <p>Turn ideas into scalable startups with real-world frameworks.</p>
-    <a class="button" href="#">Explore</a>
-  </div>
+  <div class="cards">
+    <div class="card">
+      <h3>📈 Financial Literacy</h3>
+      <p>Understand saving, investing and wealth building.</p>
+    </div>
 
-  <div class="card">
-    <h3>Financial Tools</h3>
-    <p>Track expenses, plan goals, and build wealth efficiently.</p>
-    <a class="button" href="#">Open Tools</a>
+    <div class="card">
+      <h3>🚀 Entrepreneurship</h3>
+      <p>Turn ideas into structured startups.</p>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Smart Tools</h3>
+      <p>Expense trackers and planners for youth.</p>
+    </div>
   </div>
-</div>
+</section>
+
+<footer>
+  <strong>Udaan</strong>
+  <small>© 2025 • Powered by Atal Technologies Pvt. Ltd.</small>
+</footer>
 
 <script>
-function logoutUser() {
+function logoutUser(){
   localStorage.clear();
-  alert("Logged out successfully!");
   location.reload();
 }
 
-function updateNavbar() {
-  const loggedIn = localStorage.getItem("prernaLoggedIn") === "true";
-  document.querySelector(".nav-desktop").classList.toggle("hidden", !loggedIn);
-  document.getElementById("authLinks").classList.toggle("hidden", loggedIn);
+function updateNavbar(){
+  const loggedIn = localStorage.getItem("prernaLoggedIn")==="true";
+  document.getElementById("guestNav").style.display = loggedIn ? "none" : "block";
+  document.getElementById("userNav").style.display = loggedIn ? "block" : "none";
 }
 
 window.onload = updateNavbar;
