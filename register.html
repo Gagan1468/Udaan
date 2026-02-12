@@ -2,91 +2,165 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Register – Udaan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register – Prerna</title>
+
+  <!-- Poppins font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1508780709619-79562169bc64')
+        no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
     }
-    .box {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      width: 350px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+    .register-box {
+      background: rgba(255, 255, 255, 0.98);
+      padding: 36px;
+      border-radius: 18px;
+      box-shadow: 0 4px 12px rgba(60,64,67,0.12),
+                  0 8px 24px rgba(60,64,67,0.06);
+      width: 420px;
+      max-width: calc(100% - 40px);
     }
-    h2 {
+
+    .register-box h2 {
       text-align: center;
+      margin-bottom: 18px;
+      font-weight: 700;
+      font-size: 1.3rem;
     }
-    input, button {
+
+    input {
       width: 100%;
       padding: 12px;
       margin-top: 12px;
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
+      font-size: 15px;
+      font-weight: 600;
     }
+
+    .no-phone {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+
+    .phone-tick {
+      display: none;
+      margin-top: 12px;
+      width: 56px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(26,115,232,0.08);
+      color: #1a73e8;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
     button {
-      background: #34A853;
-      color: white;
+      margin-top: 18px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 20px;
       border: none;
+      background: #1a73e8;
+      color: white;
+      font-weight: 700;
       cursor: pointer;
-      font-weight: bold;
-    }
-    .msg {
-      color: red;
-      margin-top: 10px;
-      text-align: center;
     }
   </style>
 </head>
+
 <body>
 
-<div class="box">
-  <h2>Register on Udaan</h2>
+<div class="register-box">
+  <h2>Register for Prerna</h2>
 
-  <input type="text" id="name" placeholder="Full Name" required>
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="password" id="password" placeholder="Password" required>
+  <input type="text" id="regName" placeholder="Full Name" required>
+  <input type="email" id="regEmail" placeholder="Email Address" required>
+
+  <input type="tel" id="regPhone" placeholder="Phone Number" required>
+
+  <label class="no-phone">
+    <input type="checkbox" id="noPhoneCheckbox">
+    I don't have a phone number
+  </label>
+
+  <div id="phoneTick" class="phone-tick">✓</div>
+
+  <input type="password" id="regPassword" placeholder="Password" required>
 
   <button onclick="registerUser()">Register</button>
-
-  <div class="msg" id="msg"></div>
 </div>
 
 <script>
-function registerUser() {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const noPhoneCheckbox = document.getElementById('noPhoneCheckbox');
+  const regPhone = document.getElementById('regPhone');
+  const phoneTick = document.getElementById('phoneTick');
 
-  if (!name || !email || !password) {
-    document.getElementById("msg").innerText = "Fill all fields";
-    return;
-  }
-
-  fetch("http://localhost:3000/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("Registered successfully");
-      window.location.href = "login.html";
+  noPhoneCheckbox.addEventListener('change', () => {
+    if (noPhoneCheckbox.checked) {
+      regPhone.dataset.prevValue = regPhone.value || '';
+      regPhone.value = '';
+      regPhone.style.display = 'none';
+      phoneTick.style.display = 'flex';
+      regPhone.removeAttribute('required');
     } else {
-      document.getElementById("msg").innerText = "User already exists";
+      regPhone.style.display = '';
+      phoneTick.style.display = 'none';
+      regPhone.value = regPhone.dataset.prevValue || '';
+      regPhone.setAttribute('required', 'required');
     }
-  })
-  .catch(() => {
-    document.getElementById("msg").innerText = "Server not responding";
   });
-}
+
+  function registerUser() {
+    const name = regName.value.trim();
+    const email = regEmail.value.trim();
+    const phone = regPhone.value.trim();
+    const password = regPassword.value.trim();
+    const noPhone = noPhoneCheckbox.checked;
+
+    if (!name || !email || (!phone && !noPhone) || !password) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    fetch('http://localhost:3000/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        phone: noPhone ? '' : phone,
+        password
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert('Registration successful! Please login.');
+        window.location.href = 'login.html';
+      } else {
+        alert(data.message || 'Registration failed.');
+      }
+    })
+    .catch(() => alert('Backend server not running.'));
+  }
 </script>
 
 </body>
