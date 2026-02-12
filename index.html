@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Udaan</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Udaan – Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body { margin:0; font-family:Arial, sans-serif; }
-header {
-  background:#0b1c2d;
-  color:white;
-  padding:15px 40px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-a { color:white; text-decoration:none; margin-left:15px; }
-main { padding:40px; }
-</style>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+    }
+    header {
+      background: #0b1c2d;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: bold;
+    }
+    main {
+      padding: 40px;
+    }
+  </style>
 </head>
-
 <body>
 
 <header>
-  <strong>Udaan</strong>
+  <div><strong>Udaan</strong></div>
 
-  <!-- GUEST -->
+  <!-- GUEST NAV -->
   <div id="guestNav">
     <a href="login.html">Login</a>
     <a href="register.html">Register</a>
   </div>
 
-  <!-- USER -->
+  <!-- USER NAV -->
   <div id="userNav" style="display:none;">
     <a href="#">Profile</a>
     <a href="#" onclick="logout()">Logout</a>
@@ -40,7 +50,7 @@ main { padding:40px; }
 
 <main>
   <h1>Welcome to Udaan</h1>
-  <p>Session-based authentication working.</p>
+  <p>Node + MySQL + Session authentication working.</p>
 </main>
 
 <script>
@@ -53,10 +63,10 @@ async function checkAuth() {
 
     document.getElementById("guestNav").style.display =
       data.loggedIn ? "none" : "block";
+
     document.getElementById("userNav").style.display =
       data.loggedIn ? "block" : "none";
-
-  } catch (e) {
+  } catch (err) {
     console.error("Auth check failed");
   }
 }
@@ -65,7 +75,9 @@ function logout() {
   fetch("http://localhost:3000/api/auth/logout", {
     method: "POST",
     credentials: "include"
-  }).then(() => location.reload());
+  }).then(() => {
+    window.location.reload();
+  });
 }
 
 window.onload = checkAuth;
