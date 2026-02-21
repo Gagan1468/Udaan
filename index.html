@@ -3,17 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Udaan – Financial Freedom for Youth</title>
+<title>UDAAN – Building Intelligent Products</title>
 
-<!-- GOOGLE FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --primary:#1e88e5;
-  --dark:#0b1c2d;
-  --light:#f4f7fb;
-  --muted:#9db0c9;
+  --primary:#2563eb;
+  --dark:#0f172a;
+  --light:#f8fafc;
+  --muted:#64748b;
 }
 
 *{
@@ -28,13 +27,13 @@ body{
   color:var(--dark);
 }
 
-/* ================= NAVBAR ================= */
+/* NAVBAR */
 header{
   position:fixed;
   top:0;
   width:100%;
   z-index:1000;
-  background:rgba(11,28,45,0.85);
+  background:rgba(15,23,42,0.85);
   backdrop-filter:blur(12px);
   display:flex;
   align-items:center;
@@ -48,50 +47,27 @@ header{
   gap:12px;
   color:white;
   font-weight:800;
-  font-size:1.35rem;
+  font-size:1.3rem;
   text-decoration:none;
 }
 
 .brand img{
-  width:42px;
-  height:42px;
+  width:40px;
+  height:40px;
   border-radius:10px;
 }
 
-/* ===== NAV ACTIONS ===== */
-.nav-actions a{
+.nav-links a{
   text-decoration:none;
-  margin-left:14px;
-  padding:10px 20px;
-  border-radius:10px;
-  font-weight:600;
-}
-
-/* logged OUT */
-.login-btn{ color:white; }
-.register-btn{
-  background:var(--primary);
+  margin-left:18px;
   color:white;
+  font-weight:500;
 }
 
-/* logged IN */
-.nav-user{
-  display:none;
-}
-.nav-user a{
-  color:white;
-  margin-left:16px;
-  font-weight:600;
-}
-
-/* ================= HERO ================= */
+/* HERO */
 .hero{
   min-height:100vh;
-  background:
-    linear-gradient(120deg,rgba(11,28,45,.88),rgba(11,28,45,.75)),
-    url("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3");
-  background-size:cover;
-  background-position:center;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
   display:flex;
   align-items:center;
   padding:120px 70px;
@@ -99,18 +75,18 @@ header{
 }
 
 .hero-content{
-  max-width:720px;
+  max-width:750px;
 }
 
 .hero h1{
-  font-size:3.6rem;
+  font-size:3.5rem;
   font-weight:800;
 }
 
 .hero p{
-  margin-top:22px;
-  font-size:1.15rem;
-  color:#dbe4f3;
+  margin-top:24px;
+  font-size:1.1rem;
+  color:#cbd5e1;
 }
 
 .hero-buttons{
@@ -132,29 +108,28 @@ header{
 }
 
 .secondary{
-  border:1px solid rgba(255,255,255,0.35);
+  border:1px solid rgba(255,255,255,0.3);
   color:white;
 }
 
-/* ================= SECTIONS ================= */
+/* SECTION */
 .section{
-  max-width:1300px;
+  max-width:1200px;
   margin:auto;
-  padding:90px 70px;
+  padding:100px 70px;
 }
 
 .section-title{
-  font-size:2.3rem;
+  font-size:2.4rem;
   font-weight:700;
-  margin-bottom:14px;
+  margin-bottom:20px;
 }
 
 .section-sub{
-  color:#5b6f8d;
-  margin-bottom:50px;
+  color:var(--muted);
+  margin-bottom:60px;
 }
 
-/* ================= CARDS ================= */
 .cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -164,35 +139,35 @@ header{
 .card{
   background:white;
   border-radius:20px;
-  padding:40px 32px;
-  box-shadow:0 18px 50px rgba(0,0,0,.08);
-  transition:.35s;
+  padding:40px;
+  box-shadow:0 20px 50px rgba(0,0,0,.06);
+  transition:.3s;
 }
 
 .card:hover{
-  transform:translateY(-10px);
+  transform:translateY(-8px);
 }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 footer{
-  background:#0b1c2d;
+  background:#0f172a;
   color:white;
   padding:70px;
+  text-align:center;
 }
 
-footer a{
-  color:#bcd1ec;
-  text-decoration:none;
+footer small{
   display:block;
   margin-top:8px;
+  color:#94a3b8;
 }
 
-/* ================= RESPONSIVE ================= */
+/* RESPONSIVE */
 @media(max-width:768px){
   header{padding:16px 25px}
   .hero{padding:110px 25px}
   .hero h1{font-size:2.6rem}
-  .section{padding:70px 25px}
+  .section{padding:80px 25px}
 }
 </style>
 </head>
@@ -200,85 +175,61 @@ footer a{
 <body>
 
 <header>
-  <a href="index.html" class="brand">
+  <a href="#" class="brand">
     <img src="Modern Logo with Blue Bird and 'U' Design.png">
-    Udaan
+    UDAAN
   </a>
 
-  <!-- LOGGED OUT -->
-  <div class="nav-actions" id="guestNav">
-    <a href="login.html" class="login-btn">Login</a>
-    <a href="register.html" class="register-btn">Get Started</a>
-  </div>
-
-  <!-- LOGGED IN -->
-  <div class="nav-user" id="userNav">
-    <a href="profile.html">Profile</a>
-    <a href="settings.html">Settings</a>
-    <a href="#" onclick="logoutUser()">Logout</a>
+  <div class="nav-links">
+    <a href="#">Product</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
   </div>
 </header>
 
 <section class="hero">
   <div class="hero-content">
-    <h1>Financial Power<br>Built for the Youth</h1>
+    <h1>Building Intelligent<br>Products for the Future</h1>
     <p>
-      Learn investing, master money, and turn ideas into startups.
-      Udaan helps you build real financial confidence.
+      UDAAN is a technology company focused on building AI-powered
+      consumer applications. Our flagship product, KIROS, helps users
+      track nutrition instantly using computer vision.
     </p>
     <div class="hero-buttons">
-      <a href="start-learning.html" class="primary">Start Learning</a>
-      <a href="tools.html" class="secondary">Explore Tools</a>
-
+      <a href="#" class="primary">Explore KIROS</a>
+      <a href="#" class="secondary">Learn More</a>
     </div>
   </div>
 </section>
 
 <section class="section">
-  <h2 class="section-title">What Udaan Offers</h2>
+  <h2 class="section-title">Our Focus</h2>
   <p class="section-sub">
-    Everything a young mind needs to grow financially — designed professionally.
+    We build scalable AI-driven products designed for real-world impact.
   </p>
 
   <div class="cards">
     <div class="card">
-      <h3>📈 Financial Literacy</h3>
-      <p>Understand saving, investing and wealth building.</p>
+      <h3>🤖 Artificial Intelligence</h3>
+      <p>Leveraging computer vision to simplify everyday tasks.</p>
     </div>
 
     <div class="card">
-      <h3>🚀 Entrepreneurship</h3>
-      <p>Turn ideas into structured startups.</p>
+      <h3>📱 Consumer Apps</h3>
+      <p>Designing intuitive mobile-first experiences.</p>
     </div>
 
     <div class="card">
-      <h3>🧠 Smart Tools</h3>
-      <p>Expense trackers and planners for youth.</p>
+      <h3>⚡ Scalable Systems</h3>
+      <p>Built for global reach and long-term growth.</p>
     </div>
   </div>
 </section>
 
 <footer>
-  <strong>Udaan</strong>
-  <small>© 2025 • Powered by Atal Technologies Pvt. Ltd.</small>
+  <strong>UDAAN Technologies</strong>
+  <small>© 2026 • All Rights Reserved</small>
 </footer>
-
-<script>
-function logoutUser(){
-  localStorage.clear();
-  location.reload();
-}
-
-function updateNavbar(){
-  const loggedIn = localStorage.getItem("prernaLoggedIn")==="true";
-  document.getElementById("guestNav").style.display = loggedIn ? "none" : "block";
-  document.getElementById("userNav").style.display = loggedIn ? "block" : "none";
-}
-
-window.onload = updateNavbar;
-</script>
 
 </body>
 </html>
-
-
